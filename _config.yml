@@ -1,1 +1,5 @@
 theme: jekyll-theme-minimal
+title: AQL-System
+description: System using the Analysis Query Language
+show_downloads: true
+logo: https://foellix.github.io/AQL-System/logo.png
