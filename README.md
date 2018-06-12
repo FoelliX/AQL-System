@@ -32,7 +32,7 @@ Different operators are available to merge and further filter queries as well as
 More information about AQL-Queries can be found [here](https://github.com/FoelliX/AQL-System/wiki).
 
 Similarly, AQL-Answers are used to represent analysis results in a standardized form.  
-The syntax of AQL-Answers is defined via an [XML schema definition (XSD)](https://github.com/FoelliX/AQL-System/schemas/answers.xsd).
+The syntax of AQL-Answers is defined via an [XML schema definition (XSD)](https://github.com/FoelliX/AQL-System/blob/master/schemas/answer.xsd).
 
 ### Example 2: AQL-Answers
 An AQL-Answer to the query from above could be (shortened):
