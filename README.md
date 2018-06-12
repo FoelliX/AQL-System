@@ -28,10 +28,10 @@ TO
 ?
 ```
 
-Different operators are available to merge and further filter queries as well as methods to match intents and intent-filters.
+Different operators are available to merge and further filter queries as well as methods to match intents and intent-filters.  
 More information about AQL-Queries can be found [here](https://github.com/FoelliX/AQL-System/wiki).
 
-Similarly, AQL-Answers are used to represent analysis results in a standardized form.
+Similarly, AQL-Answers are used to represent analysis results in a standardized form.  
 The syntax of AQL-Answers is defined via an [XML schema definition (XSD)](https://github.com/FoelliX/AQL-System/schemas/answers.xsd).
 
 ### Example 2: AQL-Answers
@@ -61,7 +61,7 @@ An AQL-Answer to the query from above could be (shortened):
 It shows a taint flow from a ``getDeviceId()`` statement to a ``sendTextMessage(...)`` statement.
 
 # AQL-System
-The associated AQL-System takes AQL-Queries as input and outputs AQL-Answers.
+The associated AQL-System takes AQL-Queries as input and outputs AQL-Answers.  
 To do so, it requires a configuration in form of an .xml file that describes
 - which tools are avaliable in a certain instance of the AQL-System and how to execute these,
 - which queries can be answered by which tool and
@@ -82,9 +82,10 @@ One [tutorial](https://github.com/FoelliX/AQL-System/wiki) deals with a simple r
 It guides the user how to install, configure and execute an AQL-System setup to use [Amandroid](http://pag.arguslab.org/argus-saf).
 
 ### Development
-**Library**
+**Library**  
 The AQL-System or only its internal datastructure (AQL-Lib) can be used by or in other tools. We offer to options for integration:
 - Maven
+
 ```xml
 <dependency>
 	<groupId>de.foellix.aql</groupId>
@@ -92,10 +93,11 @@ The AQL-System or only its internal datastructure (AQL-Lib) can be used by or in
 	<version>1.1.0</version>
 </dependency>
 ```
+
 - .jar Import
 All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/).
 
-**Building from source code**
+**Building from source code**  
 - Import *Maven project* to Eclipse
 - Build pom.xml as *Maven project*
 	- Build is stored in the project's directory: ``projectDirectory/target/build``
@@ -109,20 +111,20 @@ All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/
 
 
 ## Publications
-- *Do Android Taint Analysis Tools Keep their Promises?* (Felix Pauck, Eric Bodden, Heike Wehrheim)\
-Technical Report: https://arxiv.org/abs/1804.02903
+- *Do Android Taint Analysis Tools Keep their Promises?* (Felix Pauck, Eric Bodden, Heike Wehrheim)  
+Technical Report: [https://arxiv.org/abs/1804.02903](https://arxiv.org/abs/1804.02903)
 
 ## License
 The AQL-System is licensed under the *GNU General Public License v3* (see [LICENSE](https://github.com/FoelliX/AQL-System/blob/master/LICENSE)).
 
 # Contact
-**Felix Pauck**
-Paderborn University
-fpauck@mail.uni-paderborn.de
+**Felix Pauck**  
+Paderborn University  
+fpauck@mail.uni-paderborn.de  
 [Homepage](https://cs.uni-paderborn.de/sms/team/group/people/felix-pauck)
 
 <a href="http://www.FoelliX.de" target="_blank"><img src="http://FoelliX.de/style/images/fx.png" width="200px" /></a>
 
 # Links
-- The AQL-System is part of BREW: https://github.com/FoelliX/BREW
-- which is used in the ReproDroid toolchain: https://github.com/FoelliX/ReproDroid
+- The AQL-System is part of BREW: [https://github.com/FoelliX/BREW](https://github.com/FoelliX/BREW)
+- which is used in the ReproDroid toolchain: [https://github.com/FoelliX/ReproDroid](https://github.com/FoelliX/ReproDroid)

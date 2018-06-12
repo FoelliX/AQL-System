@@ -1,0 +1,222 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="hash">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="type" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="file" type="xs:string"/>
+  <xs:element name="hashes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hash" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="method" type="xs:string"/>
+  <xs:element name="classname" type="xs:string"/>
+  <xs:element name="app">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="file"/>
+        <xs:element ref="hashes"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="value" type="xs:string"/>
+  <xs:element name="attribute">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="reference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="statement" minOccurs="0"/>
+        <xs:element ref="method" minOccurs="0"/>
+        <xs:element ref="classname" minOccurs="0"/>
+        <xs:element ref="app"/>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="type" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="attributes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="attribute" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="permission">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="reference"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="type" type="xs:string"/>
+  <xs:element name="scheme" type="xs:string"/>
+  <xs:element name="ssp" type="xs:string"/>
+  <xs:element name="host" type="xs:string"/>
+  <xs:element name="port" type="xs:string"/>
+  <xs:element name="path" type="xs:string"/>
+  <xs:element name="action" type="xs:string"/>
+  <xs:element name="category" type="xs:string"/>
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="type" minOccurs="0"/>
+        <xs:element ref="scheme" minOccurs="0"/>
+        <xs:element ref="ssp" minOccurs="0"/>
+        <xs:element ref="host" minOccurs="0"/>
+        <xs:element ref="port" minOccurs="0"/>
+        <xs:element ref="path" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parameter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="type"/>
+        <xs:element ref="value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="statementfull" type="xs:string"/>
+  <xs:element name="statementgeneric" type="xs:string"/>
+  <xs:element name="parameters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="parameter" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="statement">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="statementfull"/>
+        <xs:element ref="statementgeneric"/>
+        <xs:element ref="parameters" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="target">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="action" minOccurs="0"/>
+        <xs:element ref="category" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="data" minOccurs="0"/>
+        <xs:element ref="reference" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intentsource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="target"/>
+        <xs:element ref="reference"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intentsink">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="target"/>
+        <xs:element ref="reference"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="reference"/>
+        <xs:element ref="target"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intentfilter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="reference"/>
+        <xs:element ref="action"/>
+        <xs:element ref="category" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="data" minOccurs="0"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="flow">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="reference" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="permissions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="permission" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intentsources">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="intentsource" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intentsinks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="intentsink" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intents">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="intent" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intentfilters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="intentfilter" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="flows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="flow" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="answer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="permissions"/>
+        <xs:element ref="intentsources"/>
+        <xs:element ref="intentsinks"/>
+        <xs:element ref="intents"/>
+        <xs:element ref="intentfilters"/>
+        <xs:element ref="flows"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
