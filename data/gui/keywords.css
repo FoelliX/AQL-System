@@ -1,0 +1,35 @@
+.code-area {
+	-fx-font-family: Consolas;
+	-fx-font-size: 11pt;
+}
+
+.keyword1 {
+    -fx-fill: #2A3FAA;
+    -fx-font-weight: bold;
+}
+
+.keyword3 {
+    -fx-fill: #2A3FAA;
+}
+
+.keyword2, .paren2 {
+    -fx-fill: #7F0000;
+}
+
+.paren1, .comma, .arrow {
+    -fx-fill: #7F0071;
+	-fx-font-weight: bold;
+}
+
+.question {
+    -fx-fill: #7F0000;
+	-fx-font-weight: bold;
+}
+
+.string {
+    -fx-fill: #2A5F00;
+}
+
+.comment {
+	-fx-fill: #999999;
+}

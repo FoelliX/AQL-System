@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+%APP_APK%: 		.apk file
+%APP_APK_FILENAME%	Filename of .apk file without path and .apk
+%APP_NAME%: 		App name
+%APP_PACKAGE%:		App package
+%ANDROID_PLATFORMS%:	Android platforms folder
+%MEMORY%:		Memory
+%PID%			Process ID
+%ANSWERS%:		Input AQL-Answers for operators
+%ANSWERSHASH%:		SHA-256-hash of %ANSWERS%-String
+%RESULT_FILE%:		Result file for converter input
+-->
+
+<config>
+	<androidPlatforms>/media/sf_sdks/platforms/</androidPlatforms>
+	<maxMemory>4</maxMemory>
+	<tools>
+		<tool name="PAndA2" version="1">
+			<priority>1</priority>
+			<path>/home/fpauck/tools/Android/AQL/tools/PAndA2/</path>
+			<run>/home/fpauck/tools/Android/AQL/tools/PAndA2/aqlRun.sh %MEMORY% %APP_APK% %APP_APK_FILENAME%_result.txt</run>
+			<result>/home/fpauck/tools/Android/AQL/tools/PAndA2/%APP_APK_FILENAME%_result.txt</result>
+			<questions>Permissions</questions>
+			<instances>0</instances>
+			<memoryPerInstance>2</memoryPerInstance>
+			<runOnExit>/media/sf_aqlsystem/flushMemory.sh</runOnExit>
+			<runOnAbort>/media/sf_aqlsystem/killpid.sh %PID%</runOnAbort>
+		</tool>
+		<tool name="FlowDroid" version="1">
+			<priority>1</priority>
+			<path>/home/fpauck/tools/Android/AQL/tools/FlowDroid</path>
+			<run>/home/fpauck/tools/Android/AQL/tools/FlowDroid/aqlRunSS.sh %MEMORY% %APP_APK% %ANDROID_PLATFORMS% %APP_APK_FILENAME%_result.txt SourcesAndSinks_std.txt</run>
+			<result>/home/fpauck/tools/Android/AQL/tools/FlowDroid/%APP_APK_FILENAME%_result.txt</result>
+			<questions>IntraAppFlows</questions>
+			<instances>0</instances>
+			<memoryPerInstance>2</memoryPerInstance>
+			<runOnExit>/media/sf_aqlsystem/flushMemory.sh</runOnExit>
+			<runOnAbort>/media/sf_aqlsystem/killpid.sh %PID%</runOnAbort>
+		</tool>
+		<tool name="IC3" version="1">
+			<priority>1</priority>
+			<path>/home/fpauck/tools/Android/AQL/tools/linuxOnly/run</path>
+			<run>/home/fpauck/tools/Android/AQL/tools/linuxOnly/run/run3.sh -a %APP_APK% %MEMORY%</run>
+			<result>/home/fpauck/tools/Android/AQL/tools/linuxOnly/run/results/protobufs/%APP_PACKAGE%_1.dat</result>
+			<questions>Intentfilter, Intents, IntentSources, IntentSinks</questions>
+			<instances>1</instances>
+			<memoryPerInstance>2</memoryPerInstance>
+			<runOnExit>/media/sf_aqlsystem/flushMemory.sh</runOnExit>
+			<runOnAbort>/media/sf_aqlsystem/killpid.sh %PID%</runOnAbort>
+		</tool>
+	</tools>
+	<operators>
+		<tool name="PIM" version="1">
+			<priority>1</priority>
+			<path>/media/sf_pim</path>
+			<run>/media/sf_pim/aqlRun.sh %ANSWERS%</run>
+			<result>/media/sf_pim/result_%ANSWERSHASH%.xml</result>
+			<questions>CONNECT(*)</questions>
+			<instances>1</instances>
+			<memoryPerInstance>2</memoryPerInstance>
+			<runOnExit>/media/sf_ggwiz/flushMemory.sh</runOnExit>
+			<runOnAbort>/media/sf_ggwiz/killpid.sh %PID%</runOnAbort>
+		</tool>
+	</operators>
+</config>

@@ -1,0 +1,15 @@
+-help, -h, -?, -man, -manpage:	Outputs a very brief manual, which contains a list of all available parameters
+
+-query "X", -q "X":		This parameter is used to assign the AQL-Query. X refers to this query.
+
+-config "X", -cfg "X", -c "X":	By default the config.xml file in the tool's directory is used as configuration. With this parameter a different configuration file can be chosen. X has to reference the path to and the configuration file itself.
+
+-output "X", -out "X", -o "X":	The answer to a query is automatically saved in the "answers" directory. This parameter can be used to store it in a second file. X has to define this file by path and filename.
+
+-preferexecute, -pe:		This parameter is used to force the execution of analysis tools even if a similar question has been asked before.
+
+-timeout "X"s/m/h, -t "X"s/m/h:	With this parameter the maximum execution time of each tool can be set. If it expires the tool's execution is aborted. X refers to this time in seconds (e.g. 10s), minutes or hours.
+
+-debug "X", -d "X":		The output generated during the execution of this tool can be set to different levels. X may be set to: "error", "warning", "normal", "debug", "detailed" (ascending precision from left to right). By default it is set to "normal".
+
+-gui				If this or no parameters at all are provided the graphical user interface is started. It allows to formulate queries and display answers in a handy way.

@@ -1,0 +1,10 @@
+FILTER [
+	CONNECT[
+		Flows IN App('SIMApp.apk')?,
+		Flows IN App('SMSApp.apk')?,
+		CONNECT[
+			IntentSinks IN App('SIMApp.apk') ?,
+			IntentSources IN App('SMSApp.apk') ?
+		]
+	]
+]

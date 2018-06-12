@@ -1,0 +1,5 @@
+FILTER [
+	 FILTER[
+		'E:\uni\masterarbeit\evaluation\4_AQL_Realworld\interApp\connect_all_intent_sinks_and_sources1.xml'!
+	] | 'complete'='true'
+]

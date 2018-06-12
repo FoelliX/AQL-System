@@ -1,0 +1,305 @@
+/*
+ *
+ * Copyright (c) 2006, Sun Microsystems, Inc.
+ * All rights reserved.
+ *
+ */
+
+options
+{
+  ERROR_REPORTING = true;
+  DEBUG_PARSER = false;
+  DEBUG_TOKEN_MANAGER = false;
+  STATIC = false;
+}
+
+PARSER_BEGIN(QuestionParser)
+package de.foellix.aql.datastructure.handler;
+import de.foellix.aql.datastructure.KeywordsAndConstants;
+import de.foellix.aql.datastructure.handler.QuestionHandler;
+
+public class QuestionParser
+{
+  private QuestionHandler questionHandler = new QuestionHandler();
+
+  public QuestionHandler getQuestionHandler()
+  {
+    return questionHandler;
+  }
+}
+
+PARSER_END(QuestionParser)
+
+SKIP :
+{
+  " "
+| "\n"
+| "\r"
+| "\t"
+}
+
+TOKEN :
+{
+  < OPERATOR1 : "FILTER" >
+| 
+  < OPERATOR2 :
+    "UNIFY"
+  | "CONNECT" >
+| < SOIS1 : 
+    "Flows" >
+| < SOIS2 :
+    "Permissions"
+  | "IntentSources"
+  | "IntentSinks"
+  | "IntentFilters"
+  | "Intents" >
+| 
+  < STRING : "'" (~[ "'" ])* "'" >
+}
+
+void query() :
+{}
+{
+  {
+    questionHandler.startQuery();
+  }
+  (
+    questionOrOperator()
+  )+
+  < EOF >
+}
+
+void questionOrOperator() :
+{}
+{
+  (
+    {
+      questionHandler.startQuestion();
+    }
+    question() featuring() "?"
+    {
+      questionHandler.endQuestion();
+    }
+  )
+|
+  (
+    answer() "!"
+  )
+|
+  (
+    operator()
+    {
+      questionHandler.endOperator();
+    }
+  )
+}
+
+void featuring() :
+{}
+{
+  (
+    "FEATURING" features()
+  )?
+}
+
+void features() :
+{}
+{
+  feature()
+  (
+    "," features()
+  )?
+}
+
+void feature() :
+{
+  Token t;
+}
+{
+  t = < STRING >
+  {
+    questionHandler.addFeature(t.toString());
+  }
+}
+
+void questions() :
+{}
+{
+  questionOrOperator()
+  (
+    "," questions()
+  )?
+}
+
+void operator() :
+{
+  Token t1;
+  Token t2;
+}
+{
+  t1 = < OPERATOR2 >
+  {
+    questionHandler.startOperator(t1.toString());
+  }
+  "[" questions() "]"
+| 
+  t1 = < OPERATOR1 >
+  {
+    questionHandler.startOperator(t1.toString());
+  }
+  "[" questionOrOperator()
+  (
+    "|"
+    (
+      (
+        pair()
+        (
+          "|"
+          (
+            t2 = < SOIS1 >
+          | t2 = < SOIS2 >
+          )
+          {
+            questionHandler.setFilterSOI(t2.toString());
+          }
+        )?
+      )
+    |
+      (
+        t2 = < SOIS1 >
+      | t2 = < SOIS2 >
+      )
+      {
+        questionHandler.setFilterSOI(t2.toString());
+      }
+    )
+  )?
+  "]"
+}
+
+void pair() :
+{
+  Token t1;
+  Token t2;
+}
+{
+  t1 = < STRING > "=" t2 = < STRING >
+  {
+    questionHandler.setFilterNameValuePair(t1.toString(), t2.toString());
+  }
+}
+
+void question() :
+{
+  Token token;
+}
+{
+  token = < SOIS1 >
+  (
+    fromTo()
+  | in()
+  )
+  {
+    questionHandler.setMode(token.toString());
+  }
+| 
+  token = < SOIS2 > 
+  in()
+  {
+    questionHandler.setMode(token.toString());
+  }
+}
+
+void fromTo() :
+{
+}
+{
+  "FROM" reference()
+  {
+    questionHandler.setReferenceType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
+    questionHandler.addReference();
+  }
+  "TO" reference()
+  {
+    questionHandler.setReferenceType(KeywordsAndConstants.REFERENCE_TYPE_TO);
+    questionHandler.addReference();
+  }
+}
+
+void in() :
+{
+}
+{
+  "IN" reference()
+  {
+    questionHandler.addReference();
+  }
+}
+
+void reference() :
+{
+  Token t1;
+  Token t2;
+  Token t3;
+  Token t4;
+}
+{
+  (
+    "Statement" "(" t1 = < STRING > ")" "->"
+    {
+      questionHandler.setStatement(t1.toString());
+    }
+  )?
+  (
+    "Method" "(" t2 = < STRING > ")" "->"
+    {
+      questionHandler.setMethod(t2.toString());
+    }
+  )?
+  (
+    "Class" "(" t3 = < STRING > ")" "->"
+    {
+      questionHandler.setClass(t3.toString());
+    }
+  )?
+  "App" "(" t4 = < STRING >
+  (
+    preprocessors()
+  )?
+  ")"
+  {
+    questionHandler.setApp(t4.toString());
+  }
+}
+
+void preprocessors() :
+{
+}
+{
+  preprocessor()
+  (
+    preprocessors()
+  )?
+}
+
+void preprocessor() :
+{
+  Token token;
+}
+{
+  "|" token = < STRING >
+  {
+    questionHandler.addPreprocessor(token.toString());
+  }
+}
+
+void answer() :
+{
+  Token token;
+}
+{
+  token = < STRING >
+  {
+    questionHandler.addAnswer(token.toString());
+  }
+}

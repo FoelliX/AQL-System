@@ -1,0 +1,6 @@
+FILTER[
+	CONNECT [
+		'E:\uni\masterarbeit\evaluation\2_AQL_FD_IC3_vs_AQL_IccTA\expected\Expected_true_interApp_SendSMS_FlowDroid.xml'!,
+		'E:\uni\masterarbeit\evaluation\2_AQL_FD_IC3_vs_AQL_IccTA\results_adapted\adaptionFiles\Connect_interApp_SendSMS_FlowDroid.xml'!
+	]
+]

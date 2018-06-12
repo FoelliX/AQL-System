@@ -1,0 +1,104 @@
+.progress-indicator {
+	-fx-progress-color: #61794b;
+	-fx-background-radius:500px;
+}
+
+.progress-bar {
+  -fx-accent: #61794b;
+}
+
+.menu:hover, .menu:showing {
+	-fx-background-color: linear-gradient(#86a868, #61794b);
+}
+
+.tab, .tab:hover, .tab:showing {
+	-fx-padding: 3 10 3 10;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-effect: none;
+}
+
+.defaultMenuItem {
+	-fx-background-color: #FFFFFF;
+    -fx-padding: 7;
+}
+.defaultMenuItem:hover {
+	-fx-background-color: #61794b;
+}
+.defaultMenuItem:pressed {
+	-fx-background-color: #86a868;
+}
+.defaultMenuItem .label {
+	-fx-text-fill: #333333;
+}
+.defaultMenuItem:hover .label {
+	-fx-text-fill: #000000;
+}
+
+.defaultBtn{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, #ebebeb;
+    -fx-background-radius: 5,4,3;
+    -fx-background-insets: 0,1,2;
+    -fx-padding: 10;
+	-fx-indent: 50;
+}
+.defaultBtn:hover{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, #d1d1d1;
+}
+.defaultBtn:pressed{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, #b7b7b7;
+}
+
+.red{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, linear-gradient(#4f3131, #794b4b);
+    -fx-background-radius: 5,4,3;
+    -fx-background-insets: 0,1,2;
+    -fx-padding: 10;
+	-fx-text-fill: #FFFFFF;
+}
+.red:hover{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, linear-gradient(#794b4b, #a86868);
+}
+.red:pressed{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, #a86868;
+}
+
+.green{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, linear-gradient(#3f4f31, #61794b);
+    -fx-background-radius: 5,4,3;
+    -fx-background-insets: 0,1,2;
+    -fx-padding: 10;
+	-fx-text-fill: #FFFFFF;
+}
+.green:hover{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, linear-gradient(#61794b, #86a868);
+}
+.green:pressed{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, #86a868;
+}
+
+.blue{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, linear-gradient(#3b5c91, #8ca9d8);
+    -fx-background-radius: 15,15,15;
+    -fx-background-insets: 0,1,2;
+    -fx-padding: 0 6 0 6;
+	-fx-text-fill: #FFFFFF;
+}
+.blue:hover{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, linear-gradient(#8ca9d8, #8cb8ff);
+}
+.blue:pressed{
+	-fx-background-color: 
+        #b5b5b5, #fcfcfc, #8cb8ff;
+}
