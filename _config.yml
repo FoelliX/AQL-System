@@ -1,4 +1,4 @@
-theme: jekyll-theme-minimal
+theme: jekyll-theme-slate
 title: AQL-System
 description: System using the Analysis Query Language
 show_downloads: true
