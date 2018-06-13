@@ -94,7 +94,7 @@ The AQL-System or only its internal datastructure (AQL-Lib) can be used by or in
 </dependency>
 ```
 
-- .jar Import
+- .jar Import  
 All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/).
 
 **Building from source code**  
