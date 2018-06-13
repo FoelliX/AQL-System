@@ -1,4 +1,4 @@
-<p align="center">
+﻿<p align="center">
 	<img src="https://FoelliX.github.io/AQL-System/logo.png" width="300px"/>
 </p>
 
@@ -88,7 +88,7 @@ The AQL-System or only its internal datastructure (AQL-Lib) can be used by or in
 
 ```xml
 <dependency>
-	<groupId>de.foellix.aql</groupId>
+	<groupId>de.foellix</groupId>
 	<artifactId>AQL-System</artifactId>
 	<version>1.1.0</version>
 </dependency>
