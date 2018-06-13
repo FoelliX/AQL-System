@@ -79,7 +79,7 @@ Our wiki contains tutorials how to use/extend the AQL-System: [here](https://git
 
 ### Execution
 One [tutorial](https://github.com/FoelliX/AQL-System/wiki) deals with a simple run-through.
-It guides the user how to install, configure and execute an AQL-System setup to use [Amandroid](http://pag.arguslab.org/argus-saf).
+It guides the user how to install, configure and execute an AQL-System, which is setup to use [Amandroid](http://pag.arguslab.org/argus-saf).
 
 ### Development
 **Library**  
@@ -100,8 +100,9 @@ All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/
 **Building from source code**  
 - Import *Maven project* to Eclipse
 - Build pom.xml as *Maven project*
-	- Build is stored in the project's directory: ``projectDirectory/target/build``
-- Run build the build ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki)):
+	- Build is stored inside the project's directory: ``projectDirectory/target/build``  
+	*(``projectDirectory`` refers to your local project directory and consequently has to be replaced by the actual directory and its path)*
+- Run the build ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki)):
 	- Option 1:
 	```bash
 	cd projectDirectory/target/build
