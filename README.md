@@ -90,7 +90,7 @@ The AQL-System or only its internal datastructure (AQL-Lib) can be used by or in
 <dependency>
 	<groupId>de.foellix</groupId>
 	<artifactId>AQL-System</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 </dependency>
 ```
 

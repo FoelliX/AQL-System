@@ -130,11 +130,13 @@ public class CommandLineInterface {
 		}
 
 		// Load custom config
-		final File configFile = new File(config);
-		if (config != null && configFile.exists()) {
-			ConfigHandler.getInstance().setConfig(configFile);
-		} else {
-			Log.warning("Configuration file does not exist: " + configFile.getAbsolutePath());
+		if (config != null) {
+			final File configFile = new File(config);
+			if (config != null && configFile.exists()) {
+				ConfigHandler.getInstance().setConfig(configFile);
+			} else {
+				Log.warning("Configuration file does not exist: " + configFile.getAbsolutePath());
+			}
 		}
 
 		if (!gui) {
