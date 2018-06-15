@@ -1,4 +1,6 @@
-﻿<p align="center">
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System)
+---
+<p align="center">
 	<img src="https://FoelliX.github.io/AQL-System/logo.png" width="300px"/>
 </p>
 
