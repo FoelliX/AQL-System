@@ -1,0 +1,11 @@
+de.upb.fpauck.smsapp.BuildConfig
+de.upb.fpauck.smsapp.R$attr
+de.upb.fpauck.smsapp.R$color
+de.upb.fpauck.smsapp.R$dimen
+de.upb.fpauck.smsapp.R$id
+de.upb.fpauck.smsapp.R$layout
+de.upb.fpauck.smsapp.R$mipmap
+de.upb.fpauck.smsapp.R$string
+de.upb.fpauck.smsapp.R$style
+de.upb.fpauck.smsapp.R
+de.upb.fpauck.smsapp.SMSAppMainActivity

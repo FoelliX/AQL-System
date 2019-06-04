@@ -21,7 +21,7 @@ import de.foellix.aql.datastructure.Reference;
 public class HashHelper {
 	// Hash-Creator
 	public static String createHash(final Tool tool, final IQuestionNode question) {
-		final String hash = Helper.toRAW(tool) + question.toRAW();
+		final String hash = Helper.toRAW(tool) + question.toRAW(tool.isExternal());
 		return HashHelper.sha256Hash(hash);
 	}
 
@@ -33,13 +33,13 @@ public class HashHelper {
 	public static String createGenericHash(final IQuestionNode question) {
 		final IQuestionNode copy = Helper.copy(question);
 		for (final QuestionPart part : copy.getAllQuestionParts()) {
-			for (final Reference ref : part.getReferences()) {
+			for (final Reference ref : part.getAllReferences()) {
 				ref.setClassname(null);
 				ref.setMethod(null);
 				ref.setStatement(null);
 			}
 		}
-		final String hash = copy.toRAW();
+		final String hash = copy.toRAW(false);
 		return HashHelper.sha256Hash(hash);
 	}
 

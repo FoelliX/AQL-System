@@ -36,10 +36,10 @@ public class TaskMemory {
 		final TaskInfo taskinfo = task.getTaskinfo();
 		if (taskinfo instanceof ToolTaskInfo) {
 			final ToolTaskInfo t = (ToolTaskInfo) taskinfo;
-			return Helper.replaceVariables(t.getTool().getRun(), t, t.getQuestion()) + "; " + task.getTimeout();
+			return Helper.getExecuteCommand(t) + "; " + task.getParent().getScheduler().getTimeout();
 		} else if (taskinfo instanceof PreprocessorTaskInfo) {
 			final PreprocessorTaskInfo t = (PreprocessorTaskInfo) taskinfo;
-			return Helper.replaceVariables(t.getTool().getRun(), t, t.getApp()) + "; " + task.getTimeout();
+			return Helper.getExecuteCommand(t) + "; " + task.getParent().getScheduler().getTimeout();
 		}
 		return null;
 	}

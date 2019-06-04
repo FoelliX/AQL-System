@@ -51,12 +51,12 @@ public class ConverterDroidSafe implements IConverter {
 			while ((line = br.readLine()) != null) {
 				if (line.startsWith("Sink: ")) {
 					to = new Reference();
-					to.setStatement(Helper.fromStatementString(Helper.cutFromFirstToLast(line, "<", ">")));
+					to.setStatement(Helper.createStatement(Helper.cutFromFirstToLast(line, "<", ">")));
 					final String method = findMethodRecursively(to.getStatement().getStatementgeneric());
 					if (method != null) {
 						to.setMethod(method);
 						to.setClassname(Helper.cut(to.getMethod(), "<", ":"));
-						to.setApp(taskInfo.getQuestion().getReferences().get(0).getApp());
+						to.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
 						to.setType(KeywordsAndConstants.REFERENCE_TYPE_TO);
 					} else {
 						Log.error("Could not find method for the following statement: "
@@ -70,12 +70,12 @@ public class ConverterDroidSafe implements IConverter {
 					sources = false;
 				} else if (sources) {
 					from = new Reference();
-					from.setStatement(Helper.fromStatementString(Helper.cut(line, "\t", " (UNIQUE_IDENTIFIER)")));
+					from.setStatement(Helper.createStatement(Helper.cut(line, "\t", " (UNIQUE_IDENTIFIER)")));
 					final String method = findMethodRecursively(from.getStatement().getStatementgeneric());
 					if (method != null) {
 						from.setMethod(method);
 						from.setClassname(Helper.cut(from.getMethod(), "<", ":"));
-						from.setApp(taskInfo.getQuestion().getReferences().get(0).getApp());
+						from.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
 						from.setType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
 
 						final Flow flow = new Flow();

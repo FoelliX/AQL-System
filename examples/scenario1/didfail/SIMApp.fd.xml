@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results package="de.upb.fpauck.sourceapp">
+<flow>
+    <sink method="&lt;android.app.Activity: void startActivity(android.content.Intent)&gt;" is-intent="1" intent-id="newField_1" component="de.upb.fpauck.simapp.SIMAppMainActivity"></sink>
+    <source method="&lt;android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()&gt;"
+     in="source"
+    ></source>
+</flow>
+</results>

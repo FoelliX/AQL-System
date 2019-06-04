@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System) ![Java 8](https://img.shields.io/badge/java-8-brightgreen.svg)
 ---
 <p align="center">
 	<img src="https://FoelliX.github.io/AQL-System/logo.png" width="300px"/>
@@ -21,12 +21,12 @@ Flows FROM
 	Statement(’getDeviceId()’)
 	->Method(’onCreate(...)’)
 	->Class(’MainActivity’)
-	->App(’/path/to/example.apk’) 
+	->App(’/path/to/example1.apk’) 
 TO 
 	Statement(’sendTextMessage(...)’)
 	->Method(’onCreate(...)’)
 	->Class(’MainActivity’)
-	->App(’/path/to/DirectLeak1.apk’)
+	->App(’/path/to/example2.apk’)
 ?
 ```
 
@@ -92,7 +92,7 @@ The AQL-System or only its internal datastructure (AQL-Lib) can be used by or in
 <dependency>
 	<groupId>de.foellix</groupId>
 	<artifactId>AQL-System</artifactId>
-	<version>1.1.1</version>
+	<version>1.2.0</version>
 </dependency>
 ```
 
@@ -114,19 +114,17 @@ All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/
 
 
 ## Publications
-- *Do Android Taint Analysis Tools Keep their Promises?* (Felix Pauck, Eric Bodden, Heike Wehrheim)  
-Technical Report: [https://arxiv.org/abs/1804.02903](https://arxiv.org/abs/1804.02903)
+- *Do Android Taint Analysis Tools Keep Their Promises?* (Felix Pauck, Eric Bodden, Heike Wehrheim)  
+ESEC/FSE 2018 [https://dl.acm.org/citation.cfm?id=3236029](https://dl.acm.org/citation.cfm?id=3236029)
 
 ## License
 The AQL-System is licensed under the *GNU General Public License v3* (see [LICENSE](https://github.com/FoelliX/AQL-System/blob/master/LICENSE)).
 
 # Contact
-**Felix Pauck**  
+**Felix Pauck** (FoelliX)  
 Paderborn University  
 fpauck@mail.uni-paderborn.de  
-[Homepage](https://cs.uni-paderborn.de/sms/team/group/people/felix-pauck)
-
-<a href="http://www.FoelliX.de" target="_blank"><img src="http://FoelliX.de/style/images/fx.png" width="200px" /></a>
+[http://www.FelixPauck.de](http://www.FelixPauck.de)
 
 # Links
 - The AQL-System is part of BREW: [https://github.com/FoelliX/BREW](https://github.com/FoelliX/BREW)

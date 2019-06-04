@@ -1,6 +1,7 @@
 package de.foellix.aql.ui.gui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,9 +25,12 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -65,7 +69,7 @@ public class GUI extends Application implements IGUI {
 	public void start(final Stage stage) throws Exception {
 		this.time = java.lang.System.currentTimeMillis();
 
-		this.stage = stage;
+		GUI.stage = stage;
 
 		stage.setTitle("AQL-Editor");
 		stage.getIcons().add(new Image("file:data/gui/images/icon_16.png", 16, 16, false, true));
@@ -114,14 +118,14 @@ public class GUI extends Application implements IGUI {
 				viewer.viewerGraph.refresh();
 			}
 		});
-		stage.getScene().widthProperty().addListener(new ChangeListener<Number>() {
+		scene.widthProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observableValue, final Number oldSceneWidth,
 					final Number newSceneWidth) {
 				viewer.viewerGraph.refresh();
 			}
 		});
-		stage.getScene().heightProperty().addListener(new ChangeListener<Number>() {
+		scene.heightProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(final ObservableValue<? extends Number> observableValue, final Number oldSceneHeight,
 					final Number newSceneHeight) {
@@ -142,28 +146,71 @@ public class GUI extends Application implements IGUI {
 		this.allFilter = new FileChooser.ExtensionFilter("*.* All files", "*.*");
 		this.aqlFilter = new FileChooser.ExtensionFilter("*.aql AQL-Query", "*.aql");
 		this.xmlFilter = new FileChooser.ExtensionFilter("*.xml AQL-Answer", "*.xml");
-		this.pngFilter = new FileChooser.ExtensionFilter("*.png Image", "*.png");
+		this.pngFilter = new FileChooser.ExtensionFilter("*.png Image files", "*.png");
 
 		// Flag
 		started = true;
 
+		// Drag and Drop
+		scene.setOnDragOver(new EventHandler<DragEvent>() {
+			@Override
+			public void handle(DragEvent event) {
+				final Dragboard db = event.getDragboard();
+				if (db.hasFiles()) {
+					event.acceptTransferModes(TransferMode.COPY);
+				} else {
+					event.consume();
+				}
+			}
+		});
+		scene.setOnDragDropped(new EventHandler<DragEvent>() {
+			@Override
+			public void handle(DragEvent event) {
+				final Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasFiles()) {
+					success = true;
+
+					if (viewerActive) {
+						openFile(db.getFiles().get(0));
+					} else {
+						if (db.getFiles().get(0).getName().endsWith(".aql")) {
+							openFile(db.getFiles().get(0));
+						} else {
+							final StringBuilder sb = new StringBuilder();
+							for (int i = 0; i < db.getFiles().size(); i++) {
+								final File file = db.getFiles().get(i);
+								sb.append((i == 0 ? "" : " ") + file.getAbsolutePath());
+							}
+							editor.insert(sb.toString());
+						}
+					}
+				}
+
+				event.setDropCompleted(success);
+				event.consume();
+			}
+		});
+		viewer.viewerWeb.getWebView().setOnDragOver(scene.getOnDragOver());
+		viewer.viewerWeb.getWebView().setOnDragDropped(scene.getOnDragDropped());
+
 		// Additional Shortcuts
 		Platform.runLater(() -> {
-			stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.NUMPAD0, KeyCombination.CONTROL_ANY),
+			scene.getAccelerators().put(new KeyCodeCombination(KeyCode.NUMPAD0, KeyCombination.CONTROL_ANY),
 					new Runnable() {
 						@Override
 						public void run() {
 							viewer.zoomReset();
 						}
 					});
-			stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ADD, KeyCombination.CONTROL_ANY),
+			scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ADD, KeyCombination.CONTROL_ANY),
 					new Runnable() {
 						@Override
 						public void run() {
 							viewer.zoomIn();
 						}
 					});
-			stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.SUBTRACT, KeyCombination.CONTROL_ANY),
+			scene.getAccelerators().put(new KeyCodeCombination(KeyCode.SUBTRACT, KeyCombination.CONTROL_ANY),
 					new Runnable() {
 						@Override
 						public void run() {
@@ -174,7 +221,7 @@ public class GUI extends Application implements IGUI {
 
 		// SplashScreen
 		final SplashScreen splashScreen = new SplashScreen(
-				Properties.info().ABBRRVIATION + " (v. " + Properties.info().VERSION + ")",
+				Properties.info().ABBREVIATION + " (v. " + Properties.info().VERSION + ")",
 				"by " + Properties.info().AUTHOR, Color.WHITE);
 		new Thread(() -> {
 			try {
@@ -233,7 +280,10 @@ public class GUI extends Application implements IGUI {
 			}
 		}
 
-		final File file = this.openDialog.showOpenDialog(this.stage);
+		openFile(this.openDialog.showOpenDialog(getStage()));
+	}
+
+	private void openFile(File file) {
 		if (file != null) {
 			try {
 				if (!viewerActive) {
@@ -245,8 +295,11 @@ public class GUI extends Application implements IGUI {
 					viewer.openFile(file);
 					this.currentAnswer = file;
 				}
-			} catch (final Exception e) {
+			} catch (final FileNotFoundException e) {
 				Log.msg("File not found: " + file.toString(), Log.ERROR);
+			} catch (final Exception e) {
+				Log.msg("Error occurred while opening file: " + file.toString() + " (" + e.getClass().getSimpleName()
+						+ ": " + e.getMessage() + ")", Log.ERROR);
 			}
 		}
 
@@ -265,7 +318,7 @@ public class GUI extends Application implements IGUI {
 			} else {
 				this.saveDialog.setInitialDirectory(new File("queries"));
 			}
-			this.currentQuery = this.saveDialog.showSaveDialog(this.stage);
+			this.currentQuery = this.saveDialog.showSaveDialog(getStage());
 			if (this.currentQuery != null) {
 				save();
 			}
@@ -278,7 +331,7 @@ public class GUI extends Application implements IGUI {
 			} else {
 				this.saveDialog.setInitialDirectory(new File("answers"));
 			}
-			this.currentAnswer = this.saveDialog.showSaveDialog(this.stage);
+			this.currentAnswer = this.saveDialog.showSaveDialog(getStage());
 			if (this.currentAnswer != null) {
 				save();
 			}
@@ -329,7 +382,7 @@ public class GUI extends Application implements IGUI {
 
 	@Override
 	public void exit() {
-		new ExitDialog("Exit", "You will exit the AQL-System now.", "Proceed?");
+		new ExitDialog("Exit", "You will exit the " + Properties.info().ABBREVIATION + " now.", "Proceed?");
 	}
 
 	public void exportGraph() {
@@ -341,7 +394,7 @@ public class GUI extends Application implements IGUI {
 		} else {
 			this.saveDialog.setInitialDirectory(new File("./"));
 		}
-		this.currentExport = this.saveDialog.showSaveDialog(this.stage);
+		this.currentExport = this.saveDialog.showSaveDialog(getStage());
 		if (this.currentExport != null) {
 			viewer.viewerGraph.exportGraph(this.currentExport);
 		}
@@ -351,15 +404,15 @@ public class GUI extends Application implements IGUI {
 		Platform.runLater(() -> {
 			if (viewerActive) {
 				if (this.currentAnswer == null) {
-					this.stage.setTitle("AQL-Viewer");
+					getStage().setTitle("AQL-Viewer");
 				} else {
-					this.stage.setTitle("AQL-Viewer (" + this.currentAnswer.getAbsolutePath() + ")");
+					getStage().setTitle("AQL-Viewer (" + this.currentAnswer.getAbsolutePath() + ")");
 				}
 			} else {
 				if (this.currentQuery == null) {
-					this.stage.setTitle("AQL-Editor");
+					getStage().setTitle("AQL-Editor");
 				} else {
-					this.stage.setTitle("AQL-Editor (" + this.currentQuery.getAbsolutePath() + ")");
+					getStage().setTitle("AQL-Editor (" + this.currentQuery.getAbsolutePath() + ")");
 				}
 			}
 		});
@@ -367,7 +420,7 @@ public class GUI extends Application implements IGUI {
 
 	@Override
 	public Stage getStage() {
-		return this.stage;
+		return GUI.stage;
 	}
 
 	@Override

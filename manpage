@@ -10,6 +10,12 @@
 
 -timeout "X"s/m/h, -t "X"s/m/h:	With this parameter the maximum execution time of each tool can be set. If it expires the tool's execution is aborted. X refers to this time in seconds (e.g. 10s), minutes or hours.
 
--debug "X", -d "X":		The output generated during the execution of this tool can be set to different levels. X may be set to: "error", "warning", "normal", "debug", "detailed" (ascending precision from left to right). By default it is set to "normal".
+-debug "X", -d "X":		The output generated during the execution of this tool can be set to different levels. X may be set to: "error", "warning", "normal", "debug", "detailed" (ascending precision from left to right). Additionally it can be set to "short", the output will then be equal to "normal" but shorter at some points. By default it is set to "normal".
+
+-configwizard, -cw		If this parameter is applied the Config Wizard will be started at the beginning.
+
+-backup, -bak, -b:		To backup previously computed results on startup add one of these parameters.
+
+-reset, -re, -r:		To reset BREW on startup add one of these parameters.
 
 -gui				If this or no parameters at all are provided the graphical user interface is started. It allows to formulate queries and display answers in a handy way.

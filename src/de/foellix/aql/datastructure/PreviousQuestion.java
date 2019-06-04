@@ -1,11 +1,12 @@
 package de.foellix.aql.datastructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.foellix.aql.helper.Helper;
 
-public class PreviousQuestion implements IQuestionNode {
+public class PreviousQuestion implements IQuestionNode, Serializable {
 	private final String file;
 
 	public PreviousQuestion(final String file) {
@@ -24,11 +25,11 @@ public class PreviousQuestion implements IQuestionNode {
 			indent += "\t";
 		}
 
-		return indent + "ANSWER(" + this.file + ")\n";
+		return indent + "'" + this.file + "' !";
 	}
 
 	@Override
-	public String toRAW() {
+	public String toRAW(boolean external) {
 		return "PreviousQuestion (" + this.file + ")";
 	}
 
@@ -39,6 +40,16 @@ public class PreviousQuestion implements IQuestionNode {
 
 	@Override
 	public List<QuestionPart> getAllQuestionParts() {
+		return null;
+	}
+
+	@Override
+	public List<Reference> getAllReferences() {
+		return null;
+	}
+
+	@Override
+	public List<App> getAllApps(boolean equalsOnObjectLevel) {
 		return null;
 	}
 

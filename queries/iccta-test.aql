@@ -1,6 +1,0 @@
-FILTER [
-	UNIFY [
-		Flows IN App('SIMApp.apk SMSApp.apk' | 'COMBINE') ?,
-		Permissions IN App('SIMApp.apk SMSApp.apk' | 'COMBINE') ?
-	]
-]

@@ -46,9 +46,16 @@ public class OperatorManager {
 
 	public Answer applyOperator(Question question) {
 		Tool operator = ToolSelector.getInstance().selectOperator(question);
-		if (operator == null && (question.getOperator().equals(KeywordsAndConstants.OPERATOR_FILTER)
-				|| question.getOperator().equals(KeywordsAndConstants.OPERATOR_UNIFY)
-				|| question.getOperator().equals(KeywordsAndConstants.OPERATOR_CONNECT))) {
+		if (operator == null && ((question.getOperator().equals(KeywordsAndConstants.getFilterOperator())
+				|| question.getOperator().equals(KeywordsAndConstants.OPERATOR_FILTER_ORIGINAL))
+				|| (question.getOperator().equals(KeywordsAndConstants.getUnifyOperator())
+						|| question.getOperator().equals(KeywordsAndConstants.OPERATOR_UNIFY_ORIGINAL))
+				|| (question.getOperator().equals(KeywordsAndConstants.getConnectOperator())
+						|| question.getOperator().equals(KeywordsAndConstants.OPERATOR_CONNECT_ORIGINAL))
+				|| (question.getOperator().equals(KeywordsAndConstants.getMinusOperator())
+						|| question.getOperator().equals(KeywordsAndConstants.OPERATOR_MINUS_ORIGINAL))
+				|| (question.getOperator().equals(KeywordsAndConstants.getIntersectOperator())
+						|| question.getOperator().equals(KeywordsAndConstants.OPERATOR_INTERSECT_ORIGINAL)))) {
 			operator = new DefaultOperator();
 		}
 

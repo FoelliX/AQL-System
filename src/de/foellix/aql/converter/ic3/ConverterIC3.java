@@ -65,12 +65,12 @@ public class ConverterIC3 implements IConverter {
 					// Origin
 					final Reference originReduced = new Reference();
 					originReduced.setClassname(instruction.getClassName());
-					originReduced.setApp(question.getReferences().get(0).getApp());
+					originReduced.setApp(question.getAllReferences().get(0).getApp());
 					final Reference origin = new Reference();
-					origin.setStatement(Helper.fromStatementString(instruction.getStatement()));
+					origin.setStatement(Helper.createStatement(instruction.getStatement()));
 					origin.setMethod(instruction.getMethod());
 					origin.setClassname(instruction.getClassName());
-					origin.setApp(question.getReferences().get(0).getApp());
+					origin.setApp(question.getAllReferences().get(0).getApp());
 
 					if (!component.getIntentFiltersList().isEmpty()) {
 						// Action
@@ -87,54 +87,58 @@ public class ConverterIC3 implements IConverter {
 									}
 								} else if (attribute.getKind() == AttributeKind.ACTION) {
 									for (final String value : attribute.getValueList()) {
-										intentfilterObj.setAction(value);
+										intentfilterObj.getAction().add(value);
 									}
 								} else if (attribute.getKind() == AttributeKind.TYPE) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setType(value);
+										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SCHEME) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setScheme(value);
+										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SSP) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setSsp(value);
+										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.HOST) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setHost(value);
+										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PORT) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setPort(value);
+										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PATH) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setPath(value);
+										intentfilterObj.getData().add(dataObj);
+									}
+								} else if (attribute.getKind() == AttributeKind.URI) {
+									for (final String value : attribute.getValueList()) {
+										dataObj = new Data();
+										Helper.extractDataFromURI(value, dataObj);
+										intentfilterObj.getData().add(dataObj);
+									}
+								} else if (attribute.getKind() == AttributeKind.AUTHORITY) {
+									for (final String value : attribute.getValueList()) {
+										dataObj = new Data();
+										Helper.extractDataFromAuthority(value, dataObj);
+										intentfilterObj.getData().add(dataObj);
 									}
 								}
-							}
-							if (dataObj != null) {
-								intentfilterObj.setData(dataObj);
+								// MISSING: URI, AUTHORITY
 							}
 							answer.getIntentfilters().getIntentfilter().add(intentfilterObj);
 						}
@@ -152,12 +156,12 @@ public class ConverterIC3 implements IConverter {
 						// Origin
 						final Reference originReduced = new Reference();
 						originReduced.setClassname(instruction.getClassName());
-						originReduced.setApp(question.getReferences().get(0).getApp());
+						originReduced.setApp(question.getAllReferences().get(0).getApp());
 						final Reference origin = new Reference();
-						origin.setStatement(Helper.fromStatementString(instruction.getStatement()));
+						origin.setStatement(Helper.createStatement(instruction.getStatement()));
 						origin.setMethod(instruction.getMethod());
 						origin.setClassname(instruction.getClassName());
-						origin.setApp(question.getReferences().get(0).getApp());
+						origin.setApp(question.getAllReferences().get(0).getApp());
 
 						// Explicit
 						final Intentsource intentsourceExp = new Intentsource();
@@ -184,54 +188,57 @@ public class ConverterIC3 implements IConverter {
 										}
 									} else if (attribute.getKind() == AttributeKind.ACTION) {
 										for (final String value : attribute.getValueList()) {
-											targetImp.setAction(value);
+											targetImp.getAction().add(value);
 										}
 									} else if (attribute.getKind() == AttributeKind.TYPE) {
 										for (final String value : attribute.getValueList()) {
-											if (dataObj == null) {
-												dataObj = new Data();
-											}
+											dataObj = new Data();
 											dataObj.setType(value);
+											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.SCHEME) {
 										for (final String value : attribute.getValueList()) {
-											if (dataObj == null) {
-												dataObj = new Data();
-											}
+											dataObj = new Data();
 											dataObj.setScheme(value);
+											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.SSP) {
 										for (final String value : attribute.getValueList()) {
-											if (dataObj == null) {
-												dataObj = new Data();
-											}
+											dataObj = new Data();
 											dataObj.setSsp(value);
+											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.HOST) {
 										for (final String value : attribute.getValueList()) {
-											if (dataObj == null) {
-												dataObj = new Data();
-											}
+											dataObj = new Data();
 											dataObj.setHost(value);
+											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.PORT) {
 										for (final String value : attribute.getValueList()) {
-											if (dataObj == null) {
-												dataObj = new Data();
-											}
+											dataObj = new Data();
 											dataObj.setPort(value);
+											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.PATH) {
 										for (final String value : attribute.getValueList()) {
-											if (dataObj == null) {
-												dataObj = new Data();
-											}
+											dataObj = new Data();
 											dataObj.setPath(value);
+											targetImp.getData().add(dataObj);
+										}
+									} else if (attribute.getKind() == AttributeKind.URI) {
+										for (final String value : attribute.getValueList()) {
+											dataObj = new Data();
+											Helper.extractDataFromURI(value, dataObj);
+											targetImp.getData().add(dataObj);
+										}
+									} else if (attribute.getKind() == AttributeKind.AUTHORITY) {
+										for (final String value : attribute.getValueList()) {
+											dataObj = new Data();
+											Helper.extractDataFromAuthority(value, dataObj);
+											targetImp.getData().add(dataObj);
 										}
 									}
-								}
-								if (dataObj != null) {
-									targetImp.setData(dataObj);
 								}
 								intentsource.setTarget(targetImp);
 								answer.getIntentsources().getIntentsource().add(intentsource);
@@ -253,10 +260,10 @@ public class ConverterIC3 implements IConverter {
 
 						// Origin
 						final Reference origin = new Reference();
-						origin.setStatement(Helper.fromStatementString(instruction.getStatement()));
+						origin.setStatement(Helper.createStatement(instruction.getStatement()));
 						origin.setMethod(instruction.getMethod());
 						origin.setClassname(instruction.getClassName());
-						origin.setApp(question.getReferences().get(0).getApp());
+						origin.setApp(question.getAllReferences().get(0).getApp());
 
 						// Action & Package + Class
 						for (final Intent intent : exitpoint.getIntentsList()) {
@@ -275,49 +282,55 @@ public class ConverterIC3 implements IConverter {
 									}
 								} else if (attribute.getKind() == AttributeKind.ACTION) {
 									for (final String value : attribute.getValueList()) {
-										target.setAction(value);
+										target.getAction().add(value);
 									}
 								} else if (attribute.getKind() == AttributeKind.TYPE) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setType(value);
+										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SCHEME) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setScheme(value);
+										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SSP) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setSsp(value);
+										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.HOST) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setHost(value);
+										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PORT) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setPort(value);
+										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PATH) {
 									for (final String value : attribute.getValueList()) {
-										if (dataObj == null) {
-											dataObj = new Data();
-										}
+										dataObj = new Data();
 										dataObj.setPath(value);
+										target.getData().add(dataObj);
+									}
+								} else if (attribute.getKind() == AttributeKind.URI) {
+									for (final String value : attribute.getValueList()) {
+										dataObj = new Data();
+										Helper.extractDataFromURI(value, dataObj);
+										target.getData().add(dataObj);
+									}
+								} else if (attribute.getKind() == AttributeKind.AUTHORITY) {
+									for (final String value : attribute.getValueList()) {
+										dataObj = new Data();
+										Helper.extractDataFromAuthority(value, dataObj);
+										target.getData().add(dataObj);
 									}
 								} else {
 									// Explicit
@@ -333,7 +346,8 @@ public class ConverterIC3 implements IConverter {
 											if (targetRef == null) {
 												targetRef = new Reference();
 											}
-											if (targetRef.getClass() == null || targetRef.getClassname().equals("")) {
+											if (targetRef.getClassname() == null
+													|| targetRef.getClassname().isEmpty()) {
 												targetRef.setClassname(value);
 											}
 										}
@@ -342,9 +356,6 @@ public class ConverterIC3 implements IConverter {
 							}
 							if (targetRef != null) {
 								target.setReference(targetRef);
-							}
-							if (dataObj != null) {
-								target.setData(dataObj);
 							}
 							intentObj.setTarget(target);
 							intentsink.setTarget(target);

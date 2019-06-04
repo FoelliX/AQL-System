@@ -9,12 +9,19 @@ import de.foellix.aql.Log;
 import de.foellix.aql.helper.ZipHelper;
 
 public class BackupAndReset {
+	private static File storageFolder = new File("data/storage");
+
+	public static boolean backup(File storageFolder) {
+		BackupAndReset.storageFolder = storageFolder;
+		return backup();
+	}
+
 	public static boolean backup() {
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy-HH_mm_ss");
 		final Date currentTime = new Date();
 		try {
 			final File zipFile = new File("data/storage_backup_" + formatter.format(currentTime) + ".zip");
-			ZipHelper.zip(new File("data/storage"), zipFile);
+			ZipHelper.zip(storageFolder, zipFile);
 			Log.msg("Successfully backuped storage to: " + zipFile.getAbsolutePath(), Log.NORMAL);
 			return true;
 		} catch (final IOException e) {
@@ -23,9 +30,13 @@ public class BackupAndReset {
 		}
 	}
 
+	public static void reset(File storageFolder) {
+		BackupAndReset.storageFolder = storageFolder;
+		reset();
+	}
+
 	public static void reset() {
 		boolean failed = false;
-		final File storageFolder = new File("data/storage");
 		for (final File file : storageFolder.listFiles()) {
 			if (file.getName().endsWith(".xml")) {
 				if (file.exists() && !file.delete()) {

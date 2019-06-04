@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.04.11 um 10:45:24 AM CEST 
+// Generiert: 2019.01.10 um 12:57:59 PM CET 
 //
 
 
@@ -29,19 +29,18 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{}priority" maxOccurs="unbounded" minOccurs="0"/&gt;
- *         &lt;element ref="{}path"/&gt;
- *         &lt;element ref="{}run"/&gt;
+ *         &lt;element ref="{}execute"/&gt;
+ *         &lt;element ref="{}path" minOccurs="0"/&gt;
+ *         &lt;element ref="{}runOnEntry" minOccurs="0"/&gt;
  *         &lt;element ref="{}runOnExit" minOccurs="0"/&gt;
  *         &lt;element ref="{}runOnSuccess" minOccurs="0"/&gt;
  *         &lt;element ref="{}runOnFail" minOccurs="0"/&gt;
  *         &lt;element ref="{}runOnAbort" minOccurs="0"/&gt;
- *         &lt;element ref="{}result"/&gt;
  *         &lt;element ref="{}questions"/&gt;
- *         &lt;element ref="{}instances"/&gt;
- *         &lt;element ref="{}memoryPerInstance"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="version" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="external" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -52,39 +51,35 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "priority",
+    "execute",
     "path",
-    "run",
+    "runOnEntry",
     "runOnExit",
     "runOnSuccess",
     "runOnFail",
     "runOnAbort",
-    "result",
-    "questions",
-    "instances",
-    "memoryPerInstance"
+    "questions"
 })
 @XmlRootElement(name = "tool")
 public class Tool {
 
     protected List<Priority> priority;
     @XmlElement(required = true)
+    protected Execute execute;
     protected String path;
-    @XmlElement(required = true)
-    protected String run;
+    protected String runOnEntry;
     protected String runOnExit;
     protected String runOnSuccess;
     protected String runOnFail;
     protected String runOnAbort;
     @XmlElement(required = true)
-    protected String result;
-    @XmlElement(required = true)
     protected String questions;
-    protected int instances;
-    protected int memoryPerInstance;
-    @XmlAttribute(name = "name")
+    @XmlAttribute(name = "name", required = true)
     protected String name;
     @XmlAttribute(name = "version")
     protected String version;
+    @XmlAttribute(name = "external")
+    protected Boolean external;
 
     /**
      * Gets the value of the priority property.
@@ -116,6 +111,30 @@ public class Tool {
     }
 
     /**
+     * Ruft den Wert der execute-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Execute }
+     *     
+     */
+    public Execute getExecute() {
+        return execute;
+    }
+
+    /**
+     * Legt den Wert der execute-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Execute }
+     *     
+     */
+    public void setExecute(Execute value) {
+        this.execute = value;
+    }
+
+    /**
      * Ruft den Wert der path-Eigenschaft ab.
      * 
      * @return
@@ -140,27 +159,27 @@ public class Tool {
     }
 
     /**
-     * Ruft den Wert der run-Eigenschaft ab.
+     * Ruft den Wert der runOnEntry-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getRun() {
-        return run;
+    public String getRunOnEntry() {
+        return runOnEntry;
     }
 
     /**
-     * Legt den Wert der run-Eigenschaft fest.
+     * Legt den Wert der runOnEntry-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setRun(String value) {
-        this.run = value;
+    public void setRunOnEntry(String value) {
+        this.runOnEntry = value;
     }
 
     /**
@@ -260,30 +279,6 @@ public class Tool {
     }
 
     /**
-     * Ruft den Wert der result-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getResult() {
-        return result;
-    }
-
-    /**
-     * Legt den Wert der result-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setResult(String value) {
-        this.result = value;
-    }
-
-    /**
      * Ruft den Wert der questions-Eigenschaft ab.
      * 
      * @return
@@ -305,38 +300,6 @@ public class Tool {
      */
     public void setQuestions(String value) {
         this.questions = value;
-    }
-
-    /**
-     * Ruft den Wert der instances-Eigenschaft ab.
-     * 
-     */
-    public int getInstances() {
-        return instances;
-    }
-
-    /**
-     * Legt den Wert der instances-Eigenschaft fest.
-     * 
-     */
-    public void setInstances(int value) {
-        this.instances = value;
-    }
-
-    /**
-     * Ruft den Wert der memoryPerInstance-Eigenschaft ab.
-     * 
-     */
-    public int getMemoryPerInstance() {
-        return memoryPerInstance;
-    }
-
-    /**
-     * Legt den Wert der memoryPerInstance-Eigenschaft fest.
-     * 
-     */
-    public void setMemoryPerInstance(int value) {
-        this.memoryPerInstance = value;
     }
 
     /**
@@ -385,6 +348,34 @@ public class Tool {
      */
     public void setVersion(String value) {
         this.version = value;
+    }
+
+    /**
+     * Ruft den Wert der external-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public boolean isExternal() {
+        if (external == null) {
+            return false;
+        } else {
+            return external;
+        }
+    }
+
+    /**
+     * Legt den Wert der external-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setExternal(Boolean value) {
+        this.external = value;
     }
 
 }

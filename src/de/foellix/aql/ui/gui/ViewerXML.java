@@ -19,7 +19,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 public class ViewerXML extends BorderPane implements IAnswerAvailable {
-	protected final CodeArea codeArea;
+	protected CodeArea codeArea;
+
+	private MenubarViewer statsbar;
 
 	private static final Pattern XML_TAG = Pattern
 			.compile("(?<ELEMENT>(</?\\h*)(\\w+)([^<>]*)(\\h*/?>))" + "|(?<COMMENT><!--[^<>]+-->)");
@@ -38,6 +40,16 @@ public class ViewerXML extends BorderPane implements IAnswerAvailable {
 	private static final int GROUP_ATTRIBUTE_VALUE = 3;
 
 	public ViewerXML() {
+		this.statsbar = null;
+		init();
+	}
+
+	public ViewerXML(MenubarViewer statsbar) {
+		this.statsbar = statsbar;
+		init();
+	}
+
+	private void init() {
 		this.codeArea = new CodeArea();
 		this.codeArea.setWrapText(true);
 		this.codeArea.setParagraphGraphicFactory(LineNumberFactory.get(this.codeArea));
@@ -105,6 +117,9 @@ public class ViewerXML extends BorderPane implements IAnswerAvailable {
 		Platform.runLater(() -> {
 			this.codeArea.replaceText(AnswerHandler.createXMLString(answer));
 			this.codeArea.scrollYBy(0);
+			if (this.statsbar != null) {
+				this.statsbar.refresh(answer);
+			}
 		});
 	}
 

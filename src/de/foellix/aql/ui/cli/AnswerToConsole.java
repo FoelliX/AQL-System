@@ -46,7 +46,8 @@ public class AnswerToConsole implements IAnswerAvailable {
 			permissions = 0;
 		}
 
-		if ((flows + intentfilters + intents + intentsinks + intentsources + permissions == 0) || !Log.getShorten()) {
+		if ((flows + intentfilters + intents + intentsinks + intentsources + permissions == 0) || (!Log.getShorten()
+				&& (flows + intentfilters + intents + intentsinks + intentsources + permissions < 100))) {
 			Log.msg("\n\n\n" + AnswerHandler.createXMLString(answer) + "\n\n\n", Log.NORMAL);
 		} else {
 			Log.msg("\n<answer>\n\t...\nShortened for the sake of clarity (Just showing numbers)\n\tFlows:" + flows

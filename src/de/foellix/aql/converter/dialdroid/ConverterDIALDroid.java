@@ -2,10 +2,9 @@ package de.foellix.aql.converter.dialdroid;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -28,7 +27,7 @@ import de.foellix.aql.helper.Helper;
 import de.foellix.aql.system.task.ToolTaskInfo;
 
 public class ConverterDIALDroid implements IConverter {
-	private static final File config = new File("data/converter/dialdroid_config.txt");
+	private static final File DATABASE_PROPERTIES = new File("data/converter/dialdroid_config.properties");
 	private List<String> logLines;
 
 	@Override
@@ -36,10 +35,7 @@ public class ConverterDIALDroid implements IConverter {
 			throws MySQLIntegrityConstraintViolationException {
 		final QuestionPart question = taskInfo.getQuestion();
 
-		try {
-			final FileReader fr = new FileReader(resultFile);
-			final BufferedReader br = new BufferedReader(fr);
-
+		try (BufferedReader br = new BufferedReader(new FileReader(resultFile))) {
 			this.logLines = new ArrayList<>();
 			String line = "";
 			while ((line = br.readLine()) != null) {
@@ -51,9 +47,6 @@ public class ConverterDIALDroid implements IConverter {
 					this.logLines.add(line);
 				}
 			}
-
-			br.close();
-			fr.close();
 		} catch (final IOException e) {
 			Log.error("Could not read log file: " + resultFile.getAbsolutePath());
 		}
@@ -63,22 +56,20 @@ public class ConverterDIALDroid implements IConverter {
 
 		final MysqlDataSource dataSource = new MysqlDataSource();
 		try {
-			final List<String> lines = Files.readAllLines(config.toPath(), StandardCharsets.UTF_8);
-			for (final String line : lines) {
-				if (line.contains("user") && line.contains("=")) {
-					dataSource.setUser(Helper.cut(line, "=").replace(" ", ""));
-				} else if (line.contains("password") && line.contains("=")) {
-					if (!Helper.cut(line, "=").replace(" ", "").equals("")) {
-						dataSource.setPassword(Helper.cut(line, "=").replace(" ", ""));
-					}
-				} else if (line.contains("server") && line.contains("=")) {
-					dataSource.setServerName(Helper.cut(line, "=").replace(" ", ""));
-				} else if (line.contains("database") && line.contains("=")) {
-					dataSource.setDatabaseName(Helper.cut(line, "=").replace(" ", ""));
-				}
+			final java.util.Properties prop = new java.util.Properties();
+			final FileInputStream in = new FileInputStream(DATABASE_PROPERTIES);
+			prop.load(in);
+			in.close();
+
+			dataSource.setUser(prop.getProperty("user"));
+			if (prop.getProperty("password") != null && !prop.getProperty("password").equals("")
+					&& !prop.getProperty("password").equals(" ")) {
+				dataSource.setPassword(prop.getProperty("password"));
 			}
+			dataSource.setServerName(prop.getProperty("server"));
+			dataSource.setDatabaseName(prop.getProperty("database"));
 		} catch (final IOException e) {
-			Log.error("Could not read DIALDroid-Converter's config file: " + config.getAbsolutePath());
+			Log.error("Could not read DIALDroid-Converter's config file: " + DATABASE_PROPERTIES.getAbsolutePath());
 		}
 
 		try {
@@ -86,14 +77,14 @@ public class ConverterDIALDroid implements IConverter {
 			final Statement stmt = conn.createStatement();
 			final String query = "SELECT ICCEntryLeaks.leak_sink AS toStatement, ICCExitLeaks.leak_source AS fromStatement, EntryPoints.method AS toMethod, ExitPoints.method AS fromMethod FROM SensitiveChannels JOIN Applications Applications_A ON Applications_A.id = SensitiveChannels.fromapp JOIN Applications Applications_B ON Applications_B.id = SensitiveChannels.toapp JOIN ExitPoints ON SensitiveChannels.exitpoint = ExitPoints.id JOIN ICCExitLeaks ON SensitiveChannels.exitpoint = ICCExitLeaks.exit_point_id JOIN EntryPoints ON SensitiveChannels.entryclass = EntryPoints.class_id JOIN ICCEntryLeaks ON EntryPoints.id = ICCEntryLeaks.entry_point_id WHERE Applications_A.shasum = '"
 					+ HashHelper
-							.getHash(question.getReferences().get(0).getApp().getHashes(),
+							.getHash(question.getAllReferences().get(0).getApp().getHashes(),
 									KeywordsAndConstants.HASH_TYPE_SHA256)
 							.toUpperCase()
 					+ "' AND Applications_B.shasum = '"
-					+ (question.getReferences().size() > 1
-							? HashHelper.getHash(question.getReferences().get(1).getApp().getHashes(),
+					+ (question.getAllReferences().size() > 1
+							? HashHelper.getHash(question.getAllReferences().get(1).getApp().getHashes(),
 									KeywordsAndConstants.HASH_TYPE_SHA256).toUpperCase()
-							: HashHelper.getHash(question.getReferences().get(0).getApp().getHashes(),
+							: HashHelper.getHash(question.getAllReferences().get(0).getApp().getHashes(),
 									KeywordsAndConstants.HASH_TYPE_SHA256).toUpperCase())
 					+ "' GROUP BY CONCAT(toStatement, fromStatement, toMethod, fromMethod)";
 
@@ -103,17 +94,17 @@ public class ConverterDIALDroid implements IConverter {
 
 			while (rs.next()) {
 				final Reference from = new Reference(), to = new Reference();
-				from.setStatement(Helper.fromStatementString(rs.getString("fromStatement")));
+				from.setStatement(Helper.createStatement(rs.getString("fromStatement")));
 				from.setMethod(searchMethod(from.getStatement().getStatementfull()));
 				from.setClassname(Helper.cut(from.getMethod(), "<", ": "));
-				from.setApp(question.getReferences().get(0).getApp());
+				from.setApp(question.getAllReferences().get(0).getApp());
 				from.setType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
 
-				to.setStatement(Helper.fromStatementString(rs.getString("toStatement")));
+				to.setStatement(Helper.createStatement(rs.getString("toStatement")));
 				to.setMethod(rs.getString("toMethod"));
 				to.setClassname(Helper.cut(rs.getString("toMethod"), "<", ": "));
-				to.setApp((question.getReferences().size() > 1 ? question.getReferences().get(1).getApp()
-						: question.getReferences().get(0).getApp()));
+				to.setApp((question.getAllReferences().size() > 1 ? question.getAllReferences().get(1).getApp()
+						: question.getAllReferences().get(0).getApp()));
 				to.setType(KeywordsAndConstants.REFERENCE_TYPE_TO);
 
 				final Flow flow = new Flow();

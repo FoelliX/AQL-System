@@ -10,6 +10,7 @@ import de.foellix.aql.converter.dialdroid.ConverterDIALDroid;
 import de.foellix.aql.converter.didfail.ConverterDidFail;
 import de.foellix.aql.converter.droidsafe.ConverterDroidSafe;
 import de.foellix.aql.converter.flowdroid.ConverterFD;
+import de.foellix.aql.converter.horndroid.ConverterHD;
 import de.foellix.aql.converter.ic3.ConverterIC3;
 import de.foellix.aql.converter.iccta.ConverterIccTA;
 import de.foellix.aql.converter.panda2.ConverterPAndA2;
@@ -32,6 +33,7 @@ public class ConverterRegistry {
 		this.map.put("Amandroid".toLowerCase(), new ConverterAmandroid());
 		this.map.put("DIALDroid".toLowerCase(), new ConverterDIALDroid());
 		this.map.put("DroidSafe".toLowerCase(), new ConverterDroidSafe());
+		this.map.put("HornDroid".toLowerCase(), new ConverterHD());
 
 		loadCompilersFromConfig();
 	}
@@ -44,7 +46,9 @@ public class ConverterRegistry {
 		if (ConfigHandler.getInstance().getConfig().getConverters() != null
 				&& !ConfigHandler.getInstance().getConfig().getConverters().getTool().isEmpty()) {
 			for (final Tool converter : ConfigHandler.getInstance().getConfig().getConverters().getTool()) {
-				this.map.put(converter.getName().toLowerCase(), new ExternalConverter(converter));
+				for (final String keyword : converter.getQuestions().replaceAll(" ", "").split(",")) {
+					this.map.put(keyword.toLowerCase(), new ExternalConverter(converter));
+				}
 			}
 		}
 	}
@@ -54,6 +58,14 @@ public class ConverterRegistry {
 	}
 
 	public IConverter getConverter(final String toolname) {
-		return this.map.get(toolname.toLowerCase());
+		IConverter converter = this.map.get(toolname.toLowerCase());
+		if (converter == null) {
+			converter = new NoConverter();
+		}
+		if (converter instanceof ExternalConverter) {
+			return new ExternalConverter(((ExternalConverter) converter).getConverter());
+		} else {
+			return converter;
+		}
 	}
 }

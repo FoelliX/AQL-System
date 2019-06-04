@@ -1,0 +1,36 @@
+record `edu.mit.icc_action_string_operations.OutFlowActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `<init>`(`edu.mit.icc_action_string_operations.OutFlowActivity` v0 @kind this) @signature `Ledu/mit/icc_action_string_operations/OutFlowActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L046e64.  call `<init>`(v0) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L046e6a.  return @kind void;
+}
+procedure `void` `onCreate`(`edu.mit.icc_action_string_operations.OutFlowActivity` v5 @kind this, `android.os.Bundle` v6 @kind object @name `savedInstanceState`) @signature `Ledu/mit/icc_action_string_operations/OutFlowActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+
+  #L046e7c.  call `onCreate`(v5, v6) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L046e82.  v3:= 2130903040I;
+  #L046e86.  call `setContentView`(v5, v3) @signature `Ledu/mit/icc_action_string_operations/OutFlowActivity;.setContentView:(I)V` @kind virtual;
+  #L046e8c.  v3:= "phone" @kind object;
+  #L046e90.  call temp:= `getSystemService`(v5, v3) @signature `Ledu/mit/icc_action_string_operations/OutFlowActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L046e96.  v2:= temp @kind object;
+  #L046e98.  v2:= (`android.telephony.TelephonyManager`) v2 @kind object;
+  #L046e9c.  call temp:= `getDeviceId`(v2) @signature `Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;` @kind virtual;
+  #L046ea2.  v1:= temp @kind object;
+  #L046ea4.  v0:= new `android.content.Intent`;
+  #L046ea8.  v3:= "ignore.edu.mit.icc_action_string_operations.ACTION" @kind object;
+  #L046eac.  v4:= 7I;
+  #L046eae.  call temp:= `substring`(v3, v4) @signature `Ljava/lang/String;.substring:(I)Ljava/lang/String;` @kind virtual;
+  #L046eb4.  v3:= temp @kind object;
+  #L046eb6.  call `<init>`(v0, v3) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L046ebc.  v3:= "DroidBench" @kind object;
+  #L046ec0.  call temp:= `putExtra`(v0, v3, v1) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L046ec6.  call `startActivity`(v5, v0) @signature `Ledu/mit/icc_action_string_operations/OutFlowActivity;.startActivity:(Landroid/content/Intent;)V` @kind virtual;
+  #L046ecc.  return @kind void;
+}

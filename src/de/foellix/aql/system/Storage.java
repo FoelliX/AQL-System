@@ -26,7 +26,7 @@ import de.foellix.aql.helper.Helper;
 public class Storage implements Serializable {
 	private static final long serialVersionUID = -8412816715518012412L;
 
-	private final String storageFolder = "data/storage/";
+	private String storageFolder = "data/storage/";
 	private final String storageFileParts = "storageParts.ser";
 	private final String storageFilePreprocessors = "storagePreprocessors.ser";
 
@@ -36,6 +36,15 @@ public class Storage implements Serializable {
 	private static Storage instance = new Storage();
 
 	private Storage() {
+		init();
+	}
+
+	private Storage(String storageFolder) {
+		this.storageFolder = storageFolder;
+		init();
+	}
+
+	private void init() {
 		loadData();
 
 		if (this.data == null) {
@@ -54,7 +63,7 @@ public class Storage implements Serializable {
 		final String hash = HashHelper.createHash(tool, question);
 		Log.msg("Storing part with associated hash: " + hash, Log.DEBUG_DETAILED);
 
-		final File xmlFile = new File("data/storage/" + hash + ".xml");
+		final File xmlFile = new File(this.storageFolder + hash + ".xml");
 		AnswerHandler.createXML(answer, xmlFile);
 
 		List<IQuestionNode> tempList = this.data.getData().get(hash);
@@ -136,7 +145,9 @@ public class Storage implements Serializable {
 				for (final IQuestionNode storedQuestion : list) {
 					if (storedQuestion instanceof QuestionPart) {
 						final QuestionPart p2 = (QuestionPart) storedQuestion;
-						if (p1.getMode() == p2.getMode() && p1.toRAW().equals(p2.toRAW())) {
+						if (p1.getMode() == p2.getMode() && p1.toRAW(false).equals(p2.toRAW(false))) {
+							return AnswerHandler.parseXML(getFile(this.data.getData().getKey(list)));
+						} else if (p1.getMode() == p2.getMode() && p1.toRAW(true).equals(p2.toRAW(true))) {
 							return AnswerHandler.parseXML(getFile(this.data.getData().getKey(list)));
 						}
 					}
@@ -149,7 +160,7 @@ public class Storage implements Serializable {
 			if (file.exists()) {
 				if (question instanceof QuestionPart
 						&& this.data.getMayFitTool().get(HashHelper.createGenericHash(question))
-								.contains(Helper.modeToString(((QuestionPart) question).getMode()))) {
+								.contains(Helper.typeToSoi(((QuestionPart) question).getMode()))) {
 					Log.warning(
 							"Previously computed answer may not be accurate, because it only fits on App detail-level.");
 					return AnswerHandler.parseXML(getFile(hash));
@@ -179,7 +190,7 @@ public class Storage implements Serializable {
 			in.close();
 			fileIn.close();
 		} catch (final IOException | ClassNotFoundException e) {
-			Log.warning("Could not load part-storage.");
+			Log.warning("Could not load part-storage (" + this.storageFolder + this.storageFileParts + ").");
 		}
 
 		try {
@@ -189,7 +200,8 @@ public class Storage implements Serializable {
 			in.close();
 			fileIn.close();
 		} catch (final IOException | ClassNotFoundException e) {
-			Log.warning("Could not load preprocessor-storage.");
+			Log.warning("Could not load preprocessor-storage (" + this.storageFolder + this.storageFilePreprocessors
+					+ ").");
 		}
 
 		if (this.data != null) {
@@ -235,7 +247,8 @@ public class Storage implements Serializable {
 			out.close();
 			fileOut.close();
 		} catch (final IOException e) {
-			Log.error("Could not save part-storage.");
+			Log.error("Could not save part-storage (" + this.storageFolder + this.storageFileParts + "): "
+					+ e.getMessage());
 		}
 
 		try {
@@ -245,7 +258,8 @@ public class Storage implements Serializable {
 			out.close();
 			fileOut.close();
 		} catch (final IOException e) {
-			Log.error("Could not save preprocessor-storage.");
+			Log.error("Could not save preprocessor-storage (" + this.storageFolder + this.storageFilePreprocessors
+					+ "): " + e.getMessage());
 		}
 	}
 
@@ -262,6 +276,17 @@ public class Storage implements Serializable {
 	}
 
 	public void reset() {
-		instance = new Storage();
+		instance = new Storage(this.storageFolder);
+	}
+
+	public void setDifferentStorageLocation(String location) {
+		location = location.replaceAll("\\\\", "//");
+		if (location.endsWith("/")) {
+			this.storageFolder = location;
+		} else {
+			this.storageFolder = location + "/";
+		}
+		Log.msg("Relocating storage to " + this.storageFolder, Log.NORMAL);
+		reset();
 	}
 }

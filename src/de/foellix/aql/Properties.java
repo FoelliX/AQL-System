@@ -6,7 +6,7 @@ public class Properties {
 	private static final String PROPERTIES_FILE = "tool.properties";
 	private static final String UNKNOWN = "Unknown";
 
-	public String ABBRRVIATION = UNKNOWN;
+	public String ABBREVIATION = UNKNOWN;
 	public String NAME = UNKNOWN;
 	public String VERSION = UNKNOWN;
 	public String BUILDNUMBER = UNKNOWN;
@@ -23,7 +23,7 @@ public class Properties {
 			prop.load(in);
 			in.close();
 
-			this.ABBRRVIATION = prop.getProperty("abbreviation");
+			this.ABBREVIATION = prop.getProperty("abbreviation");
 			this.NAME = prop.getProperty("name");
 			this.VERSION = prop.getProperty("version");
 			this.BUILDNUMBER = prop.getProperty("buildnumber");
@@ -31,7 +31,7 @@ public class Properties {
 			this.AUTHOR_EMAIL = prop.getProperty("email");
 			this.GITHUB_LINK = prop.getProperty("github");
 		} catch (final Exception e) {
-			this.ABBRRVIATION = UNKNOWN;
+			this.ABBREVIATION = UNKNOWN;
 			this.NAME = UNKNOWN;
 			this.VERSION = UNKNOWN;
 			this.BUILDNUMBER = UNKNOWN;

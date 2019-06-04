@@ -35,7 +35,7 @@ public class QueryProcessor {
 		if (this.parent.getCurrentQuery().getAllQuestionParts() != null) {
 			// Run Preprocessors
 			for (final QuestionPart questionPart : this.parent.getCurrentQuery().getAllQuestionParts()) {
-				for (final Reference reference : questionPart.getReferences()) {
+				for (final Reference reference : questionPart.getAllReferences()) {
 					if (addPreprocessorTask(questionPart, reference) != null) {
 						size += questionPart.getPreprocessor(reference).size();
 					}
@@ -55,7 +55,7 @@ public class QueryProcessor {
 				ask(this.parent.getCurrentQuery());
 			}
 		} else {
-			return;
+			ask(this.parent.getCurrentQuery());
 		}
 	}
 
@@ -121,8 +121,8 @@ public class QueryProcessor {
 							break;
 						}
 					} else {
-						if (questionPart.getReferences().size() == 1) {
-							final File folder = new File(questionPart.getReferences().get(0).getApp().getFile());
+						if (questionPart.getAllReferences().size() == 1) {
+							final File folder = new File(questionPart.getAllReferences().get(0).getApp().getFile());
 							if (folder.isDirectory()) {
 								final List<File> apks = new ArrayList<>();
 								for (final File file : folder.listFiles()) {
@@ -135,7 +135,10 @@ public class QueryProcessor {
 											KeywordsAndConstants.OPERATOR_COLLECTION);
 									for (final File apk : apks) {
 										final QuestionPart newPart = Helper.copy(questionPart);
-										newPart.getReferences().get(0).setApp(Helper.createApp(apk.getAbsolutePath()));
+										newPart.getAllReferences().get(0)
+												.setApp(Helper.createApp(apk.getAbsolutePath()));
+										newPart.getFeatures().addAll(questionPart.getFeatures());
+										newPart.getUses().addAll(questionPart.getUses());
 										expandedQuestion.addChild(newPart);
 									}
 									if (question == questionPart) {
@@ -149,9 +152,9 @@ public class QueryProcessor {
 									break;
 								}
 							}
-						} else if (questionPart.getReferences().size() == 2) {
-							final File folder1 = new File(questionPart.getReferences().get(0).getApp().getFile());
-							final File folder2 = new File(questionPart.getReferences().get(0).getApp().getFile());
+						} else if (questionPart.getAllReferences().size() == 2) {
+							final File folder1 = new File(questionPart.getAllReferences().get(0).getApp().getFile());
+							final File folder2 = new File(questionPart.getAllReferences().get(0).getApp().getFile());
 							final List<File> apks1 = new ArrayList<>();
 							final List<File> apks2 = new ArrayList<>();
 							if (folder1.isDirectory()) {
@@ -179,8 +182,10 @@ public class QueryProcessor {
 								for (final File apk1 : apks1) {
 									for (final File apk2 : apks2) {
 										final QuestionPart newPart = Helper.copy(questionPart);
-										newPart.getReferences().get(0).setApp(Helper.createApp(apk1.getAbsolutePath()));
-										newPart.getReferences().get(1).setApp(Helper.createApp(apk2.getAbsolutePath()));
+										newPart.getAllReferences().get(0)
+												.setApp(Helper.createApp(apk1.getAbsolutePath()));
+										newPart.getAllReferences().get(1)
+												.setApp(Helper.createApp(apk2.getAbsolutePath()));
 										expandedQuestion.addChild(newPart);
 									}
 								}
@@ -217,7 +222,7 @@ public class QueryProcessor {
 				this.parent.localAnswerAvailable(null, null);
 			}
 		} else {
-			return;
+			this.parent.localAnswerAvailable(null, null);
 		}
 	}
 
@@ -227,41 +232,49 @@ public class QueryProcessor {
 			if (ToolSelector.getInstance().detectInterApp(question)) {
 				Reference from, to;
 
-				if (question.getReferences().get(0).getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
-					from = question.getReferences().get(0);
-					to = question.getReferences().get(1);
+				if (question.getAllReferences().get(0).getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
+					from = question.getAllReferences().get(0);
+					to = question.getAllReferences().get(1);
 				} else {
-					from = question.getReferences().get(1);
-					to = question.getReferences().get(0);
+					from = question.getAllReferences().get(1);
+					to = question.getAllReferences().get(0);
 				}
 
 				// IntraAppParts
 				final QuestionPart q1 = new QuestionPart();
 				q1.setMode(KeywordsAndConstants.QUESTION_TYPE_FLOWS);
+				q1.getFeatures().addAll(question.getFeatures());
+				q1.getUses().addAll(question.getUses());
 				q1.addReference(from);
 
 				final QuestionPart q2 = new QuestionPart();
 				q2.setMode(KeywordsAndConstants.QUESTION_TYPE_FLOWS);
+				q2.getFeatures().addAll(question.getFeatures());
+				q2.getUses().addAll(question.getUses());
 				q2.addReference(to);
 
 				// Intent-Sources & -SinksParts
 				final QuestionPart q3 = new QuestionPart();
 				q3.setMode(KeywordsAndConstants.QUESTION_TYPE_INTENTSINKS);
+				q3.getFeatures().addAll(question.getFeatures());
+				q3.getUses().addAll(question.getUses());
 				q3.addReference(from);
 
 				final QuestionPart q4 = new QuestionPart();
 				q4.setMode(KeywordsAndConstants.QUESTION_TYPE_INTENTSOURCES);
+				q4.getFeatures().addAll(question.getFeatures());
+				q4.getUses().addAll(question.getUses());
 				q4.addReference(to);
 
 				// Connect
-				final Question connectNode = new Question(KeywordsAndConstants.OPERATOR_CONNECT);
+				final Question connectNode = new Question(KeywordsAndConstants.getConnectOperator());
 				connectNode.addChild(q1);
 				connectNode.addChild(q2);
 				connectNode.addChild(q3);
 				connectNode.addChild(q4);
 
 				// Filter
-				final Question newQuestion = new Question(KeywordsAndConstants.OPERATOR_FILTER);
+				final Question newQuestion = new Question(KeywordsAndConstants.getFilterOperator());
 				newQuestion.addChild(connectNode);
 
 				return newQuestion;

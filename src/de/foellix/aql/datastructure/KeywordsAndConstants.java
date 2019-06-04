@@ -2,9 +2,16 @@ package de.foellix.aql.datastructure;
 
 public class KeywordsAndConstants {
 	public static final String OPERATOR_COLLECTION = "COLLECTION";
-	public static final String OPERATOR_UNIFY = "UNIFY";
-	public static final String OPERATOR_CONNECT = "CONNECT";
-	public static final String OPERATOR_FILTER = "FILTER";
+	public static String OPERATOR_UNIFY_ORIGINAL = "UNIFY";
+	public static String OPERATOR_CONNECT_ORIGINAL = "CONNECT";
+	public static String OPERATOR_MINUS_ORIGINAL = "MINUS";
+	public static String OPERATOR_INTERSECT_ORIGINAL = "INTERSECT";
+	public static String OPERATOR_FILTER_ORIGINAL = "FILTER";
+	private static String OPERATOR_UNIFY = "UNIFY";
+	private static String OPERATOR_CONNECT = "CONNECT";
+	private static String OPERATOR_MINUS = "MINUS";
+	private static String OPERATOR_INTERSECT = "INTERSECT";
+	private static String OPERATOR_FILTER = "FILTER";
 
 	public static final String SOI_UNKNOWN = "Unknown";
 	public static final String SOI_FLOWS = "Flows";
@@ -46,4 +53,44 @@ public class KeywordsAndConstants {
 	public static final int DEFAULT_CONNECT_ALL = 0;
 	public static final int DEFAULT_CONNECT_INTRA_APP = 1;
 	public static final int DEFAULT_CONNECT_INTER_APP = 2;
+
+	public static String getUnifyOperator() {
+		return OPERATOR_UNIFY;
+	}
+
+	public static String getConnectOperator() {
+		return OPERATOR_CONNECT;
+	}
+
+	public static String getMinusOperator() {
+		return OPERATOR_MINUS;
+	}
+
+	public static String getIntersectOperator() {
+		return OPERATOR_INTERSECT;
+	}
+
+	public static String getFilterOperator() {
+		return OPERATOR_FILTER;
+	}
+
+	public static void overwriteUnifyOperator(String operator) {
+		OPERATOR_UNIFY = operator;
+	}
+
+	public static void overwriteConnectOperator(String operator) {
+		OPERATOR_CONNECT = operator;
+	}
+
+	public static void overwriteMinusOperator(String operator) {
+		OPERATOR_MINUS = operator;
+	}
+
+	public static void overwriteIntersectOperator(String operator) {
+		OPERATOR_INTERSECT = operator;
+	}
+
+	public static void overwriteFilterOperator(String operator) {
+		OPERATOR_FILTER = operator;
+	}
 }

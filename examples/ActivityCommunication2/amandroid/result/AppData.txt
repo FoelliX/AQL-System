@@ -1,0 +1,100 @@
+Application Name: ActivityCommunication2.apk
+Uses Permissions: android.permission.READ_PHONE_STATE
+
+Component edu.mit.icc_action_string_operations.InFlowActivity
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["edu.mit.icc_action_string_operations.ACTION"],Categories:["android.intent.category.DEFAULT"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component edu.mit.icc_action_string_operations.IsolateActivity
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["edu.mit.icc_action_string_operations.EDIT"],Categories:["android.intent.category.DEFAULT"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component edu.mit.icc_action_string_operations.OutFlowActivity
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.MAIN"],Categories:["android.intent.category.LAUNCHER"])
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/app/Activity;.startActivity:(Landroid/content/Intent;)V
+      Caller Context: (onCreate,L046ec6)(envMain,L51)
+      Outgoing Intents via this call:
+        Intent:
+          ICC destinations:
+            Target Component: edu.mit.icc_action_string_operations.InFlowActivity, Intent Type: IMPLICIT
+            Target Component: edu.mit.icc_action_string_operations.OutFlowActivity, Intent Type: IMPLICIT
+            Target Component: edu.mit.icc_action_string_operations.IsolateActivity, Intent Type: IMPLICIT
+
+
+Taint analysis result:
+  Sources found:
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager?;.getDeviceId:()Ljava/lang/String; >
+  Sinks found:
+    <Descriptors: api_sink: Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I 1>
+    <Descriptors: api_sink: Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I 1>
+    <Descriptors: api_sink: Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I 0>
+    <Descriptors: api_sink: Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I 0>
+    <Descriptors: icc_sink: L046ec6 1>
+  Discovered taint paths are listed below:
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager?;.getDeviceId:()Ljava/lang/String; >
+      Sink: <Descriptors: api_sink: Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        Call@(onCreate,L046ec6)(envMain,L51)p1  ->
+        Entry@Ledu/mit/icc_action_string_operations/IsolateActivity;.envMain:(Landroid/content/Intent;)Vp0  ->
+        Call@(envMain,L27)p1  ->
+        VirtualBody@(envMain,L27)  ->
+        Call@(envMain,L30)p0  ->
+        Entry@Ledu/mit/icc_action_string_operations/IsolateActivity;.onCreate:(Landroid/os/Bundle;)Vp0  ->
+        Call@(onCreate,L046e32)(envMain,L30)p0  ->
+        ReturnVar@(onCreate,L046e32)(envMain,L30)  ->
+        (onCreate,L046e38)(envMain,L30)  ->
+        Call@(onCreate,L046e3e)(envMain,L30)p0  ->
+        VirtualBody@(onCreate,L046e3e)(envMain,L30)  ->
+        Call@(onCreate,L046e4a)(envMain,L30)p1  ->
+        VirtualBody@(onCreate,L046e9c)(envMain,L51)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager?;.getDeviceId:()Ljava/lang/String; >
+      Sink: <Descriptors: api_sink: Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        Call@(onCreate,L046ec6)(envMain,L51)p1  ->
+        Entry@Ledu/mit/icc_action_string_operations/InFlowActivity;.envMain:(Landroid/content/Intent;)Vp0  ->
+        Call@(envMain,L6)p1  ->
+        VirtualBody@(envMain,L6)  ->
+        Call@(envMain,L9)p0  ->
+        Entry@Ledu/mit/icc_action_string_operations/InFlowActivity;.onCreate:(Landroid/os/Bundle;)Vp0  ->
+        Call@(onCreate,L046de4)(envMain,L9)p0  ->
+        ReturnVar@(onCreate,L046de4)(envMain,L9)  ->
+        (onCreate,L046dea)(envMain,L9)  ->
+        Call@(onCreate,L046df0)(envMain,L9)p0  ->
+        VirtualBody@(onCreate,L046df0)(envMain,L9)  ->
+        Call@(onCreate,L046dfc)(envMain,L9)p1  ->
+        VirtualBody@(onCreate,L046e9c)(envMain,L51)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager?;.getDeviceId:()Ljava/lang/String; >
+      Sink: <Descriptors: icc_sink: L046ec6 1>
+      Types: vulnerability:information_leak
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        Call@(onCreate,L046ec6)(envMain,L51)p1  ->
+        VirtualBody@(onCreate,L046e9c)(envMain,L51)

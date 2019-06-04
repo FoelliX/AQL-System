@@ -1,41 +1,83 @@
 package de.foellix.aql.config.wizard;
 
+import de.foellix.aql.config.Execute;
 import de.foellix.aql.config.Priority;
 import de.foellix.aql.config.Tool;
 import de.foellix.aql.ui.gui.FileChooserUIElement;
 import de.foellix.aql.ui.gui.FontAwesome;
 import de.foellix.aql.ui.gui.StringConstants;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 public class EditorOverview extends BorderPane {
+	// GENERAL
+	final private static int ITEM_NAME = 0;
+	final private static int ITEM_VERSION = 1;
+	final private static int ITEM_QUESTIONS = 2;
+	final private static int ITEM_PRIORITY = 3;
+	final private static int ITEM_PATH = 4;
+
+	// INTERNAL
+	final private static int ITEM_RUN = 5;
+	final private static int ITEM_RESULT = 6;
+	final private static int ITEM_INSTANCES = 7;
+	final private static int ITEM_MEMORY_PER_INSTANCE = 8;
+
+	// EXTERNAL
+	final private static int ITEM_URL = 9;
+	final private static int ITEM_USERNAME = 10;
+	final private static int ITEM_PASSWORD = 11;
+
+	// EXTRA
+	final private static int ITEM_RUN_ON_ABORT = 12;
+	final private static int ITEM_RUN_ON_FAIL = 13;
+	final private static int ITEM_RUN_ON_SUCCESS = 14;
+	final private static int ITEM_RUN_ON_EXIT = 15;
+	final private static int ITEM_RUN_ON_ENTRY = 15;
+
 	private final Overview parent;
 
-	private final Label[] labels = new Label[13];
-	private final HelpButton[] helpBtn = new HelpButton[13];
-	private final FileChooserUIElement[] texts = new FileChooserUIElement[13];
+	private final Label[] labels = new Label[16];
+	private final HelpButton[] helpBtn = new HelpButton[16];
+	private final FlowPane[] helpPane = new FlowPane[16];
+	private final FileChooserUIElement[] texts = new FileChooserUIElement[16];
 	private ScrollPane priorityScroll;
 	private TableView<Priority> priorityTable;
 	private Button addBtn;
+	final RadioButton radioBtnInternal, radioBtnExternal;
 
 	private Tool currentTool;
 
@@ -46,9 +88,16 @@ public class EditorOverview extends BorderPane {
 	private static final String TOOLTIP_PREPROCESSOR = TOOLTIP_TOOL;
 	private static final String TOOLTIP_OPERATOR = "Available variables: \r\n" + "\r\n"
 			+ "%ANSWERS%: Input AQL-Answers for operators\r\n" + "%ANSWERSHASH%: SHA-256-hash of %ANSWERS%-String\r\n"
+			+ "%ANDROID_PLATFORMS%: Android platforms folder\r\n" + "%MEMORY%: Memory\r\n" + "%PID%: Process ID";
+	private static final String TOOLTIP_CONVERTER_1 = "Available variables: \r\n" + "\r\n"
+			+ "%RESULT_FILE%: Result file of a tool\r\n" + "%APP_APK%: .apk file\r\n"
+			+ "%APP_APK_FILENAME%: .apk file without path and \".apk\"\r\n" + "%APP_NAME%: App name\r\n"
+			+ "%APP_PACKAGE%: App package\r\n" + "%ANDROID_PLATFORMS%: Android platforms folder\r\n"
 			+ "%MEMORY%: Memory\r\n" + "%PID%: Process ID";
-	private static final String TOOLTIP_CONVERTER = "Available variables: \r\n" + "\r\n"
-			+ "%RESULT_FILE%: Result file of a tool\r\n" + "%MEMORY%: Memory\r\n" + "%PID%: Process ID";
+	private static final String TOOLTIP_CONVERTER_2 = "Available variables: \r\n" + "\r\n" + "%APP_APK%: .apk file\r\n"
+			+ "%APP_APK_FILENAME%: .apk file without path and \".apk\"\r\n" + "%APP_NAME%: App name\r\n"
+			+ "%APP_PACKAGE%: App package\r\n" + "%ANDROID_PLATFORMS%: Android platforms folder\r\n"
+			+ "%MEMORY%: Memory\r\n" + "%PID%: Process ID";
 	private static final String TOOLTIP_EVENT = "Available variables: \r\n" + "\r\n" + "%MEMORY%: Memory\r\n"
 			+ "%PID%: Process ID";
 
@@ -61,46 +110,112 @@ public class EditorOverview extends BorderPane {
 		scrollBox.setFitToWidth(true);
 		final VBox editorBox = new VBox(5);
 		editorBox.setPadding(new Insets(10));
-		this.labels[0] = new Label("Name:");
-		this.labels[1] = new Label("Version:");
-		this.labels[2] = new Label();
-		this.labels[3] = new Label("Priority:");
-		this.labels[4] = new Label("Instances (0 = \u221e):");
-		this.labels[5] = new Label("Memory per instance (in GB):");
-		this.labels[6] = new Label("Path: ");
-		this.helpBtn[6] = new HelpButton(TOOLTIP_TOOL);
-		this.labels[7] = new Label("Run: ");
-		this.helpBtn[7] = new HelpButton(TOOLTIP_TOOL);
-		this.labels[8] = new Label("Result: ");
-		this.helpBtn[8] = new HelpButton(TOOLTIP_TOOL);
-		this.labels[9] = new Label("Run on Abort: ");
-		this.helpBtn[9] = new HelpButton(TOOLTIP_EVENT);
-		this.labels[10] = new Label("Run on Fail: ");
-		this.helpBtn[10] = new HelpButton(TOOLTIP_EVENT);
-		this.labels[11] = new Label("Run on Success: ");
-		this.helpBtn[11] = new HelpButton(TOOLTIP_EVENT);
-		this.labels[12] = new Label("Run on Exit: ");
-		this.helpBtn[12] = new HelpButton(TOOLTIP_EVENT);
-		for (int i = 0; i <= 8; i++) {
-			if (i != 3) {
-				if (i >= 6) {
+
+		final VBox executeBox = new VBox(5);
+		executeBox.setPadding(new Insets(10));
+		executeBox.setBorder(new Border(new BorderStroke(Color.rgb(200, 200, 200), BorderStrokeStyle.SOLID,
+				new CornerRadii(3), BorderWidths.DEFAULT)));
+		final ToggleGroup toggleGroup = new ToggleGroup();
+		this.radioBtnInternal = new RadioButton("Internal");
+		this.radioBtnInternal.setToggleGroup(toggleGroup);
+		this.radioBtnInternal.setSelected(true);
+		this.radioBtnExternal = new RadioButton("External");
+		this.radioBtnExternal.setToggleGroup(toggleGroup);
+		this.radioBtnExternal.setSelected(false);
+		final HBox radioBox = new HBox(20);
+		radioBox.getChildren().addAll(this.radioBtnInternal, this.radioBtnExternal);
+		toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				if (toggleGroup.getSelectedToggle() == EditorOverview.this.radioBtnInternal) {
+					for (int i = EditorOverview.ITEM_RUN; i <= EditorOverview.ITEM_MEMORY_PER_INSTANCE; i++) {
+						show(i);
+					}
+					for (int i = EditorOverview.ITEM_URL; i <= EditorOverview.ITEM_PASSWORD; i++) {
+						hide(i);
+					}
+				} else {
+					for (int i = EditorOverview.ITEM_URL; i <= EditorOverview.ITEM_PASSWORD; i++) {
+						show(i);
+					}
+					for (int i = EditorOverview.ITEM_RUN; i <= EditorOverview.ITEM_MEMORY_PER_INSTANCE; i++) {
+						hide(i);
+					}
+				}
+			}
+		});
+		executeBox.getChildren().addAll(radioBox, new Separator());
+
+		final VBox runOnEventBox = new VBox(5);
+		final TitledPane runOnEventRoot = new TitledPane("Run on Event", runOnEventBox);
+		runOnEventRoot.setExpanded(false);
+
+		this.labels[ITEM_NAME] = new Label("Name:");
+		this.labels[ITEM_VERSION] = new Label("Version:");
+		this.labels[ITEM_QUESTIONS] = new Label();
+		this.labels[ITEM_PRIORITY] = new Label("Priority:");
+		this.labels[ITEM_PATH] = new Label("Path: ");
+		this.helpBtn[ITEM_PATH] = new HelpButton(TOOLTIP_TOOL);
+
+		this.labels[ITEM_RUN] = new Label("Run: ");
+		this.helpBtn[ITEM_RUN] = new HelpButton(TOOLTIP_TOOL);
+		this.labels[ITEM_RESULT] = new Label("Result: ");
+		this.helpBtn[ITEM_RESULT] = new HelpButton(TOOLTIP_TOOL);
+		this.labels[ITEM_INSTANCES] = new Label("Instances (0 = \u221e):");
+		this.labels[ITEM_MEMORY_PER_INSTANCE] = new Label("Memory per instance (in GB):");
+
+		this.labels[ITEM_URL] = new Label("URL: ");
+		this.labels[ITEM_USERNAME] = new Label("Username: ");
+		this.labels[ITEM_PASSWORD] = new Label("Password: ");
+
+		this.labels[ITEM_RUN_ON_ENTRY] = new Label("Run on Entry: ");
+		this.helpBtn[ITEM_RUN_ON_ENTRY] = new HelpButton(TOOLTIP_EVENT);
+		this.labels[ITEM_RUN_ON_ABORT] = new Label("Run on Abort: ");
+		this.helpBtn[ITEM_RUN_ON_ABORT] = new HelpButton(TOOLTIP_EVENT);
+		this.labels[ITEM_RUN_ON_FAIL] = new Label("Run on Fail: ");
+		this.helpBtn[ITEM_RUN_ON_FAIL] = new HelpButton(TOOLTIP_EVENT);
+		this.labels[ITEM_RUN_ON_SUCCESS] = new Label("Run on Success: ");
+		this.helpBtn[ITEM_RUN_ON_SUCCESS] = new HelpButton(TOOLTIP_EVENT);
+		this.labels[ITEM_RUN_ON_EXIT] = new Label("Run on Exit: ");
+		this.helpBtn[ITEM_RUN_ON_EXIT] = new HelpButton(TOOLTIP_EVENT);
+
+		for (int i = 0; i <= 11; i++) {
+			if (i != ITEM_PRIORITY) {
+				if (i == ITEM_PATH || i == ITEM_RUN || i == ITEM_RESULT || i == ITEM_RUN_ON_ENTRY
+						|| i == ITEM_RUN_ON_ABORT || i == ITEM_RUN_ON_FAIL || i == ITEM_RUN_ON_SUCCESS
+						|| i == ITEM_RUN_ON_EXIT) {
 					this.texts[i] = new FileChooserUIElement(parent.getParentGUI().getStage(),
 							StringConstants.STR_BROWSE);
 				} else {
 					this.texts[i] = new FileChooserUIElement(parent.getParentGUI().getStage(), null);
 				}
-				if (i >= 4 && i <= 5) {
+				if (i == ITEM_INSTANCES || i == ITEM_MEMORY_PER_INSTANCE) {
 					this.texts[i].setNumeric();
 				}
-				if (i == 6) {
+				if (i == ITEM_PATH) {
 					this.texts[i].setFolder();
 				}
+				Node toAdd;
 				if (this.helpBtn[i] != null) {
-					final FlowPane helpPane = new FlowPane();
-					helpPane.getChildren().addAll(this.labels[i], this.helpBtn[i]);
-					editorBox.getChildren().addAll(helpPane, this.texts[i]);
+					this.helpPane[i] = new FlowPane();
+					this.helpPane[i].getChildren().addAll(this.labels[i], this.helpBtn[i]);
+					toAdd = this.helpPane[i];
 				} else {
-					editorBox.getChildren().addAll(this.labels[i], this.texts[i]);
+					toAdd = this.labels[i];
+				}
+				if (i == ITEM_RUN || i == ITEM_RESULT || i == ITEM_INSTANCES || i == ITEM_MEMORY_PER_INSTANCE
+						|| i == ITEM_URL || i == ITEM_USERNAME || i == ITEM_PASSWORD) {
+					executeBox.getChildren().addAll(toAdd, this.texts[i]);
+					if (!editorBox.getChildren().contains(executeBox)) {
+						final Separator separator = new Separator();
+						separator.setVisible(false);
+						editorBox.getChildren().addAll(separator, executeBox);
+					}
+				} else {
+					editorBox.getChildren().addAll(toAdd, this.texts[i]);
+				}
+				if (i >= EditorOverview.ITEM_URL && i <= EditorOverview.ITEM_PASSWORD) {
+					hide(i);
 				}
 			} else {
 				final BorderPane priorityBox = new BorderPane();
@@ -151,10 +266,7 @@ public class EditorOverview extends BorderPane {
 				editorBox.getChildren().addAll(this.labels[i], priorityBox);
 			}
 		}
-		final VBox runOnEventBox = new VBox(5);
-		final TitledPane runOnEventRoot = new TitledPane("Run on Event", runOnEventBox);
-		runOnEventRoot.setExpanded(false);
-		for (int i = 9; i <= 12; i++) {
+		for (int i = ITEM_RUN_ON_ABORT; i <= ITEM_RUN_ON_ENTRY; i++) {
 			this.texts[i] = new FileChooserUIElement(parent.getParentGUI().getStage(), StringConstants.STR_BROWSE);
 			if (this.helpBtn[i] != null) {
 				final FlowPane helpPane = new FlowPane();
@@ -164,7 +276,9 @@ public class EditorOverview extends BorderPane {
 				runOnEventBox.getChildren().addAll(this.labels[i], this.texts[i]);
 			}
 		}
-		editorBox.getChildren().addAll(new Label(), runOnEventRoot);
+		final Separator separator = new Separator();
+		separator.setVisible(false);
+		editorBox.getChildren().addAll(separator, runOnEventRoot);
 		scrollBox.setContent(editorBox);
 
 		final Button applyBtn = new Button("Apply");
@@ -180,58 +294,99 @@ public class EditorOverview extends BorderPane {
 	public void load(final Tool tool, final int type) {
 		if (tool != null && tool.getName() != null) {
 			this.currentTool = tool;
-			final boolean toggle = type == Overview.TYPE_CONVERTER;
+			final boolean toggle = (type == Overview.TYPE_CONVERTER);
 
-			this.labels[2].setText(Overview.typeToString(type) + " (separated by \",\")");
-			this.helpBtn[6].setToolTip(typeToToolTip(type));
-			this.helpBtn[7].setToolTip(typeToToolTip(type));
-			this.helpBtn[8].setToolTip(typeToToolTip(type));
+			this.labels[ITEM_QUESTIONS].setText(Overview.typeToString(type) + " (separated by \",\")");
+			this.helpBtn[ITEM_PATH].setToolTip(typeToToolTip(type, 1));
+			this.helpBtn[ITEM_RUN].setToolTip(typeToToolTip(type, 1));
+			this.helpBtn[ITEM_RESULT].setToolTip(typeToToolTip(type, 2));
 
-			this.texts[0].getTextField().setText(tool.getName());
-			this.texts[1].getTextField().setText(tool.getVersion());
-			this.texts[2].getTextField().setText(tool.getQuestions());
+			this.texts[ITEM_NAME].getTextField().setText(tool.getName());
+			this.texts[ITEM_VERSION].getTextField().setText(tool.getVersion());
+			this.texts[ITEM_QUESTIONS].getTextField().setText(tool.getQuestions());
 			this.priorityScroll.setDisable(toggle);
 			this.addBtn.setDisable(toggle);
 			this.priorityTable.setDisable(toggle);
 			this.priorityTable.getItems().setAll(tool.getPriority());
+			this.texts[ITEM_PATH].getTextField().setText(tool.getPath());
 
-			this.texts[4].setDisable(toggle);
-			this.texts[4].getTextField().setText(String.valueOf(tool.getInstances()));
-			this.texts[5].getTextField().setText(String.valueOf(tool.getMemoryPerInstance()));
+			if (!tool.isExternal()) {
+				this.radioBtnExternal.setSelected(false);
+				this.radioBtnInternal.setSelected(true);
 
-			this.texts[6].getTextField().setText(tool.getPath());
-			this.texts[7].getTextField().setText(tool.getRun());
-			this.texts[8].getTextField().setText(tool.getResult());
+				if (tool.getExecute() != null) {
+					this.texts[ITEM_RUN].getTextField().setText(tool.getExecute().getRun());
+					this.texts[ITEM_RESULT].getTextField().setText(tool.getExecute().getResult());
+					this.texts[ITEM_INSTANCES].getTextField().setText(String.valueOf(tool.getExecute().getInstances()));
+					this.texts[ITEM_MEMORY_PER_INSTANCE].getTextField()
+							.setText(String.valueOf(tool.getExecute().getMemoryPerInstance()));
+				}
+				this.texts[ITEM_INSTANCES].setDisable(toggle);
 
-			this.texts[9].setDisable(toggle);
-			this.texts[10].setDisable(toggle);
-			this.texts[11].setDisable(toggle);
-			this.texts[12].setDisable(toggle);
-			this.texts[9].getTextField().setText(tool.getRunOnAbort());
-			this.texts[10].getTextField().setText(tool.getRunOnFail());
-			this.texts[11].getTextField().setText(tool.getRunOnSuccess());
-			this.texts[12].getTextField().setText(tool.getRunOnExit());
+				this.texts[ITEM_URL].getTextField().clear();
+				this.texts[ITEM_USERNAME].getTextField().clear();
+				this.texts[ITEM_PASSWORD].getTextField().clear();
+			} else {
+				this.radioBtnExternal.setSelected(true);
+				this.radioBtnInternal.setSelected(false);
+
+				if (tool.getExecute() != null) {
+					this.texts[ITEM_URL].getTextField().setText(tool.getExecute().getUrl());
+					this.texts[ITEM_USERNAME].getTextField().setText(tool.getExecute().getUsername());
+					this.texts[ITEM_PASSWORD].getTextField().setText(tool.getExecute().getPassword());
+				}
+
+				this.texts[ITEM_RUN].getTextField().clear();
+				this.texts[ITEM_RESULT].getTextField().clear();
+				this.texts[ITEM_INSTANCES].getTextField().clear();
+				this.texts[ITEM_MEMORY_PER_INSTANCE].getTextField().clear();
+			}
+
+			this.texts[ITEM_RUN_ON_ENTRY].setDisable(toggle);
+			this.texts[ITEM_RUN_ON_ABORT].setDisable(toggle);
+			this.texts[ITEM_RUN_ON_FAIL].setDisable(toggle);
+			this.texts[ITEM_RUN_ON_SUCCESS].setDisable(toggle);
+			this.texts[ITEM_RUN_ON_EXIT].setDisable(toggle);
+			this.texts[ITEM_RUN_ON_ENTRY].getTextField().setText(tool.getRunOnEntry());
+			this.texts[ITEM_RUN_ON_ABORT].getTextField().setText(tool.getRunOnAbort());
+			this.texts[ITEM_RUN_ON_FAIL].getTextField().setText(tool.getRunOnFail());
+			this.texts[ITEM_RUN_ON_SUCCESS].getTextField().setText(tool.getRunOnSuccess());
+			this.texts[ITEM_RUN_ON_EXIT].getTextField().setText(tool.getRunOnExit());
 		}
 	}
 
 	private void apply() {
-		this.currentTool.setName(this.texts[0].getTextField().getText());
-		this.currentTool.setVersion(this.texts[1].getTextField().getText());
-		this.currentTool.setQuestions(this.texts[2].getTextField().getText());
+		this.currentTool.setName(this.texts[ITEM_NAME].getTextField().getText());
+		this.currentTool.setVersion(this.texts[ITEM_VERSION].getTextField().getText());
+		this.currentTool.setQuestions(this.texts[ITEM_QUESTIONS].getTextField().getText());
 		this.currentTool.getPriority().clear();
 		this.currentTool.getPriority().addAll(this.priorityTable.getItems());
+		this.currentTool.setPath(this.texts[ITEM_PATH].getTextField().getText());
 
-		this.currentTool.setInstances(Integer.parseInt(this.texts[4].getTextField().getText()));
-		this.currentTool.setMemoryPerInstance(Integer.parseInt(this.texts[5].getTextField().getText()));
+		this.currentTool.setExecute(new Execute());
+		if (this.radioBtnExternal.isSelected()) {
+			this.currentTool.setExternal(true);
+		} else {
+			this.currentTool.setExternal(false);
+		}
+		if (this.currentTool.isExternal()) {
+			this.currentTool.getExecute().setUrl(this.texts[ITEM_URL].getTextField().getText());
+			this.currentTool.getExecute().setUsername(this.texts[ITEM_USERNAME].getTextField().getText());
+			this.currentTool.getExecute().setPassword(this.texts[ITEM_PASSWORD].getTextField().getText());
+		} else {
+			this.currentTool.getExecute().setRun(this.texts[ITEM_RUN].getTextField().getText());
+			this.currentTool.getExecute().setResult(this.texts[ITEM_RESULT].getTextField().getText());
+			this.currentTool.getExecute()
+					.setInstances(Integer.parseInt(this.texts[ITEM_INSTANCES].getTextField().getText()));
+			this.currentTool.getExecute().setMemoryPerInstance(
+					Integer.parseInt(this.texts[ITEM_MEMORY_PER_INSTANCE].getTextField().getText()));
+		}
 
-		this.currentTool.setPath(this.texts[6].getTextField().getText());
-		this.currentTool.setRun(this.texts[7].getTextField().getText());
-		this.currentTool.setResult(this.texts[8].getTextField().getText());
-
-		this.currentTool.setRunOnAbort(this.texts[9].getTextField().getText());
-		this.currentTool.setRunOnFail(this.texts[10].getTextField().getText());
-		this.currentTool.setRunOnSuccess(this.texts[11].getTextField().getText());
-		this.currentTool.setRunOnExit(this.texts[12].getTextField().getText());
+		this.currentTool.setRunOnEntry(this.texts[ITEM_RUN_ON_ENTRY].getTextField().getText());
+		this.currentTool.setRunOnAbort(this.texts[ITEM_RUN_ON_ABORT].getTextField().getText());
+		this.currentTool.setRunOnFail(this.texts[ITEM_RUN_ON_FAIL].getTextField().getText());
+		this.currentTool.setRunOnSuccess(this.texts[ITEM_RUN_ON_SUCCESS].getTextField().getText());
+		this.currentTool.setRunOnExit(this.texts[ITEM_RUN_ON_EXIT].getTextField().getText());
 
 		this.parent.apply();
 	}
@@ -250,7 +405,6 @@ public class EditorOverview extends BorderPane {
 		}
 
 		private void showToolTip() {
-
 			final Alert alert = new Alert(AlertType.INFORMATION);
 			final Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
 			alertStage.getIcons().add(new Image("file:data/gui/images/icon_16.png", 16, 16, false, true));
@@ -275,7 +429,7 @@ public class EditorOverview extends BorderPane {
 		}
 	}
 
-	private static String typeToToolTip(int type) {
+	private static String typeToToolTip(int type, int number) {
 		if (type == Overview.TYPE_TOOL) {
 			return TOOLTIP_TOOL;
 		} else if (type == Overview.TYPE_PREPROCESSOR) {
@@ -283,9 +437,44 @@ public class EditorOverview extends BorderPane {
 		} else if (type == Overview.TYPE_OPERATOR) {
 			return TOOLTIP_OPERATOR;
 		} else if (type == Overview.TYPE_CONVERTER) {
-			return TOOLTIP_CONVERTER;
+			if (number == 1) {
+				return TOOLTIP_CONVERTER_1;
+			} else {
+				return TOOLTIP_CONVERTER_2;
+			}
 		} else {
 			return "UNKNOWN TYPE";
+		}
+	}
+
+	private void hide(int id) {
+		if (this.labels[id] != null) {
+			this.labels[id].setVisible(false);
+			this.labels[id].setManaged(false);
+		}
+		if (this.texts[id] != null) {
+			this.texts[id].setVisible(false);
+			this.texts[id].getTextField().clear();
+			this.texts[id].setManaged(false);
+		}
+		if (this.helpPane[id] != null) {
+			this.helpPane[id].setVisible(false);
+			this.helpPane[id].setManaged(false);
+		}
+	}
+
+	private void show(int id) {
+		if (this.labels[id] != null) {
+			this.labels[id].setVisible(true);
+			this.labels[id].setManaged(true);
+		}
+		if (this.texts[id] != null) {
+			this.texts[id].setVisible(true);
+			this.texts[id].setManaged(true);
+		}
+		if (this.helpPane[id] != null) {
+			this.helpPane[id].setVisible(true);
+			this.helpPane[id].setManaged(true);
 		}
 	}
 }

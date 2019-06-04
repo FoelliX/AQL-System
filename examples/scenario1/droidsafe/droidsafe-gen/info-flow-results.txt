@@ -1,0 +1,22 @@
+Entry Point: <de.upb.fpauck.simapp.SIMAppMainActivity: void onCreate(android.os.Bundle)> (Line: de.upb.fpauck.simapp.SIMAppMainActivity 14)
+
+Sink: <android.app.Activity: void startActivity(android.content.Intent)>
+Lines: 
+Receiver Sources: 
+Arg 0 Sources: 
+	$r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>() (UNIQUE_IDENTIFIER)
+
+Entry Point: <de.upb.fpauck.smsapp.SMSAppMainActivity: void onCreate(android.os.Bundle)> (Line: de.upb.fpauck.smsapp.SMSAppMainActivity 12)
+
+Sink: <android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>
+Lines: 
+Receiver Sources: 
+Arg 2 Sources: 
+	$r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>() (UNIQUE_IDENTIFIER)
+
+
+FLOW:<de.upb.fpauck.simapp.SIMAppMainActivity: void onCreate(android.os.Bundle)>|{<android.app.Activity: void startActivity(android.content.Intent)>/IPC/Line: de.upb.fpauck.simapp.SIMAppMainActivity 39}<={<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>/UNIQUE_IDENTIFIER/Line: de.upb.fpauck.simapp.SIMAppMainActivity 34/ARG}
+
+FLOW:<de.upb.fpauck.smsapp.SMSAppMainActivity: void onCreate(android.os.Bundle)>|{<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>/SMS_MMS/Line: de.upb.fpauck.smsapp.SMSAppMainActivity 34}<={<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>/UNIQUE_IDENTIFIER/Line: de.upb.fpauck.simapp.SIMAppMainActivity 34/ARG}
+
+

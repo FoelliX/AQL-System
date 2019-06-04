@@ -98,7 +98,7 @@ public class Scheduler {
 								final Task task = Scheduler.this.schedule.get(i);
 
 								// Memory available?
-								if (!MemoryHelper.getInstance()
+								if (!task.getTaskinfo().getTool().isExternal() && !MemoryHelper.getInstance()
 										.checkMemoryAvailable(task.getTaskinfo().getMemoryUsage(), true)) {
 									final int temp = task.getTaskinfo().getMemoryUsage();
 									task.getTaskinfo().setMemoryUsage(MemoryHelper.getInstance()
@@ -113,10 +113,12 @@ public class Scheduler {
 										&& MemoryHelper.getInstance()
 												.checkMemoryAvailable(task.getTaskinfo().getMemoryUsage(), false)) {
 									// Another concurrent instance allowed?
-									if (Scheduler.this.runningInstances.get(task.getTaskinfo().getTool()) == null
+									if (task.getTaskinfo().getTool() instanceof DefaultOperator
+											|| task.getTaskinfo().getTool().isExternal()
+											|| Scheduler.this.runningInstances.get(task.getTaskinfo().getTool()) == null
 											|| (Scheduler.this.runningInstances.get(task.getTaskinfo().getTool()) < task
-													.getTaskinfo().getTool().getInstances()
-													|| task.getTaskinfo().getTool().getInstances() <= 0)) {
+													.getTaskinfo().getTool().getExecute().getInstances()
+													|| task.getTaskinfo().getTool().getExecute().getInstances() <= 0)) {
 										boolean ready = true;
 										if (task.getTaskinfo() instanceof OperatorTaskInfo) {
 											for (final Answer answerPart : ((OperatorTaskInfo) task.getTaskinfo())
@@ -169,7 +171,7 @@ public class Scheduler {
 												Scheduler.this.lastOnExitTask)
 										+ ")");
 								try {
-									new ExtraTask(Scheduler.this.lastOnExitTask, null).runAndWait();
+									new ExtraTask(Scheduler.this.lastOnExitTask, TaskStatus.STATUS_EXIT).runAndWait();
 								} catch (final Exception e) {
 									Log.warning("Could not execute last onExit task: " + e.getMessage());
 								}
@@ -179,6 +181,7 @@ public class Scheduler {
 						Log.error("Interrupted while reexecuting last onExit task.");
 					}
 				}
+				Log.msg("Scheduler done!", Log.DEBUG_DETAILED);
 			}
 		}).start();
 
@@ -233,7 +236,7 @@ public class Scheduler {
 	public void finishedTask(final Task from, final TaskInfo taskInfo, final TaskStatus status) {
 		// Execute OnExit
 		this.lastOnExitTask = taskInfo;
-		new ExtraTask(taskInfo, null).runAndWait();
+		new ExtraTask(taskInfo, TaskStatus.STATUS_EXIT).runAndWait();
 
 		// Finish task
 		try {
@@ -247,13 +250,12 @@ public class Scheduler {
 				if (taskInfo instanceof ToolTaskInfo) {
 					taskInfo.setTool(ToolSelector.getInstance().selectTool(((ToolTaskInfo) taskInfo).getQuestion(),
 							ToolSelector.getInstance().getPriority(taskInfo.getTool(),
-									((ToolTaskInfo) taskInfo).getQuestion().getFeatures())));
+									((ToolTaskInfo) taskInfo).getQuestion())));
 				} else if (taskInfo instanceof PreprocessorTaskInfo) {
 					taskInfo.setTool(ToolSelector.getInstance().selectPreprocessor(
 							((PreprocessorTaskInfo) taskInfo).getQuestion(),
-							((PreprocessorTaskInfo) taskInfo).getKeyword(),
-							ToolSelector.getInstance().getPriority(taskInfo.getTool(),
-									((PreprocessorTaskInfo) taskInfo).getQuestion().getFeatures())));
+							((PreprocessorTaskInfo) taskInfo).getKeyword(), ToolSelector.getInstance()
+									.getPriority(taskInfo.getTool(), ((PreprocessorTaskInfo) taskInfo).getQuestion())));
 				} else {
 					taskInfo.setTool(
 							ToolSelector.getInstance().selectOperator(((OperatorTaskInfo) taskInfo).getQuestion(),
@@ -303,10 +305,20 @@ public class Scheduler {
 		return this.waiting;
 	}
 
+	public long getTimeout() {
+		return this.timeout;
+	}
+
 	public void setAlwaysPreferLoading(boolean alwaysPreferLoading) {
 		this.alwaysPreferLoading = alwaysPreferLoading;
 	}
 
+	/**
+	 * Sets the timeout value (in seconds).
+	 * 
+	 * @param timeout
+	 *            value (in seconds)
+	 */
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
 	}

@@ -1,12 +1,12 @@
 package de.foellix.aql.system;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import de.foellix.aql.Log;
 import de.foellix.aql.datastructure.Answer;
@@ -20,13 +20,13 @@ import de.foellix.aql.datastructure.QuestionPart;
 import de.foellix.aql.datastructure.Reference;
 import de.foellix.aql.datastructure.WaitingAnswer;
 import de.foellix.aql.datastructure.handler.AnswerHandler;
-import de.foellix.aql.datastructure.handler.ParseException;
-import de.foellix.aql.datastructure.handler.QuestionHandler;
-import de.foellix.aql.datastructure.handler.QuestionParser;
+import de.foellix.aql.datastructure.handler.QueryHandler;
 import de.foellix.aql.helper.EqualsHelper;
+import de.foellix.aql.helper.EqualsOptions;
 import de.foellix.aql.helper.Helper;
 import de.foellix.aql.system.task.PreprocessorTaskInfo;
 import de.foellix.aql.system.task.Task;
+import de.foellix.aql.system.task.TaskHooks;
 import de.foellix.aql.ui.cli.AnswerToConsole;
 
 public class System {
@@ -35,16 +35,21 @@ public class System {
 	private final QueryProcessor queryProcessor;
 	private final Scheduler scheduler;
 	private final OperatorManager operatorManager;
+	private final TaskHooks taskHooksBefore;
+	private final TaskHooks taskHooksAfter;
 
 	private final List<IAnswerAvailable> answerReceivers;
 	private final List<IProgressChanged> progressListener;
 
 	private String currentInitialQuery;
 	private Collection<Answer> waitForAnswers;
+	private boolean waitForAnswersFlag;
 	private IQuestionNode currentQuery;
 	private Map<QuestionPart, Answer> tempStorage;
 	private String step;
 	private int max;
+
+	private final Lock lock;
 
 	public System() {
 		this.max = 0;
@@ -59,38 +64,29 @@ public class System {
 		this.queryProcessor = new QueryProcessor(this);
 		this.scheduler = new Scheduler(this);
 		this.operatorManager = new OperatorManager(this);
+		this.taskHooksBefore = new TaskHooks();
+		this.taskHooksAfter = new TaskHooks();
+
+		this.lock = new ReentrantLock();
 	}
 
 	public void query(final String query) {
 		Log.reset();
 		this.currentInitialQuery = query.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "");
-		Log.msg("Input: " + this.currentInitialQuery, Log.IMPORTANT);
+		Log.msg("Started: " + this.currentInitialQuery, Log.IMPORTANT);
 
-		try {
-			final InputStream input = new ByteArrayInputStream(query.getBytes());
-			final QuestionParser parser = new QuestionParser(input);
-			parser.query();
-			final QuestionHandler questionHandler = parser.getQuestionHandler();
-			this.currentQuery = questionHandler.getCollection();
+		this.currentQuery = QueryHandler.parseQuery(query);
 
-			if (this.currentQuery.getChildren() != null && this.currentQuery.getChildren().size() == 1) {
-				this.currentQuery = this.currentQuery.getChildren().get(0);
-			}
-
-			this.queryProcessor.preprocess();
-		} catch (final ParseException e) {
-			Log.error("The query is not valid.");
-			e.printStackTrace();
-			return;
-		}
+		this.queryProcessor.preprocess();
 	}
 
 	public Collection<Answer> queryAndWait(final String query) {
 		this.waitForAnswers = null;
+		this.waitForAnswersFlag = false;
 		new Thread(() -> {
 			query(query);
 		}).start();
-		while (this.waitForAnswers == null) {
+		while (this.waitForAnswersFlag == false) {
 			try {
 				Thread.sleep(250);
 			} catch (final InterruptedException e) {
@@ -100,11 +96,10 @@ public class System {
 		return this.waitForAnswers;
 	}
 
-	// FIXME:
 	public void preprocessingFinished(final PreprocessorTaskInfo taskInfo, final App storedPreprocessedVersion) {
 		// Replace with preprocessed versions
 		final QuestionPart questionPart = taskInfo.getQuestion();
-		for (final Reference reference : questionPart.getReferences()) {
+		for (final Reference reference : questionPart.getAllReferences()) {
 			if (EqualsHelper.equals(reference.getApp(), taskInfo.getApp())) {
 				if (storedPreprocessedVersion != null) {
 					reference.setApp(storedPreprocessedVersion);
@@ -127,9 +122,11 @@ public class System {
 
 		this.scheduler.decreaseWaiting();
 		progress();
+		this.lock.lock();
 		if (this.scheduler.getWaiting() <= 0) {
 			this.queryProcessor.ask(this.currentQuery);
 		}
+		this.lock.unlock();
 	}
 
 	public void localAnswerAvailable(final QuestionPart questionPart, Answer answer) {
@@ -148,15 +145,26 @@ public class System {
 			for (final IAnswerAvailable receiver : this.answerReceivers) {
 				receiver.answerAvailable(new Answer(), KeywordsAndConstants.ANSWER_STATUS_FAILED);
 			}
+
+			this.waitForAnswersFlag = true;
 			return;
 		}
 
 		if (questionPart != null && answer != null) {
-			// Filter by subject of interest
-			answer = filterBySOI(questionPart, answer);
+			if (!Helper.isEmpty(answer)) {
+				// Filter by subject of interest
+				answer = filterBySOI(questionPart, answer);
 
-			// Filter by References
-			answer = filterByRef(questionPart, answer);
+				// Filter by References
+				final Answer filteredAnswer = filterByRef(questionPart, answer, false);
+				if (Helper.isEmpty(filteredAnswer)) {
+					Log.warning(
+							"Filtering answer by given Reference returns an empty answer. Trying to ignore app reference.");
+					answer = filterByRef(questionPart, answer, true);
+				} else {
+					answer = filteredAnswer;
+				}
+			}
 
 			// Intermediate Result Output
 			Log.msg("**** Answer available ****\nQuestion:\n" + questionPart.toString() + "\nAnswer:\n"
@@ -166,9 +174,11 @@ public class System {
 
 		this.scheduler.decreaseWaiting();
 		progress();
+		this.lock.lock();
 		if (this.scheduler.getWaiting() <= 0) {
 			this.operatorManager.apply();
 		}
+		this.lock.unlock();
 	}
 
 	public void operatorExecuted(WaitingAnswer waitingAnswer, Answer answer) {
@@ -178,15 +188,20 @@ public class System {
 
 		this.scheduler.decreaseWaiting();
 		progress();
+		this.lock.lock();
 		if (this.scheduler.getWaiting() <= 0) {
 			final Collection<Answer> collection = this.operatorManager.getAnswerCollection();
 
 			Log.msg("****** Answer Collection ******\n", Log.DEBUG_DETAILED);
-			for (Answer collectionPart : collection) {
+			this.waitForAnswers = new ArrayList<>();
+			for (final Answer collectionPart : collection) {
 				if (collectionPart instanceof WaitingAnswer) {
-					collectionPart = ((WaitingAnswer) collectionPart).getAnswer();
+					this.waitForAnswers.add(((WaitingAnswer) collectionPart).getAnswer());
+				} else {
+					this.waitForAnswers.add(collectionPart);
 				}
-
+			}
+			for (final Answer collectionPart : this.waitForAnswers) {
 				if (this.storeAnswers) {
 					final File xmlFile = Helper.makeUnique(new File("answers/answer_" + Helper.getDate() + "-0.xml"));
 					AnswerHandler.createXML(collectionPart, xmlFile);
@@ -197,11 +212,11 @@ public class System {
 					receiver.answerAvailable(collectionPart, KeywordsAndConstants.ANSWER_STATUS_SUCCESSFUL);
 				}
 			}
-
-			this.waitForAnswers = collection;
-
 			Log.msg("Finished: " + this.currentInitialQuery, Log.IMPORTANT);
+
+			this.waitForAnswersFlag = true;
 		}
+		this.lock.unlock();
 	}
 
 	private Answer filterBySOI(final QuestionPart questionPart, final Answer answer) {
@@ -216,170 +231,178 @@ public class System {
 		return answer;
 	}
 
-	private Answer filterByRef(final QuestionPart questionPart, final Answer answer) {
-		// Permissions
-		if (answer.getPermissions() != null) {
-			for (int i = 0; i < answer.getPermissions().getPermission().size(); i++) {
-				final Reference ref = answer.getPermissions().getPermission().get(i).getReference();
+	private Answer filterByRef(final QuestionPart questionPart, final Answer answer, boolean ignoreApp) {
+		final Answer filteredAnswer = Helper.copy(answer);
 
-				if (!EqualsHelper.equals(questionPart.getReferences().get(0), ref, true)) {
-					answer.getPermissions().getPermission().remove(i);
+		final EqualsOptions options = new EqualsOptions();
+		options.setOption(EqualsOptions.NULL_ALLOWED_ON_LEFT_HAND_SIDE, true);
+		options.setOption(EqualsOptions.IGNORE_APP, ignoreApp);
+
+		// Permissions
+		if (filteredAnswer.getPermissions() != null) {
+			for (int i = 0; i < filteredAnswer.getPermissions().getPermission().size(); i++) {
+				final Reference ref = filteredAnswer.getPermissions().getPermission().get(i).getReference();
+
+				if (!EqualsHelper.equals(questionPart.getAllReferences().get(0), ref, options)) {
+					filteredAnswer.getPermissions().getPermission().remove(i);
 					i--;
 				}
 			}
-			if (answer.getPermissions().getPermission().size() == 0) {
-				answer.setPermissions(null);
+			if (filteredAnswer.getPermissions().getPermission().size() == 0) {
+				filteredAnswer.setPermissions(null);
 			}
 		}
 
 		// Intents
-		if (answer.getIntents() != null) {
-			for (int i = 0; i < answer.getIntents().getIntent().size(); i++) {
-				final Reference ref = answer.getIntents().getIntent().get(i).getReference();
+		if (filteredAnswer.getIntents() != null) {
+			for (int i = 0; i < filteredAnswer.getIntents().getIntent().size(); i++) {
+				final Reference ref = filteredAnswer.getIntents().getIntent().get(i).getReference();
 
-				if (!EqualsHelper.equals(questionPart.getReferences().get(0), ref, true)) {
-					answer.getIntents().getIntent().remove(i);
+				if (!EqualsHelper.equals(questionPart.getAllReferences().get(0), ref, options)) {
+					filteredAnswer.getIntents().getIntent().remove(i);
 					i--;
 				}
 			}
-			if (answer.getIntents().getIntent().size() == 0) {
-				answer.setIntents(null);
+			if (filteredAnswer.getIntents().getIntent().size() == 0) {
+				filteredAnswer.setIntents(null);
 			}
 		}
 
 		// Intent-Filters
-		if (answer.getIntentfilters() != null) {
-			for (int i = 0; i < answer.getIntentfilters().getIntentfilter().size(); i++) {
-				final Reference ref = answer.getIntentfilters().getIntentfilter().get(i).getReference();
+		if (filteredAnswer.getIntentfilters() != null) {
+			for (int i = 0; i < filteredAnswer.getIntentfilters().getIntentfilter().size(); i++) {
+				final Reference ref = filteredAnswer.getIntentfilters().getIntentfilter().get(i).getReference();
 
-				if (!EqualsHelper.equals(questionPart.getReferences().get(0), ref, true)) {
-					answer.getIntentfilters().getIntentfilter().remove(i);
+				if (!EqualsHelper.equals(questionPart.getAllReferences().get(0), ref, options)) {
+					filteredAnswer.getIntentfilters().getIntentfilter().remove(i);
 					i--;
 				}
 			}
-			if (answer.getIntentfilters().getIntentfilter().size() == 0) {
-				answer.setIntentfilters(null);
+			if (filteredAnswer.getIntentfilters().getIntentfilter().size() == 0) {
+				filteredAnswer.setIntentfilters(null);
 			}
 		}
 
 		// Intent-Sinks
-		if (answer.getIntentsinks() != null) {
-			for (int i = 0; i < answer.getIntentsinks().getIntentsink().size(); i++) {
-				final Reference ref = answer.getIntentsinks().getIntentsink().get(i).getReference();
+		if (filteredAnswer.getIntentsinks() != null) {
+			for (int i = 0; i < filteredAnswer.getIntentsinks().getIntentsink().size(); i++) {
+				final Reference ref = filteredAnswer.getIntentsinks().getIntentsink().get(i).getReference();
 
-				if (!EqualsHelper.equals(questionPart.getReferences().get(0), ref, true)) {
-					answer.getIntentsinks().getIntentsink().remove(i);
+				if (!EqualsHelper.equals(questionPart.getAllReferences().get(0), ref, options)) {
+					filteredAnswer.getIntentsinks().getIntentsink().remove(i);
 					i--;
 				}
 			}
-			if (answer.getIntentsinks().getIntentsink().size() == 0) {
-				answer.setIntentsinks(null);
+			if (filteredAnswer.getIntentsinks().getIntentsink().size() == 0) {
+				filteredAnswer.setIntentsinks(null);
 			}
 		}
 
 		// Intent-Sources
-		if (answer.getIntentsources() != null) {
-			for (int i = 0; i < answer.getIntentsources().getIntentsource().size(); i++) {
-				final Reference ref = answer.getIntentsources().getIntentsource().get(i).getReference();
+		if (filteredAnswer.getIntentsources() != null) {
+			for (int i = 0; i < filteredAnswer.getIntentsources().getIntentsource().size(); i++) {
+				final Reference ref = filteredAnswer.getIntentsources().getIntentsource().get(i).getReference();
 
-				if (!EqualsHelper.equals(questionPart.getReferences().get(0), ref, true)) {
-					answer.getIntentsources().getIntentsource().remove(i);
+				if (!EqualsHelper.equals(questionPart.getAllReferences().get(0), ref, options)) {
+					filteredAnswer.getIntentsources().getIntentsource().remove(i);
 					i--;
 				}
 			}
-			if (answer.getIntentsources().getIntentsource().size() == 0) {
-				answer.setIntentsources(null);
+			if (filteredAnswer.getIntentsources().getIntentsource().size() == 0) {
+				filteredAnswer.setIntentsources(null);
 			}
 		}
 
 		// Flows
-		if (answer.getFlows() != null) {
-			for (int i = 0; i < answer.getFlows().getFlow().size(); i++) {
-				boolean keepFrom = false;
-				boolean keepTo = questionPart.getReferences().size() < 2;
+		if (filteredAnswer.getFlows() != null) {
+			for (int i = 0; i < filteredAnswer.getFlows().getFlow().size(); i++) {
+				if (filteredAnswer.getFlows().getFlow().get(i).getReference().size() != 1) {
+					boolean keepFrom = false;
+					boolean keepTo = questionPart.getAllReferences().size() < 2;
 
-				Reference fromRef = null;
-				Reference toRef = null;
-				for (final Reference ref : answer.getFlows().getFlow().get(i).getReference()) {
-					// From
-					if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
-						fromRef = ref;
-						if (EqualsHelper.equals(questionPart.getReferences().get(0), fromRef, true)) {
-							keepFrom = true;
-						}
-					}
-
-					// To
-					if (!keepTo) {
-						if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_TO)) {
-							toRef = ref;
-							if (EqualsHelper.equals(questionPart.getReferences().get(1), toRef, true)) {
-								keepTo = true;
-							}
-						}
-					}
-				}
-
-				// Check for transitive connection
-				if (fromRef != null && toRef != null) {
-					if (!keepFrom && keepTo) {
-						for (final Flow flow : answer.getFlows().getFlow()) {
-							boolean keepFrom2 = false;
-							boolean keepTo2 = false;
-
-							for (final Reference ref : flow.getReference()) {
-								if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
-									if (EqualsHelper.equals(questionPart.getReferences().get(0), ref, true)) {
-										keepFrom2 = true;
-									}
-								} else if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_TO)) {
-									if (EqualsHelper.equals(ref, fromRef)) {
-										keepTo2 = true;
-									}
-								}
-							}
-
-							if (keepFrom2 && keepTo2) {
+					Reference fromRef = null;
+					Reference toRef = null;
+					for (final Reference ref : filteredAnswer.getFlows().getFlow().get(i).getReference()) {
+						// From
+						if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
+							fromRef = ref;
+							if (EqualsHelper.equals(questionPart.getAllReferences().get(0), fromRef, options)) {
 								keepFrom = true;
-								break;
 							}
 						}
-					} else if (keepFrom && !keepTo) {
-						for (final Flow flow : answer.getFlows().getFlow()) {
-							boolean keepFrom2 = false;
-							boolean keepTo2 = false;
 
-							for (final Reference ref : flow.getReference()) {
-								if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
-									if (EqualsHelper.equals(ref, toRef)) {
-										keepFrom2 = true;
-									}
-								} else if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_TO)) {
-									if (EqualsHelper.equals(questionPart.getReferences().get(1), ref, true)) {
-										keepTo2 = true;
-									}
+						// To
+						if (!keepTo) {
+							if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_TO)) {
+								toRef = ref;
+								if (EqualsHelper.equals(questionPart.getAllReferences().get(1), toRef, options)) {
+									keepTo = true;
 								}
-							}
-
-							if (keepFrom2 && keepTo2) {
-								keepTo = true;
-								break;
 							}
 						}
 					}
-				}
 
-				if (!keepFrom || !keepTo) {
-					answer.getFlows().getFlow().remove(i);
-					i--;
+					// Check for transitive connection
+					if (fromRef != null && toRef != null) {
+						if (!keepFrom && keepTo) {
+							for (final Flow flow : filteredAnswer.getFlows().getFlow()) {
+								boolean keepFrom2 = false;
+								boolean keepTo2 = false;
+
+								for (final Reference ref : flow.getReference()) {
+									if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
+										if (EqualsHelper.equals(questionPart.getAllReferences().get(0), ref, options)) {
+											keepFrom2 = true;
+										}
+									} else if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_TO)) {
+										if (EqualsHelper.equals(ref, fromRef)) {
+											keepTo2 = true;
+										}
+									}
+								}
+
+								if (keepFrom2 && keepTo2) {
+									keepFrom = true;
+									break;
+								}
+							}
+						} else if (keepFrom && !keepTo) {
+							for (final Flow flow : filteredAnswer.getFlows().getFlow()) {
+								boolean keepFrom2 = false;
+								boolean keepTo2 = false;
+
+								for (final Reference ref : flow.getReference()) {
+									if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_FROM)) {
+										if (EqualsHelper.equals(ref, toRef)) {
+											keepFrom2 = true;
+										}
+									} else if (ref.getType().equals(KeywordsAndConstants.REFERENCE_TYPE_TO)) {
+										if (EqualsHelper.equals(questionPart.getAllReferences().get(1), ref, options)) {
+											keepTo2 = true;
+										}
+									}
+								}
+
+								if (keepFrom2 && keepTo2) {
+									keepTo = true;
+									break;
+								}
+							}
+						}
+					}
+
+					if (!keepFrom || !keepTo) {
+						filteredAnswer.getFlows().getFlow().remove(i);
+						i--;
+					}
 				}
 			}
-			if (answer.getFlows().getFlow().size() == 0) {
-				answer.setFlows(null);
+			if (filteredAnswer.getFlows().getFlow().size() == 0) {
+				filteredAnswer.setFlows(null);
 			}
 		}
 
-		return answer;
+		return filteredAnswer;
 	}
 
 	List<Answer> buildCompleteAnswer(final IQuestionNode question) {
@@ -444,6 +467,14 @@ public class System {
 
 	public OperatorManager getOperatorManager() {
 		return this.operatorManager;
+	}
+
+	public TaskHooks getTaskHooksBefore() {
+		return this.taskHooksBefore;
+	}
+
+	public TaskHooks getTaskHooksAfter() {
+		return this.taskHooksAfter;
 	}
 
 	public List<IAnswerAvailable> getAnswerReceivers() {

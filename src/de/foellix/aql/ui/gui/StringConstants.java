@@ -18,7 +18,7 @@ public class StringConstants {
 	public static final String STR_ZOOM_RESET = "Reset zoom";
 	public static final String STR_ZOOM_IN = "Zoom in";
 	public static final String STR_ZOOM_OUT = "Zoom out";
-	public static final String STR_REFRESH_GRAPH = "Refresh Graph";
+	public static final String STR_REFRESH_GRAPH_AND_STATS = "Refresh Graph & Statistics";
 	public static final String STR_EXPORT_GRAPH = "Export Graph";
 	public static final String STR_UNDO = "Undo";
 	public static final String STR_REDO = "Redo";

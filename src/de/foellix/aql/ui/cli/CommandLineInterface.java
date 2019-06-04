@@ -4,16 +4,13 @@ import static org.fusesource.jansi.Ansi.ansi;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.fusesource.jansi.AnsiConsole;
 
 import de.foellix.aql.Log;
 import de.foellix.aql.Properties;
 import de.foellix.aql.config.ConfigHandler;
+import de.foellix.aql.helper.ManpageReader;
 import de.foellix.aql.system.BackupAndReset;
 import de.foellix.aql.system.System;
 import de.foellix.aql.ui.gui.GUI;
@@ -182,12 +179,6 @@ public class CommandLineInterface {
 	}
 
 	private static void help() {
-		try {
-			final File manpage = new File("manpage");
-			final byte[] encoded = Files.readAllBytes(Paths.get(manpage.toURI()));
-			Log.msg(new String(encoded, StandardCharsets.UTF_8), Log.NORMAL);
-		} catch (final IOException e) {
-			Log.error("Could not find manpage file.");
-		}
+		Log.msg(ManpageReader.getInstance().getManpageContent(), Log.NORMAL);
 	}
 }

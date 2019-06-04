@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:versionCode="1"
+	android:versionName="1.0"
+	package="de.upb.fpauck.sourceapp"
+	platformBuildVersionCode="23"
+	platformBuildVersionName="6.0-2704002"
+	>
+	<uses-sdk
+		android:minSdkVersion="23"
+		android:targetSdkVersion="23"
+		>
+	</uses-sdk>
+	<uses-permission
+		android:name="android.permission.READ_PHONE_STATE"
+		>
+	</uses-permission>
+	<application
+		android:theme="@7F070000"
+		android:label="@7F060000"
+		android:icon="@7F020000"
+		android:allowBackup="true"
+		android:supportsRtl="true"
+		>
+		<activity
+			android:name="de.upb.fpauck.simapp.SIMAppMainActivity"
+			>
+			<intent-filter
+				>
+				<action
+					android:name="android.intent.action.MAIN"
+					>
+				</action>
+				<category
+					android:name="android.intent.category.LAUNCHER"
+					>
+				</category>
+			</intent-filter>
+		</activity>
+	</application>
+</manifest>

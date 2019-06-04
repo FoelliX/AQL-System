@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.foellix.aql.helper.EqualsHelper;
 import de.foellix.aql.helper.Helper;
 
 public class QuestionPart implements IQuestionNode, Serializable {
@@ -14,13 +15,14 @@ public class QuestionPart implements IQuestionNode, Serializable {
 	private int mode;
 	private List<Reference> references;
 	private final Map<Reference, List<String>> preprocessorMap;
-	private final List<String> features;
+	private final List<String> features, uses;
 
 	public QuestionPart() {
 		this.mode = 0;
 		this.references = new ArrayList<>();
 		this.preprocessorMap = new HashMap<>();
 		this.features = new ArrayList<>();
+		this.uses = new ArrayList<>();
 	}
 
 	@Override
@@ -30,51 +32,86 @@ public class QuestionPart implements IQuestionNode, Serializable {
 
 	@Override
 	public String toString(final int level) {
-		final StringBuilder sb = new StringBuilder();
-
 		String indent = "";
 		for (int i = 0; i < level; i++) {
 			indent += "\t";
 		}
 
-		sb.append(indent + "QUESTION (\n" + indent + "\tMode: " + Helper.modeToString(this.mode) + "\n" + indent
-				+ "\tReferences:\n");
-		for (int i = 0; i < this.references.size(); i++) {
-			sb.append(indent + "\t" + i + ".\n" + indent + "\t" + Helper.toString(this.references.get(i), level + 1));
-			if (this.preprocessorMap.get(this.references.get(i)) != null) {
-				boolean first = true;
-				for (final String keyword : this.preprocessorMap.get(this.references.get(i))) {
-					if (first) {
-						sb.append(" <- " + keyword);
-						first = false;
-					} else {
-						sb.append(", " + keyword);
-					}
-				}
-			}
-			sb.append("\n");
+		final StringBuilder sb = new StringBuilder();
+
+		sb.append(indent + Helper.typeToSoi(this.mode));
+		if (this.references.size() == 2) {
+			sb.append(" FROM ");
+		} else {
+			sb.append(" IN ");
 		}
-		sb.append(indent + ")");
-		if (!this.features.isEmpty()) {
-			sb.append(" FEATURES: ");
+		for (int i = 0; i < this.references.size(); i++) {
+			if (i == 0) {
+				sb.append(Helper.toString(this.references.get(i)));
+			} else {
+				sb.append(" TO " + Helper.toString(this.references.get(i)));
+			}
+			if (this.preprocessorMap.get(this.references.get(i)) != null) {
+				sb.setLength(sb.length() - 1);
+				for (final String keyword : this.preprocessorMap.get(this.references.get(i))) {
+					sb.append(" | " + keyword);
+				}
+				sb.append(")");
+			}
+		}
+		if (this.features != null && !this.features.isEmpty()) {
+			sb.append(" FEATURING ");
 			for (int o = 0; o < this.features.size(); o++) {
-				sb.append(this.features.get(o));
+				sb.append("'" + this.features.get(o) + "'");
 				if (o != this.features.size() - 1) {
 					sb.append(", ");
 				}
 			}
 		}
-		sb.append("\n");
+		if (this.uses != null && !this.uses.isEmpty()) {
+			sb.append(" USES ");
+			for (int o = 0; o < this.uses.size(); o++) {
+				sb.append("'" + this.uses.get(o) + "'");
+				if (o != this.uses.size() - 1) {
+					sb.append(", ");
+				}
+			}
+		}
+		sb.append(" ?");
 
 		return sb.toString();
 	}
 
 	@Override
-	public String toRAW() {
+	public String toRAW(boolean external) {
 		final StringBuilder sb = new StringBuilder();
+		if (external) {
+			sb.append(String.valueOf(this.mode));
+		}
+
+		// References
 		for (final Reference reference : this.references) {
 			sb.append(Helper.toRAW(reference));
 		}
+
+		// Features
+		if (this.features != null) {
+			final List<String> sortedFeatures = new ArrayList<>(this.features);
+			sortedFeatures.sort(String::compareToIgnoreCase);
+			for (final String feature : sortedFeatures) {
+				sb.append(feature);
+			}
+		}
+
+		// Uses
+		if (this.uses != null) {
+			final List<String> sortedUses = new ArrayList<>(this.uses);
+			sortedUses.sort(String::compareToIgnoreCase);
+			for (final String use : sortedUses) {
+				sb.append(use);
+			}
+		}
+
 		return sb.toString();
 	}
 
@@ -93,6 +130,30 @@ public class QuestionPart implements IQuestionNode, Serializable {
 	@Override
 	public List<PreviousQuestion> getAllPreviousQuestions() {
 		return null;
+	}
+
+	@Override
+	public List<Reference> getAllReferences() {
+		return this.references;
+	}
+
+	@Override
+	public List<App> getAllApps(boolean equalsOnObjectLevel) {
+		final List<App> apps = new ArrayList<>();
+		for (final Reference reference : this.references) {
+			boolean add = true;
+			for (final App check : apps) {
+				if ((equalsOnObjectLevel && reference.getApp().equals(check))
+						|| (!equalsOnObjectLevel && EqualsHelper.equals(reference.getApp(), check))) {
+					add = false;
+					break;
+				}
+			}
+			if (add) {
+				apps.add(reference.getApp());
+			}
+		}
+		return apps;
 	}
 
 	// Add
@@ -133,10 +194,6 @@ public class QuestionPart implements IQuestionNode, Serializable {
 		return this.mode;
 	}
 
-	public List<Reference> getReferences() {
-		return this.references;
-	}
-
 	public void setMode(final int mode) {
 		this.mode = mode;
 	}
@@ -147,5 +204,9 @@ public class QuestionPart implements IQuestionNode, Serializable {
 
 	public List<String> getFeatures() {
 		return this.features;
+	}
+
+	public List<String> getUses() {
+		return this.uses;
 	}
 }

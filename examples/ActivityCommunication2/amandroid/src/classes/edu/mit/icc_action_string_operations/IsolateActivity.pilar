@@ -1,0 +1,25 @@
+record `edu.mit.icc_action_string_operations.IsolateActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `edu.mit.icc_action_string_operations.IsolateActivity.<init>`(`edu.mit.icc_action_string_operations.IsolateActivity` IsolateActivity_v0 @kind this) @owner ^`edu.mit.icc_action_string_operations.IsolateActivity` @signature `Ledu/mit/icc_action_string_operations/IsolateActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+
+  #L046e14.  call `android.app.Activity.<init>`(IsolateActivity_v0) @signature `Landroid/app/Activity;.<init>:()V` @classDescriptor ^`android.app.Activity` @kind direct;
+  #L046e1a.  return  @kind void;
+}
+procedure `void` `edu.mit.icc_action_string_operations.IsolateActivity.onCreate`(`edu.mit.icc_action_string_operations.IsolateActivity` IsolateActivity_v3 @kind this, `android.os.Bundle` Bundle_v4 @kind object) @owner ^`edu.mit.icc_action_string_operations.IsolateActivity` @signature `Ledu/mit/icc_action_string_operations/IsolateActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    `android.content.Intent` Intent_temp;
+    `int` int_temp;
+    `android.content.Intent` Intent_v0;
+    `java.lang.String` String_v2;
+    `java.lang.String` String_temp;
+    `java.lang.String` String_v1;
+
+  #L046e2c.  call `android.app.Activity.onCreate`(IsolateActivity_v3, Bundle_v4) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @classDescriptor ^`android.app.Activity` @kind super;
+  #L046e32.  call Intent_temp:=  `edu.mit.icc_action_string_operations.IsolateActivity.getIntent`(IsolateActivity_v3) @signature `Ledu/mit/icc_action_string_operations/IsolateActivity;.getIntent:()Landroid/content/Intent;` @classDescriptor ^`edu.mit.icc_action_string_operations.IsolateActivity` @kind virtual;
+  #L046e38.  Intent_v0:= Intent_temp  @kind object;
+  #L046e3a.  String_v2:= "DroidBench" @kind object;
+  #L046e3e.  call String_temp:=  `android.content.Intent.getStringExtra`(Intent_v0, String_v2) @signature `Landroid/content/Intent;.getStringExtra:(Ljava/lang/String;)Ljava/lang/String;` @classDescriptor ^`android.content.Intent` @kind virtual;
+  #L046e44.  String_v1:= String_temp  @kind object;
+  #L046e46.  String_v2:= "DroidBench" @kind object;
+  #L046e4a.  call int_temp:=  `android.util.Log.i`(String_v2, String_v1) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @classDescriptor ^`android.util.Log` @kind static;
+  #L046e50.  return  @kind void;
+}

@@ -39,10 +39,10 @@ public class ConverterFD implements IConverter {
 
 					to = new Reference();
 					to.setType(KeywordsAndConstants.REFERENCE_TYPE_TO);
-					to.setApp(taskInfo.getQuestion().getReferences().get(0).getApp());
+					to.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
 					to.setClassname(classname);
 					to.setMethod(method);
-					to.setStatement(Helper.fromStatementString(statement));
+					to.setStatement(Helper.createStatement(statement));
 
 					flow = new Flow();
 					flow.getReference().add(to);
@@ -57,10 +57,10 @@ public class ConverterFD implements IConverter {
 
 					final Reference from = new Reference();
 					from.setType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
-					from.setApp(taskInfo.getQuestion().getReferences().get(0).getApp());
+					from.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
 					from.setClassname(classname);
 					from.setMethod(method);
-					from.setStatement(Helper.fromStatementString(statement));
+					from.setStatement(Helper.createStatement(statement));
 
 					flow.getReference().add(from);
 

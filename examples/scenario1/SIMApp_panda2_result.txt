@@ -1,0 +1,32 @@
+INFO  2016-12-15 13:14:26,005 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(36): Running analysis consiting of 1 steps
+INFO  2016-12-15 13:14:26,007 [main] de.upb.pga3.panda2.utilities.MemoryUsageMonitor:setupMonitoring(98): Set up memory usage monitoring after each garbage collection
+INFO  2016-12-15 13:14:26,061 [main] de.upb.pga3.panda2.extension.Enhancer:enhance(52): Enhancer started (E:\uni\masterarbeit\pre\results\apps2\scenario1\SIMApp.apk)
+DEBUG 2016-12-15 13:14:26,272 [Service Thread] de.upb.pga3.panda2.utilities.MemoryUsageMonitor:logMem(148): Used Heapspace: 18MB
+INFO  2016-12-15 13:14:26,670 [main] de.upb.pga3.panda2.core.SootAdapter:run(156): Run WJTP phase
+INFO  2016-12-15 13:14:26,977 [main] de.upb.pga3.panda2.extension.Enhancer:enhance(126): Enhancer finished (E:\uni\masterarbeit\pre\results\apps2\scenario1\SIMApp.apk).
+INFO  2016-12-15 13:14:26,977 [main] de.upb.pga3.panda2.extension.lvl1.graphgenerator.GraphGeneratorLvl1:generateGraph(25): GraphGenerator started (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:26,979 [main] de.upb.pga3.panda2.extension.lvl1.graphgenerator.GraphGeneratorLvl1:generateGraph(30): GraphGenerator finished (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:26,979 [main] de.upb.pga3.panda2.extension.lvl1.analyzer.AnalyzerLvl1:analyze(24): Analyzer started (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:27,044 [main] de.upb.pga3.panda2.extension.lvl1.analyzer.AnalyzerLvl1:analyze(32): Analyzer finished (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:27,044 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(73): Finished analysis
+INFO  2016-12-15 13:14:27,046 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(74): Time needed for analysis: PT0.999S
+INFO  2016-12-15 13:14:27,047 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(75): Max. memory needed for analysis: 18MB
+Textual result - Intra-App Permission Usage Analysis
+-----de.foellix.sourceapp.R$attr: void <init>()-----
+-----de.foellix.sourceapp.R$color: void <init>()-----
+-----de.foellix.sourceapp.SourceMainActivity: void <init>()-----
+-----de.foellix.sourceapp.R$layout: void <init>()-----
+-----de.foellix.sourceapp.SourceMainActivity: void onCreate(android.os.Bundle)-----
+-----de.foellix.sourceapp.R$style: void <init>()-----
+-----de.foellix.sourceapp.R$id: void <init>()-----
+-----de.foellix.sourceapp.R$mipmap: void <init>()-----
+-----de.foellix.sourceapp.R$string: void <init>()-----
+-----de.foellix.sourceapp.BuildConfig: void <init>()-----
+-----de.foellix.sourceapp.SourceMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])-----
+-----de.foellix.sourceapp.R: void <init>()-----
+-----de.foellix.sourceapp.R$dimen: void <init>()-----
+-----de.foellix.sourceapp.SourceMainActivity: void source()-----
+android.permission.READ_PHONE_STATE (REQUIRED)
+
+INFO  2016-12-15 13:14:27,147 [main] de.upb.pga3.panda2.client.cmdline.HtmlParser:parse(160): Result was parsed successfully
+INFO  2016-12-15 13:14:27,147 [main] de.upb.pga3.panda2.main.ApplicationEntryPoint:main(58): Program is terminated.

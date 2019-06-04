@@ -1,0 +1,41 @@
+Unknown tag in constant pool: 16 at entry 129
+Warning: sun.misc.ObjectInputFilter$Config is a phantom class!
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.0 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.0 seconds.
+[Spark] Solution found in 0.0 seconds.
+Solving ICC problem
+Composing values
+Transforming de.upb.fpauck.simapp.R... 
+Transforming de.upb.fpauck.simapp.SIMAppMainActivity... 
+Transforming de.upb.fpauck.simapp.R$dimen... 
+Transforming de.upb.fpauck.simapp.BuildConfig... 
+Transforming de.upb.fpauck.simapp.R$id... 
+Transforming de.upb.fpauck.simapp.R$attr... 
+Transforming de.upb.fpauck.simapp.R$color... 
+Transforming de.upb.fpauck.simapp.R$style... 
+Transforming de.upb.fpauck.simapp.R$string... 
+Transforming de.upb.fpauck.simapp.R$mipmap... 
+Transforming de.upb.fpauck.simapp.R$layout... 
+
+Manifest file for de.upb.fpauck.sourceapp version 1
+  Activities:
+    de.upb.fpauck.simapp.SIMAppMainActivity
+      Intent filter:
+        Actions: [android.intent.action.MAIN]
+        Categories: [android.intent.category.LAUNCHER]
+
+  Activity Aliases:
+  Services:
+  Receivers:
+  Providers:
+
+
+The following ICC values were found:
+  - de/upb/fpauck/simapp/SIMAppMainActivity/source()
+Intent value: 1 possible value(s):
+Action: de.upb.fpauck.CALLSINK, Extras: [Secret, newField_1], 
+

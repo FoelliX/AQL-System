@@ -31,8 +31,8 @@ public class Editor extends BorderPane {
 	private File currentDir;
 	private final CodeArea codeArea;
 
-	private static final String[] KEYWORDS1 = new String[] { "IN", "FROM", "TO", "FEATURING" };
-	private static final String[] KEYWORDS2 = new String[] { "UNIFY", "CONNECT", "FILTER" };
+	private static final String[] KEYWORDS1 = new String[] { "IN", "FROM", "TO", "FEATURING", "USES" };
+	private static final String[] KEYWORDS2 = new String[] { "UNIFY", "CONNECT", "FILTER", "MINUS", "INTERSECT" };
 	private static final String[] KEYWORDS3 = new String[] { "Permissions", "Flows", "IntentSources", "IntentSinks",
 			"Intents", "IntentFilters", "Statement", "Class", "Method", "App" };
 
@@ -153,6 +153,7 @@ public class Editor extends BorderPane {
 					content = content.replaceFirst("%PLACEHOLDER_COMMA%", ",\n" + tabStr);
 				}
 			}
+			content = content.replaceAll("\t ", "\t");
 
 			this.codeArea.replaceText(content);
 		});
@@ -202,7 +203,7 @@ public class Editor extends BorderPane {
 			} else {
 				this.openDialog.setInitialDirectory(new File("."));
 			}
-			final File file = this.openDialog.showOpenDialog(this.getParentGUI().stage);
+			final File file = this.openDialog.showOpenDialog(this.getParentGUI().getStage());
 			if (file != null) {
 				try {
 					filename = file.getAbsolutePath();
@@ -213,18 +214,7 @@ public class Editor extends BorderPane {
 			}
 
 			// Paste
-			final int caret = this.codeArea.getCaretPosition();
-
-			final String before = this.codeArea.getText();
-			final String after;
-			if (caret >= before.length()) {
-				after = before.substring(0) + filename;
-			} else {
-				after = before.substring(0, caret) + filename + before.substring(caret);
-			}
-
-			this.codeArea.replaceText(after);
-			this.codeArea.requestFocus();
+			insert(filename);
 		});
 	}
 
@@ -234,5 +224,20 @@ public class Editor extends BorderPane {
 
 	public void setStop(final boolean stop) {
 		this.stop = stop;
+	}
+
+	public void insert(String string) {
+		final int caret = this.codeArea.getCaretPosition();
+
+		final String before = this.codeArea.getText();
+		final String after;
+		if (caret >= before.length()) {
+			after = before.substring(0) + string;
+		} else {
+			after = before.substring(0, caret) + string + before.substring(caret);
+		}
+
+		this.codeArea.replaceText(after);
+		this.codeArea.requestFocus();
 	}
 }

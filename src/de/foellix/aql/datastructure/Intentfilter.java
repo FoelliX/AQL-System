@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.03.13 um 11:45:28 AM CET 
+// Generiert: 2019.01.23 um 06:30:53 PM CET 
 //
 
 
@@ -29,9 +29,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element ref="{}reference"/&gt;
- *         &lt;element ref="{}action"/&gt;
+ *         &lt;element ref="{}action" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element ref="{}category" maxOccurs="unbounded" minOccurs="0"/&gt;
- *         &lt;element ref="{}data" minOccurs="0"/&gt;
+ *         &lt;element ref="{}data" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element ref="{}attributes" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -57,10 +57,9 @@ public class Intentfilter
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
     protected Reference reference;
-    @XmlElement(required = true)
-    protected String action;
+    protected List<String> action;
     protected List<String> category;
-    protected Data data;
+    protected List<Data> data;
     protected Attributes attributes;
 
     /**
@@ -88,27 +87,32 @@ public class Intentfilter
     }
 
     /**
-     * Ruft den Wert der action-Eigenschaft ab.
+     * Gets the value of the action property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAction() {
-        return action;
-    }
-
-    /**
-     * Legt den Wert der action-Eigenschaft fest.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the action property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getAction().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link String }
+     * 
+     * 
      */
-    public void setAction(String value) {
-        this.action = value;
+    public List<String> getAction() {
+        if (action == null) {
+            action = new ArrayList<String>();
+        }
+        return this.action;
     }
 
     /**
@@ -141,27 +145,32 @@ public class Intentfilter
     }
 
     /**
-     * Ruft den Wert der data-Eigenschaft ab.
+     * Gets the value of the data property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Data }
-     *     
-     */
-    public Data getData() {
-        return data;
-    }
-
-    /**
-     * Legt den Wert der data-Eigenschaft fest.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the data property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Data }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getData().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Data }
+     * 
+     * 
      */
-    public void setData(Data value) {
-        this.data = value;
+    public List<Data> getData() {
+        if (data == null) {
+            data = new ArrayList<Data>();
+        }
+        return this.data;
     }
 
     /**

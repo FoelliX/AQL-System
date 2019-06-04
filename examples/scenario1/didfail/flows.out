@@ -1,0 +1,19 @@
+Changed: 2
+Changed: 0
+---- Flows with 0 intent(s) ---------------------------------
+[]
+---- Flows with 1 intent(s) ---------------------------------
+[Flow(src='Src: <android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>', app=None, sink=Intent(tx=('de.upb.fpauck.sourceapp', 'de.upb.fpauck.simapp.SIMAppMainActivity'), rx=('de.upb.fpauck.smsapp', 'SMSAppMainActivity'), intent_id='newField_1')),
+ Flow(src=Intent(tx=('de.upb.fpauck.sourceapp', 'de.upb.fpauck.simapp.SIMAppMainActivity'), rx=('de.upb.fpauck.smsapp', 'SMSAppMainActivity'), intent_id='newField_1'), app=None, sink='Sink: <android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>')]
+---- Flows with 2 intent(s) ---------------------------------
+[]
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------
+### 'Intent(tx=('de.upb.fpauck.sourceapp', 'de.upb.fpauck.simapp.SIMAppMainActivity'), rx=('de.upb.fpauck.smsapp', 'SMSAppMainActivity'), intent_id='newField_1')': ###
+['Src: <android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>']
+--------------------
+--------------------
+### 'Sink: <android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>': ###
+['Src: <android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>']
+--------------------

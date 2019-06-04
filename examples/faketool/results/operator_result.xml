@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<answer>
+    <intentsources>
+        <intentsource>
+            <target>
+                <action>de.foellix.aql.aqlbench.LEAK</action>
+                <category>android.intent.category.DEFAULT</category>
+            </target>
+            <reference>
+                <statement>
+                    <statementfull>r3 = virtualinvoke r2.&lt;android.content.Intent: java.lang.String getStringExtra(java.lang.String)&gt;("secret")</statementfull>
+                    <statementgeneric>android.content.Intent: java.lang.String getStringExtra(java.lang.String)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>"secret"</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappend1.MainActivity: void sink()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappend1.MainActivity</classname>
+                <app>
+                    <file>examples\faketool\InterAppEnd1.apk</file>
+                    <hashes>
+                        <hash type="MD5">fc850d773145bbc65694c58213f6cb6f</hash>
+                        <hash type="SHA-1">edd9bf89ef2b01be8abf7f6616dd5867c96a79ac</hash>
+                        <hash type="SHA-256">79dd06fa366c4313f84913b73ce8fe157dd6dab8b0946d1a54ef60b604f2a26d</hash>
+                    </hashes>
+                </app>
+            </reference>
+        </intentsource>
+    </intentsources>
+    <intentsinks>
+        <intentsink>
+            <target>
+                <action>de.foellix.aql.aqlbench.LEAK</action>
+            </target>
+            <reference>
+                <statement>
+                    <statementfull>virtualinvoke r0.&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void startActivityForResult(android.content.Intent,int)&gt;(r1, b1)</statementfull>
+                    <statementgeneric>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void startActivityForResult(android.content.Intent,int)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>android.content.Intent</type>
+                            <value>r1</value>
+                        </parameter>
+                        <parameter>
+                            <type>int</type>
+                            <value>b1</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void source()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>examples\faketool\InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+        </intentsink>
+    </intentsinks>
+    <flows>
+        <flow>
+            <reference type="from">
+                <statement>
+                    <statementfull>virtualinvoke r0.&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void startActivityForResult(android.content.Intent,int)&gt;(r1, b1)</statementfull>
+                    <statementgeneric>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void startActivityForResult(android.content.Intent,int)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>android.content.Intent</type>
+                            <value>r1</value>
+                        </parameter>
+                        <parameter>
+                            <type>int</type>
+                            <value>b1</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void source()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>examples\faketool\InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <reference type="to">
+                <statement>
+                    <statementfull>r3 = virtualinvoke r2.&lt;android.content.Intent: java.lang.String getStringExtra(java.lang.String)&gt;("secret")</statementfull>
+                    <statementgeneric>android.content.Intent: java.lang.String getStringExtra(java.lang.String)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>"secret"</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappend1.MainActivity: void sink()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappend1.MainActivity</classname>
+                <app>
+                    <file>examples\faketool\InterAppEnd1.apk</file>
+                    <hashes>
+                        <hash type="MD5">fc850d773145bbc65694c58213f6cb6f</hash>
+                        <hash type="SHA-1">edd9bf89ef2b01be8abf7f6616dd5867c96a79ac</hash>
+                        <hash type="SHA-256">79dd06fa366c4313f84913b73ce8fe157dd6dab8b0946d1a54ef60b604f2a26d</hash>
+                    </hashes>
+                </app>
+            </reference>
+        </flow>
+    </flows>
+</answer>

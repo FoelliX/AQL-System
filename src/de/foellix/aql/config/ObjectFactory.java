@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.05.16 um 08:45:07 AM CEST 
+// Generiert: 2019.01.10 um 12:57:59 PM CET 
 //
 
 
@@ -33,6 +33,7 @@ public class ObjectFactory {
 
     private final static QName _Path_QNAME = new QName("", "path");
     private final static QName _Run_QNAME = new QName("", "run");
+    private final static QName _RunOnEntry_QNAME = new QName("", "runOnEntry");
     private final static QName _RunOnExit_QNAME = new QName("", "runOnExit");
     private final static QName _RunOnSuccess_QNAME = new QName("", "runOnSuccess");
     private final static QName _RunOnFail_QNAME = new QName("", "runOnFail");
@@ -41,6 +42,9 @@ public class ObjectFactory {
     private final static QName _Questions_QNAME = new QName("", "questions");
     private final static QName _Instances_QNAME = new QName("", "instances");
     private final static QName _MemoryPerInstance_QNAME = new QName("", "memoryPerInstance");
+    private final static QName _Url_QNAME = new QName("", "url");
+    private final static QName _Username_QNAME = new QName("", "username");
+    private final static QName _Password_QNAME = new QName("", "password");
     private final static QName _AndroidPlatforms_QNAME = new QName("", "androidPlatforms");
     private final static QName _MaxMemory_QNAME = new QName("", "maxMemory");
 
@@ -57,6 +61,14 @@ public class ObjectFactory {
      */
     public Priority createPriority() {
         return new Priority();
+    }
+
+    /**
+     * Create an instance of {@link Execute }
+     * 
+     */
+    public Execute createExecute() {
+        return new Execute();
     }
 
     /**
@@ -129,6 +141,15 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
+    @XmlElementDecl(namespace = "", name = "runOnEntry")
+    public JAXBElement<String> createRunOnEntry(String value) {
+        return new JAXBElement<String>(_RunOnEntry_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
     @XmlElementDecl(namespace = "", name = "runOnExit")
     public JAXBElement<String> createRunOnExit(String value) {
         return new JAXBElement<String>(_RunOnExit_QNAME, String.class, null, value);
@@ -195,6 +216,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "memoryPerInstance")
     public JAXBElement<Integer> createMemoryPerInstance(Integer value) {
         return new JAXBElement<Integer>(_MemoryPerInstance_QNAME, Integer.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "url")
+    public JAXBElement<String> createUrl(String value) {
+        return new JAXBElement<String>(_Url_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "username")
+    public JAXBElement<String> createUsername(String value) {
+        return new JAXBElement<String>(_Username_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "password")
+    public JAXBElement<String> createPassword(String value) {
+        return new JAXBElement<String>(_Password_QNAME, String.class, null, value);
     }
 
     /**

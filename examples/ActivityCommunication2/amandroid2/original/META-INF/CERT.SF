@@ -1,0 +1,31 @@
+Signature-Version: 1.0
+Created-By: 1.0 (Android)
+SHA1-Digest-Manifest: YWlsvJoCkGjvT7YuxBs9rYWGBwU=
+
+Name: res/menu/main.xml
+SHA1-Digest: xGf0u+xUTjogWdylR842SrV08xc=
+
+Name: res/drawable-xhdpi/ic_launcher.png
+SHA1-Digest: cIga++hy5wqjHl9IHSfbg8tqCug=
+
+Name: AndroidManifest.xml
+SHA1-Digest: MVerDsWN9OAPFoPQF0ut+1P9ue8=
+
+Name: res/drawable-mdpi/ic_launcher.png
+SHA1-Digest: VY7kOF8E3rn8EUTvQC/DcBEN6kQ=
+
+Name: res/drawable-hdpi/ic_launcher.png
+SHA1-Digest: stS7pUucSY0GgAVoESyO3Y7SanU=
+
+Name: res/layout/activity_main.xml
+SHA1-Digest: Uxf740M6wdZCW/zSPABJsnl6Ykg=
+
+Name: resources.arsc
+SHA1-Digest: 4L6cq0jcbWVQF/scBDRlA2/mpz8=
+
+Name: classes.dex
+SHA1-Digest: sxEbyF8EB8FGWaAP1cdGR1nD3Z8=
+
+Name: res/drawable-xxhdpi/ic_launcher.png
+SHA1-Digest: KKqaLh/DVvFp+v1KoaDw7xETvrI=
+

@@ -17,16 +17,18 @@ public class TaskTimer extends Thread {
 	public void run() {
 		final long start = java.lang.System.currentTimeMillis();
 
-		try {
-			while (start + this.timeout * 1000 > java.lang.System.currentTimeMillis()) {
+		while (start + this.timeout * 1000 > java.lang.System.currentTimeMillis()) {
+			try {
 				Thread.sleep(500);
-				if (this.parent.isDone()) {
-					return;
-				}
+			} catch (final InterruptedException e) {
+				Log.msg("Timer stopped: " + e.getMessage(), Log.DEBUG_DETAILED);
+				return;
 			}
-			this.parent.interrupt();
-		} catch (final InterruptedException e) {
-			Log.msg("Timer stopped: " + e.getMessage(), Log.DEBUG_DETAILED);
+			if (this.parent.isDone()) {
+				return;
+			}
 		}
+		Log.msg("Timeout-Timer expired! (" + this.parent.getTaskinfo().getTool().getName() + ")", Log.NORMAL);
+		this.parent.interrupt();
 	}
 }

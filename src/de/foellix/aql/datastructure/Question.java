@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.foellix.aql.helper.EqualsHelper;
+
 public class Question implements IQuestionNode, Serializable {
 	private static final long serialVersionUID = 4453131349077342896L;
 
@@ -60,36 +62,93 @@ public class Question implements IQuestionNode, Serializable {
 	}
 
 	@Override
+	public List<Reference> getAllReferences() {
+		final List<Reference> references = new ArrayList<>();
+		for (final IQuestionNode child : this.children) {
+			for (final Reference reference : child.getAllReferences()) {
+				boolean add = true;
+				for (final Reference check : references) {
+					if (EqualsHelper.equals(reference, check)) {
+						add = false;
+						break;
+					}
+				}
+				if (add) {
+					references.add(reference);
+				}
+			}
+		}
+		return references;
+	}
+
+	@Override
+	public List<App> getAllApps(boolean equalsOnObjectLevel) {
+		final List<App> apps = new ArrayList<>();
+		for (final IQuestionNode child : this.children) {
+			for (final App app : child.getAllApps(equalsOnObjectLevel)) {
+				boolean add = true;
+				for (final App check : apps) {
+					if ((equalsOnObjectLevel && app.equals(check))
+							|| (!equalsOnObjectLevel && EqualsHelper.equals(app, check))) {
+						add = false;
+						break;
+					}
+				}
+				if (add) {
+					apps.add(app);
+				}
+			}
+		}
+		return apps;
+	}
+
+	@Override
 	public String toString() {
 		return toString(0);
 	}
 
 	@Override
-	public String toString(final int level) {
-		final StringBuilder sb = new StringBuilder();
-
+	public String toString(int level) {
 		String indent = "";
 		for (int i = 0; i < level; i++) {
 			indent += "\t";
 		}
 
-		sb.append(indent + this.operator + " [\n");
-
-		for (final IQuestionNode node : this.getChildren()) {
-			sb.append(node.toString(level + 1));
+		final StringBuilder sb = new StringBuilder();
+		if (!this.operator.equals(KeywordsAndConstants.OPERATOR_COLLECTION)) {
+			sb.append(indent + this.operator + " [\n");
+		} else {
+			level--;
 		}
 
-		sb.append(indent + "]\n");
+		boolean first = true;
+		for (final IQuestionNode child : this.children) {
+			if (first) {
+				first = false;
+				sb.append(child.toString(level + 1));
+			} else {
+				if (this.operator.equals(KeywordsAndConstants.OPERATOR_COLLECTION)) {
+					sb.append("\n" + child.toString(level + 1));
+				} else {
+					sb.append(",\n" + child.toString(level + 1));
+				}
+			}
+		}
+
+		if (!this.operator.equals(KeywordsAndConstants.OPERATOR_COLLECTION)) {
+			sb.append("\n" + indent + "]");
+		}
 
 		return sb.toString();
 	}
 
 	@Override
-	public String toRAW() {
+	public String toRAW(boolean external) {
 		final StringBuilder sb = new StringBuilder();
 		for (final IQuestionNode child : this.getChildren()) {
-			sb.append(child.toRAW());
+			sb.append(child.toRAW(external));
 		}
 		return sb.toString();
 	}
+
 }

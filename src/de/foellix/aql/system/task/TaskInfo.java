@@ -1,6 +1,7 @@
 package de.foellix.aql.system.task;
 
 import de.foellix.aql.config.Tool;
+import de.foellix.aql.system.DefaultOperator;
 
 public class TaskInfo {
 	private Tool tool;
@@ -12,11 +13,18 @@ public class TaskInfo {
 	}
 
 	public int getMemoryUsage() {
-		return this.tool.getMemoryPerInstance();
+		if (this.tool.getExecute() != null && !this.tool.isExternal()
+				&& this.tool.getExecute().getMemoryPerInstance() != null) {
+			return this.tool.getExecute().getMemoryPerInstance();
+		} else {
+			return 0;
+		}
 	}
 
 	public void setMemoryUsage(int value) {
-		this.tool.setMemoryPerInstance(value);
+		if (!(this.tool instanceof DefaultOperator)) {
+			this.tool.getExecute().setMemoryPerInstance(value);
+		}
 	}
 
 	public Tool getTool() {

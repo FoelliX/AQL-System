@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results package="de.upb.fpauck.smsapp">
+<flow>
+    <sink method="&lt;android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)&gt;"></sink>
+    <source method="&lt;android.app.Activity: android.content.Intent getIntent()&gt;"
+     component="de.upb.fpauck.smsapp.SMSAppMainActivity"
+     in="sink"
+    ></source>
+</flow>
+</results>

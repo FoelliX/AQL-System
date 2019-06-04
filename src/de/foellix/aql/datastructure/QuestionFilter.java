@@ -19,27 +19,27 @@ public class QuestionFilter extends Question {
 
 	@Override
 	public String toString(final int level) {
-		final StringBuilder sb = new StringBuilder();
-
 		String indent = "";
 		for (int i = 0; i < level; i++) {
 			indent += "\t";
 		}
 
-		sb.append(indent + "FILTER [\n");
+		final StringBuilder sb = new StringBuilder();
 
-		for (final IQuestionNode node : super.getChildren()) {
-			sb.append(node.toString(level + 1));
-		}
+		sb.append(indent + getOperator() + " [\n");
+		sb.append(getChildren().get(0).toString(level + 1));
 
-		sb.append(indent);
-		if (this.name != null && this.value != null) {
-			sb.append(", " + this.name + " = " + this.value);
+		if (this.name != null && !this.name.replaceAll(" ", "").equals("")) {
+			sb.append("\n" + indent + "\t| " + this.name + " = ");
+			if (this.value != null && !this.value.replaceAll(" ", "").equals("")) {
+				sb.append(this.value);
+			}
 		}
 		if (this.soi != KeywordsAndConstants.QUESTION_TYPE_UNKNOWN) {
-			sb.append(", " + Helper.modeToString(this.soi));
+			sb.append("\n" + indent + "\t| " + Helper.typeToSoi(this.soi));
 		}
-		sb.append("]\n");
+
+		sb.append("\n" + indent + "]");
 
 		return sb.toString();
 	}

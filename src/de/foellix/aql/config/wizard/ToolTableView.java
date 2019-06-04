@@ -91,6 +91,23 @@ public class ToolTableView extends ScrollPane {
 		final Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			this.tools.remove(tool);
+			if (this.parent.getParentGUI().getConfig().getTools() != null
+					&& this.parent.getParentGUI().getConfig().getTools().getTool().contains(tool)) {
+				this.parent.getParentGUI().getConfig().getTools().getTool().remove(tool);
+			}
+			if (this.parent.getParentGUI().getConfig().getPreprocessors() != null
+					&& this.parent.getParentGUI().getConfig().getPreprocessors().getTool().contains(tool)) {
+				this.parent.getParentGUI().getConfig().getPreprocessors().getTool().remove(tool);
+			}
+			if (this.parent.getParentGUI().getConfig().getOperators() != null
+					&& this.parent.getParentGUI().getConfig().getOperators().getTool().contains(tool)) {
+				this.parent.getParentGUI().getConfig().getOperators().getTool().remove(tool);
+			}
+			if (this.parent.getParentGUI().getConfig().getConverters() != null
+					&& this.parent.getParentGUI().getConfig().getConverters().getTool().contains(tool)) {
+				this.parent.getParentGUI().getConfig().getConverters().getTool().remove(tool);
+			}
+			this.parent.apply();
 		} else {
 			alert.hide();
 		}

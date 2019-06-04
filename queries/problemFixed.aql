@@ -1,4 +1,0 @@
-CONNECT [
-	IntentSinks IN App('TestApp.apk') ?,
-	IntentSources IN App('TestApp.apk') ?
-]

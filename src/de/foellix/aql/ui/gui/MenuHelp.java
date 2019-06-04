@@ -62,7 +62,7 @@ public class MenuHelp extends Menu {
 				alertStage.getIcons().add(new Image("file:data/gui/images/icon_32.png", 32, 32, false, true));
 				alertStage.getIcons().add(new Image("file:data/gui/images/icon_64.png", 64, 64, false, true));
 				alert.setTitle("Information");
-				alert.setHeaderText(Properties.info().ABBRRVIATION + "\n" + Properties.info().NAME);
+				alert.setHeaderText(Properties.info().ABBREVIATION + "\n" + Properties.info().NAME);
 				alert.setContentText("Version: " + Properties.info().VERSION + " (" + Properties.info().BUILDNUMBER
 						+ ")\nDeveloped by: " + Properties.info().AUTHOR + " (" + Properties.info().AUTHOR_EMAIL
 						+ ")\n\nGitHub: " + Properties.info().GITHUB_LINK);

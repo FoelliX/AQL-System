@@ -140,7 +140,7 @@ public class ConverterAmandroid implements IConverter {
 		reference.setStatement(toStatement(needle));
 		reference.setMethod(toMethod(method));
 		reference.setClassname(classname);
-		reference.setApp(this.question.getReferences().get(0).getApp());
+		reference.setApp(this.question.getAllReferences().get(0).getApp());
 		return reference;
 	}
 
@@ -179,7 +179,7 @@ public class ConverterAmandroid implements IConverter {
 		final String stmName = Helper.cut(amandroidString, ";.", ":(");
 
 		final String jimpleString = stmClass + ": " + stmReturntype + " " + stmName + "(" + stmParameters + ")";
-		final Statement statement = Helper.fromStatementString(jimpleString);
+		final Statement statement = Helper.createStatement(jimpleString);
 
 		return statement;
 	}

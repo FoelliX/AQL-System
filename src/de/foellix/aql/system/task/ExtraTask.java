@@ -1,8 +1,6 @@
 package de.foellix.aql.system.task;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 
 import de.foellix.aql.Log;
 import de.foellix.aql.helper.Helper;
@@ -21,7 +19,9 @@ public class ExtraTask extends Thread {
 	public void run() {
 		String runCmdTemp = null;
 		try {
-			if (this.mode == TaskStatus.STATUS_ABORT) {
+			if (this.mode == TaskStatus.STATUS_ENTRY) {
+				runCmdTemp = this.taskinfo.getTool().getRunOnEntry();
+			} else if (this.mode == TaskStatus.STATUS_ABORT) {
 				runCmdTemp = this.taskinfo.getTool().getRunOnAbort();
 			} else if (this.mode == TaskStatus.STATUS_FAIL) {
 				runCmdTemp = this.taskinfo.getTool().getRunOnFail();
@@ -30,29 +30,14 @@ public class ExtraTask extends Thread {
 			} else {
 				runCmdTemp = this.taskinfo.getTool().getRunOnExit();
 			}
+			runCmdTemp = Helper.replaceVariables(runCmdTemp, this.taskinfo);
 			final String[] runCmd = runCmdTemp.split(" ");
+
 			final String path = Helper.replaceVariables(this.taskinfo.getTool().getPath(), this.taskinfo);
 			final Process process = new ProcessBuilder(runCmd).directory(new File(path)).start();
 
-			if (Log.logIt(Log.DEBUG_DETAILED)) {
-				String line;
-				final BufferedReader input1 = new BufferedReader(new InputStreamReader(process.getInputStream()));
-				while ((line = input1.readLine()) != null) {
-					Log.msg("Process (output): " + line, Log.DEBUG_DETAILED);
-				}
-				input1.close();
-
-				final BufferedReader input2 = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-				while ((line = input2.readLine()) != null) {
-					Log.msg("Process (error): " + line, Log.DEBUG_DETAILED);
-				}
-				input2.close();
-			} else {
-				process.getErrorStream().close();
-				process.getOutputStream().close();
-			}
-
-			process.waitFor();
+			final ProcessWrapper processWrapper = new ProcessWrapper(process);
+			processWrapper.waitFor();
 
 			this.done = true;
 		} catch (final Exception e) {
@@ -60,6 +45,9 @@ public class ExtraTask extends Thread {
 				Log.warning("Run on event did not execute properly: " + runCmdTemp + " (" + e.getMessage() + ")");
 			} else {
 				Log.warning("Run on event did not execute properly! (" + e.getMessage() + ")");
+				if (Log.logIt(Log.DEBUG_DETAILED)) {
+					e.printStackTrace();
+				}
 			}
 			this.done = true;
 		}
@@ -67,16 +55,16 @@ public class ExtraTask extends Thread {
 
 	public void runAndWait() {
 		this.done = false;
-		if ((this.mode == null && this.taskinfo.getTool().getRunOnExit() != null
+		if ((this.mode == TaskStatus.STATUS_EXIT && this.taskinfo.getTool().getRunOnExit() != null
 				&& !this.taskinfo.getTool().getRunOnExit().equals(""))
+				|| (this.mode == TaskStatus.STATUS_ENTRY && this.taskinfo.getTool().getRunOnEntry() != null
+						&& !this.taskinfo.getTool().getRunOnEntry().equals(""))
 				|| (this.mode == TaskStatus.STATUS_ABORT && this.taskinfo.getTool().getRunOnAbort() != null
 						&& !this.taskinfo.getTool().getRunOnAbort().equals(""))
 				|| (this.mode == TaskStatus.STATUS_FAIL && this.taskinfo.getTool().getRunOnFail() != null
 						&& !this.taskinfo.getTool().getRunOnFail().equals(""))
 				|| (this.mode == TaskStatus.STATUS_SUCCESS && this.taskinfo.getTool().getRunOnSuccess() != null
-						&& !this.taskinfo.getTool().getRunOnSuccess().equals(""))
-
-		) {
+						&& !this.taskinfo.getTool().getRunOnSuccess().equals(""))) {
 			this.start();
 			while (!this.done) {
 				try {

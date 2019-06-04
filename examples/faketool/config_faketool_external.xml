@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<config>
+	<androidPlatforms>path/to/Android/sdks/platforms</androidPlatforms>
+    <maxMemory>6</maxMemory>
+    <tools>
+        <tool name="Tool1" version="1" external="true">
+            <priority>1</priority>
+            <execute>
+                <url>http://localhost:8080/AQL-WebService/ask</url>
+                <username>aql</username>
+                <password>AQL-P4SSw0rd</password>
+            </execute>
+            <path>.</path>
+            <questions>IntraAppFlows</questions>
+        </tool>
+        <tool name="Tool2" version="1" external="true">
+            <priority>1</priority>
+            <execute>
+                <url>http://localhost:8080/AQL-WebService/ask</url>
+                <username>aql</username>
+                <password>AQL-P4SSw0rd</password>
+            </execute>
+            <path>.</path>
+            <questions>IntentSinks, IntentSources</questions>
+        </tool>
+    </tools>
+    <preprocessors>
+        <tool name="Preprocessor" version="1" external="true">
+            <priority>1</priority>
+            <execute>
+                <url>http://localhost:8080/AQL-WebService/ask</url>
+                <username>aql</username>
+                <password>AQL-P4SSw0rd</password>
+            </execute>
+            <path>.</path>
+            <questions>FAKE</questions>
+        </tool>
+    </preprocessors>
+    <operators>
+        <tool name="Operator" version="1" external="true">
+            <priority>1</priority>
+            <execute>
+                <url>http://localhost:8080/AQL-WebService/ask</url>
+                <username>aql</username>
+                <password>AQL-P4SSw0rd</password>
+            </execute>
+            <path>.</path>
+            <questions>MATCH(*)</questions>
+        </tool>
+    </operators>
+    <converters>
+        <tool name="Converter" version="1" external="true">
+            <priority>1</priority>
+            <execute>
+                <url>http://localhost:8080/AQL-WebService/ask</url>
+                <username>aql</username>
+                <password>AQL-P4SSw0rd</password>
+            </execute>
+            <path>.</path>
+            <questions>Tool1</questions>
+        </tool>
+    </converters>
+</config>

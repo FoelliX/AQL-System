@@ -1,4 +1,0 @@
-CONNECT [
-	IntentSinks IN App('E:\uni\masterarbeit\evaluation\2_AQL_FD_IC3_vs_AQL_IccTA\apk\Lifecycle\BroadcastReceiverLifecycle2.apk')?,
-	IntentSources IN App('E:\uni\masterarbeit\evaluation\2_AQL_FD_IC3_vs_AQL_IccTA\apk\Lifecycle\BroadcastReceiverLifecycle2.apk')?
-]

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<answer>
+    <flows>
+        <flow>
+            <reference type="from">
+                <statement>
+                    <statementfull>$r4 = virtualinvoke $r3.&lt;android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()&gt;()</statementfull>
+                    <statementgeneric>android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()</statementgeneric>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void source()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <reference type="to">
+                <statement>
+                    <statementfull>r3 = virtualinvoke r2.&lt;android.content.Intent: java.lang.String getStringExtra(java.lang.String)&gt;("secret")</statementfull>
+                    <statementgeneric>android.content.Intent: java.lang.String getStringExtra(java.lang.String)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>"secret"</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappend1.MainActivity: void sink()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappend1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppEnd1.apk</file>
+                    <hashes>
+                        <hash type="MD5">fc850d773145bbc65694c58213f6cb6f</hash>
+                        <hash type="SHA-1">edd9bf89ef2b01be8abf7f6616dd5867c96a79ac</hash>
+                        <hash type="SHA-256">79dd06fa366c4313f84913b73ce8fe157dd6dab8b0946d1a54ef60b604f2a26d</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <attributes>
+                <attribute>
+                    <name>complete</name>
+                    <value>true</value>
+                </attribute>
+            </attributes>
+        </flow>
+        <flow>
+            <reference type="from">
+                <statement>
+                    <statementfull>$r4 = virtualinvoke $r3.&lt;android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()&gt;()</statementfull>
+                    <statementgeneric>android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()</statementgeneric>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void source()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <reference type="to">
+                <statement>
+                    <statementfull>staticinvoke &lt;android.util.Log: int wtf(java.lang.String,java.lang.String)&gt;("LEAK 1", $r2)</statementfull>
+                    <statementgeneric>android.util.Log: int wtf(java.lang.String,java.lang.String)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>"LEAK 1"</value>
+                        </parameter>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>$r2</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappend1.MainActivity: void sink()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappend1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppEnd1.apk</file>
+                    <hashes>
+                        <hash type="MD5">fc850d773145bbc65694c58213f6cb6f</hash>
+                        <hash type="SHA-1">edd9bf89ef2b01be8abf7f6616dd5867c96a79ac</hash>
+                        <hash type="SHA-256">79dd06fa366c4313f84913b73ce8fe157dd6dab8b0946d1a54ef60b604f2a26d</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <attributes>
+                <attribute>
+                    <name>complete</name>
+                    <value>true</value>
+                </attribute>
+            </attributes>
+        </flow>
+        <flow>
+            <reference type="from">
+                <statement>
+                    <statementfull>$r4 = virtualinvoke $r3.&lt;android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()&gt;()</statementfull>
+                    <statementgeneric>android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()</statementgeneric>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void source()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <reference type="to">
+                <statement>
+                    <statementfull>virtualinvoke $r3.&lt;android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)&gt;("123456789", null, $r2, null, null)</statementfull>
+                    <statementgeneric>android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>"123456789"</value>
+                        </parameter>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>null</value>
+                        </parameter>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>$r2</value>
+                        </parameter>
+                        <parameter>
+                            <type>android.app.PendingIntent</type>
+                            <value>null</value>
+                        </parameter>
+                        <parameter>
+                            <type>android.app.PendingIntent</type>
+                            <value>null</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappend1.MainActivity: void sink()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappend1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppEnd1.apk</file>
+                    <hashes>
+                        <hash type="MD5">fc850d773145bbc65694c58213f6cb6f</hash>
+                        <hash type="SHA-1">edd9bf89ef2b01be8abf7f6616dd5867c96a79ac</hash>
+                        <hash type="SHA-256">79dd06fa366c4313f84913b73ce8fe157dd6dab8b0946d1a54ef60b604f2a26d</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <attributes>
+                <attribute>
+                    <name>complete</name>
+                    <value>true</value>
+                </attribute>
+            </attributes>
+        </flow>
+        <flow>
+            <reference type="from">
+                <statement>
+                    <statementfull>$r4 = virtualinvoke $r3.&lt;android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()&gt;()</statementfull>
+                    <statementgeneric>android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()</statementgeneric>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void source()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <reference type="to">
+                <statement>
+                    <statementfull>staticinvoke &lt;android.util.Log: int wtf(java.lang.String,java.lang.String)&gt;("LEAK 2", $r2)</statementfull>
+                    <statementgeneric>android.util.Log: int wtf(java.lang.String,java.lang.String)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>"LEAK 2"</value>
+                        </parameter>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>$r2</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void sink(android.content.Intent)&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <attributes>
+                <attribute>
+                    <name>complete</name>
+                    <value>true</value>
+                </attribute>
+            </attributes>
+        </flow>
+        <flow>
+            <reference type="from">
+                <statement>
+                    <statementfull>$r4 = virtualinvoke $r3.&lt;android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()&gt;()</statementfull>
+                    <statementgeneric>android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()</statementgeneric>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void source()&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <reference type="to">
+                <statement>
+                    <statementfull>virtualinvoke $r3.&lt;android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)&gt;("123456789", null, $r2, null, null)</statementfull>
+                    <statementgeneric>android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)</statementgeneric>
+                    <parameters>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>"123456789"</value>
+                        </parameter>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>null</value>
+                        </parameter>
+                        <parameter>
+                            <type>java.lang.String</type>
+                            <value>$r2</value>
+                        </parameter>
+                        <parameter>
+                            <type>android.app.PendingIntent</type>
+                            <value>null</value>
+                        </parameter>
+                        <parameter>
+                            <type>android.app.PendingIntent</type>
+                            <value>null</value>
+                        </parameter>
+                    </parameters>
+                </statement>
+                <method>&lt;de.foellix.aql.aqlbench.api19.interappstart1.MainActivity: void sink(android.content.Intent)&gt;</method>
+                <classname>de.foellix.aql.aqlbench.api19.interappstart1.MainActivity</classname>
+                <app>
+                    <file>/media/sf_webservice/aql/uploads/10001/InterAppStart1.apk</file>
+                    <hashes>
+                        <hash type="MD5">a0c5af534243440e53dec4f43b8ae26f</hash>
+                        <hash type="SHA-1">b23be8c3c45f9bec00007184a457030e035dbc85</hash>
+                        <hash type="SHA-256">886b37f290df296a7b2c8e3af7323995ef87e281196ed5fe978377ee4726b75f</hash>
+                    </hashes>
+                </app>
+            </reference>
+            <attributes>
+                <attribute>
+                    <name>complete</name>
+                    <value>true</value>
+                </attribute>
+            </attributes>
+        </flow>
+    </flows>
+</answer>

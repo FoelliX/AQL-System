@@ -49,11 +49,11 @@ public class ConverterPAndA2 implements IConverter {
 							classname = Helper.cut(method, "<", ": ");
 
 							currentRef = new Reference();
-							currentRef.setApp(taskInfo.getQuestion().getReferences().get(0).getApp());
+							currentRef.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
 							currentRef.setClassname(classname);
 							currentRef.setMethod(method);
 							try {
-								currentRef.setStatement(Helper.fromStatementString(statement));
+								currentRef.setStatement(Helper.createStatement(statement));
 							} catch (final StringIndexOutOfBoundsException e) {
 								// Do nothing to simply ignore this statement,
 								// which is not relevant for the outcome.

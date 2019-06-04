@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.foellix</groupId>
 	<artifactId>AQL-System</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>1.2.0</version>
 	<packaging>jar</packaging>
 
 	<name>AQL-System</name>
 	<description>Android App Analysis Query Language - System</description>
-	<url>https://FoelliX.github.io/AQL-System/</url>
+	<url>https://FoelliX.github.io/AQL-System</url>
 
 	<properties>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
@@ -42,6 +42,74 @@
 				<script.extension>.sh</script.extension>
 			</properties>
 		</profile>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.8</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<build>
@@ -50,6 +118,8 @@
 
 		<outputDirectory>target/classes</outputDirectory>
 		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>testsrc</testSourceDirectory>
+
 		<resources>
 			<resource>
 				<directory>${project.basedir}</directory>
@@ -57,6 +127,12 @@
 					<include>tool.properties</include>
 				</includes>
 				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>manpage</include>
+				</includes>
 			</resource>
 			<resource>
 				<directory>${project.basedir}</directory>
@@ -82,6 +158,7 @@
 				<excludes>
 					<exclude>pscout/**/*</exclude>
 					<exclude>storage/**/*</exclude>
+					<exclude>temp/**/*</exclude>
 					<exclude>gui/temp.png</exclude>
 					<exclude>**/*.ser</exclude>
 					<exclude>**/*.psd</exclude>
@@ -94,6 +171,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -139,72 +217,36 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.1.0</version>
-				<configuration>
-					<includes>
-						<include>tool.properties</include>
-						<include>**/datastructure/**/*</include>
-						<include>**/system/task/*TaskInfo.class</include>
-					</includes>
-					<excludes>
-						<exclude>**/datastructure/handler/QuestionHandler.class</exclude>
-					</excludes>
-					<outputDirectory>${project.basedir}/target/build</outputDirectory>
-					<finalName>AQL-Lib-${project.version}</finalName>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
 				<executions>
 					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
+						<id>Lib</id>
 						<goals>
 							<goal>jar</goal>
 						</goals>
+						<configuration>
+							<classifier>Lib-${project.version}</classifier>
+							<includes>
+								<include>tool.properties</include>
+								<include>**/datastructure/**/*</include>
+								<include>**/system/task/*TaskInfo.class</include>
+							</includes>
+							<excludes>
+								<exclude>**/datastructure/handler/QuestionHandler.class</exclude>
+							</excludes>
+							<outputDirectory>${project.basedir}/target/build</outputDirectory>
+							<finalName>AQL</finalName>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.8</version>
-				<extensions>true</extensions>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.0</version>
 				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<excludedGroups>requiresBuild</excludedGroups>
+					<excludedGroups>systemIsSetup</excludedGroups>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -215,61 +257,87 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>3.5.1</version>
+			<version>3.7.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx -->
 		<dependency>
 			<groupId>org.fxmisc.richtext</groupId>
 			<artifactId>richtextfx</artifactId>
-			<version>0.9.0</version>
+			<version>0.10.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.46</version>
+			<version>5.1.47</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.5</version>
+			<version>2.9.9</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.9.5</version>
+			<version>2.9.9</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.9.5</version>
+			<version>2.9.9</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.dongliu/apk-parser -->
 		<dependency>
 			<groupId>net.dongliu</groupId>
 			<artifactId>apk-parser</artifactId>
-			<version>2.5.3</version>
+			<version>2.6.6</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform -->
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna-platform</artifactId>
-			<version>4.5.1</version>
+			<version>5.3.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
-			<version>4.5.1</version>
+			<version>5.3.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.fusesource.jansi/jansi -->
 		<dependency>
 			<groupId>org.fusesource.jansi</groupId>
 			<artifactId>jansi</artifactId>
-			<version>1.17.1</version>
+			<version>1.18</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java -->
+		<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>1.4.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.4.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.4.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

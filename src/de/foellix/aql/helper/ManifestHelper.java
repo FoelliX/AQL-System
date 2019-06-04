@@ -20,7 +20,7 @@ public class ManifestHelper {
 		return instance;
 	}
 
-	synchronized public ManifestInfo getManifest(final File apkFile) {
+	synchronized public ManifestInfo getManifest(File apkFile) {
 		ManifestInfo manifestInfo = this.data.get(HashHelper.md5Hash(apkFile) + HashHelper.sha1Hash(apkFile));
 		if (manifestInfo == null) {
 			final String manifest;

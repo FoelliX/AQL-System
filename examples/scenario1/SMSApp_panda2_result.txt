@@ -1,0 +1,33 @@
+INFO  2016-12-15 13:14:27,573 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(36): Running analysis consiting of 1 steps
+INFO  2016-12-15 13:14:27,574 [main] de.upb.pga3.panda2.utilities.MemoryUsageMonitor:setupMonitoring(98): Set up memory usage monitoring after each garbage collection
+INFO  2016-12-15 13:14:27,630 [main] de.upb.pga3.panda2.extension.Enhancer:enhance(52): Enhancer started (E:\uni\masterarbeit\pre\results\apps2\scenario1\SMSApp.apk)
+DEBUG 2016-12-15 13:14:27,849 [Service Thread] de.upb.pga3.panda2.utilities.MemoryUsageMonitor:logMem(148): Used Heapspace: 18MB
+INFO  2016-12-15 13:14:28,247 [main] de.upb.pga3.panda2.core.SootAdapter:run(156): Run WJTP phase
+INFO  2016-12-15 13:14:28,564 [main] de.upb.pga3.panda2.extension.Enhancer:enhance(126): Enhancer finished (E:\uni\masterarbeit\pre\results\apps2\scenario1\SMSApp.apk).
+INFO  2016-12-15 13:14:28,564 [main] de.upb.pga3.panda2.extension.lvl1.graphgenerator.GraphGeneratorLvl1:generateGraph(25): GraphGenerator started (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:28,566 [main] de.upb.pga3.panda2.extension.lvl1.graphgenerator.GraphGeneratorLvl1:generateGraph(30): GraphGenerator finished (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:28,567 [main] de.upb.pga3.panda2.extension.lvl1.analyzer.AnalyzerLvl1:analyze(24): Analyzer started (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:28,593 [main] de.upb.pga3.panda2.extension.lvl1.analyzer.AnalyzerLvl1:analyze(32): Analyzer finished (Permission usage - Intra App - Level 1).
+INFO  2016-12-15 13:14:28,594 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(73): Finished analysis
+INFO  2016-12-15 13:14:28,599 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(74): Time needed for analysis: PT0.979S
+INFO  2016-12-15 13:14:28,599 [main] de.upb.pga3.panda2.core.AnalysisRunner:analyze(75): Max. memory needed for analysis: 18MB
+Textual result - Intra-App Permission Usage Analysis
+-----de.foellix.sinkapp.R$style: void <init>()-----
+-----de.foellix.sinkapp.R$layout: void <init>()-----
+-----de.foellix.sinkapp.R$color: void <init>()-----
+-----de.foellix.sinkapp.R: void <init>()-----
+-----de.foellix.sinkapp.R$dimen: void <init>()-----
+-----de.foellix.sinkapp.R$attr: void <init>()-----
+-----de.foellix.sinkapp.R$string: void <init>()-----
+-----de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)-----
+-----de.foellix.sinkapp.SinkMainActivity: void sink()-----
+android.permission.SEND_SMS (REQUIRED)
+android.permission.WRITE_SMS (MISSING)
+-----de.foellix.sinkapp.R$id: void <init>()-----
+-----de.foellix.sinkapp.BuildConfig: void <init>()-----
+-----de.foellix.sinkapp.SinkMainActivity: void <init>()-----
+-----de.foellix.sinkapp.R$mipmap: void <init>()-----
+-----de.foellix.sinkapp.SinkMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])-----
+
+INFO  2016-12-15 13:14:28,703 [main] de.upb.pga3.panda2.client.cmdline.HtmlParser:parse(160): Result was parsed successfully
+INFO  2016-12-15 13:14:28,703 [main] de.upb.pga3.panda2.main.ApplicationEntryPoint:main(58): Program is terminated.

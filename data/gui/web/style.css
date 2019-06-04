@@ -1,0 +1,170 @@
+html, body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	background: #DDDDDD;
+}
+
+div.menu {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: calc(100% - 6px);
+	height: 37px;
+	font-family: Myriad Pro, Calibri, Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	padding: 10px 0px 0px 6px;
+}
+
+div.menu label {
+	font-family: Myriad Pro, Calibri, Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	margin-right: 30px;
+}
+
+div.menu ul {
+	padding: 0;
+	margin: 0px 0px 0px 4px;
+}
+
+div.menu li
+{
+  float: left;
+  padding: 5px;
+  margin: 0px 20px 0px 0px;
+  height: 25px;
+
+  list-style-type: none;
+}
+
+div.content {
+	padding: 35px 0px 0px 0px;
+	height: calc(100% - 37px);
+	width: 100%;
+}
+div.center {
+	float: left;
+	width: 75%;
+	height: 85%;
+}
+div.right {
+	float: left;
+	width: 25%;
+	height: 85%;
+}
+div.bottom {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 15%;
+}
+
+pre {
+	background: #FFFFFF;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#editor {
+	margin: 0;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+div.title1 {
+	position: absolute;
+	left: 10px;
+	top: 0px;
+	font-family: Myriad Pro, Calibri, Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	padding-left: 10px;
+	height: 25px;
+	width: calc(100% - 30px);
+	background: #CCCCCC;
+	border: 1px solid #666666;
+}
+
+div.title2 {
+	position: absolute;
+	right: 8px;
+	top: 45px;
+	font-family: Myriad Pro, Calibri, Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	padding-left: 10px;
+	height: 25px;
+	width: calc(25% - 20px);
+	background: #CCCCCC;
+	border: 1px solid #666666;
+}
+
+#verboseBox {
+	background: #DDDDDD;
+	width: calc(100% - 20px);
+	height: calc(100% - 35px);
+	padding: 0px 10px 10px 10px;
+}
+
+#verboseInnerBox {
+	width:100%;
+	height:100%;
+	border: 1px solid #000000;
+	padding-top: 25px;
+}
+
+#verbose {
+	text-wrap: wrap;
+	font-family: Myriad Pro, Calibri, Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+	padding: 5px 10px 10px 10px;
+	width: 100%;
+	height: calc(100% - 1px);
+	resize: none;
+	overflow-y: scroll;
+	border: none;
+}
+
+#xmlBox {
+	background: #DDDDDD;
+	width: calc(100% - 10px);
+	height: calc(100% - 45px);
+	padding: 10px 10px 10px 0px;
+}
+
+#xmlInnerBox {
+	width:100%;
+	height:100%;
+	border: 1px solid #000000;
+	padding-top: 25px;
+}
+
+#cyBox {
+	background: #DDDDDD;
+	width: calc(100% - 20px);
+	height: calc(100% - 20px);
+	padding: 10px;
+}
+
+#cy {
+	background: #FFFFFF;
+	width: 100%;
+	height: 100%;
+	display: block;
+	border: 1px solid #000000;
+}

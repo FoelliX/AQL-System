@@ -1,0 +1,24 @@
+record `edu.mit.icc_action_string_operations.IsolateActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `<init>`(`edu.mit.icc_action_string_operations.IsolateActivity` v0 @kind this) @signature `Ledu/mit/icc_action_string_operations/IsolateActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L046e14.  call `<init>`(v0) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L046e1a.  return @kind void;
+}
+procedure `void` `onCreate`(`edu.mit.icc_action_string_operations.IsolateActivity` v3 @kind this, `android.os.Bundle` v4 @kind object @name `savedInstanceState`) @signature `Ledu/mit/icc_action_string_operations/IsolateActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+
+  #L046e2c.  call `onCreate`(v3, v4) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L046e32.  call temp:= `getIntent`(v3) @signature `Ledu/mit/icc_action_string_operations/IsolateActivity;.getIntent:()Landroid/content/Intent;` @kind virtual;
+  #L046e38.  v0:= temp @kind object;
+  #L046e3a.  v2:= "DroidBench" @kind object;
+  #L046e3e.  call temp:= `getStringExtra`(v0, v2) @signature `Landroid/content/Intent;.getStringExtra:(Ljava/lang/String;)Ljava/lang/String;` @kind virtual;
+  #L046e44.  v1:= temp @kind object;
+  #L046e46.  v2:= "DroidBench" @kind object;
+  #L046e4a.  call temp:= `i`(v2, v1) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L046e50.  return @kind void;
+}

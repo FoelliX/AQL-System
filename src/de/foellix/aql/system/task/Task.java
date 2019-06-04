@@ -1,8 +1,7 @@
 package de.foellix.aql.system.task;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.util.List;
 
 import de.foellix.aql.Log;
 import de.foellix.aql.helper.Helper;
@@ -15,10 +14,11 @@ public class Task extends Thread {
 	private long start, time;
 	private final long timeout;
 	private boolean done;
-	private boolean destroyed;
+	private boolean interrupted;
 	private boolean executed;
 
 	private Process process;
+	private ProcessWrapper processWrapper;
 
 	public Task(final System parent, final TaskInfo taskinfo, final long timeout) {
 		super();
@@ -27,7 +27,7 @@ public class Task extends Thread {
 		this.taskinfo = taskinfo;
 		this.timeout = timeout;
 		this.done = false;
-		this.destroyed = false;
+		this.interrupted = false;
 		this.executed = false;
 	}
 
@@ -44,7 +44,8 @@ public class Task extends Thread {
 			}
 
 			this.start = java.lang.System.currentTimeMillis();
-
+			executeTaskHooks(true);
+			new ExtraTask(this.taskinfo, TaskStatus.STATUS_ENTRY).runAndWait();
 			if (this.taskinfo instanceof ToolTaskInfo) {
 				new ToolTask(this).execute();
 			} else if (this.taskinfo instanceof PreprocessorTaskInfo) {
@@ -52,6 +53,7 @@ public class Task extends Thread {
 			} else {
 				new OperatorTask(this).execute();
 			}
+			executeTaskHooks(false);
 		} catch (final Exception err) {
 			this.time = Math.max(1, (java.lang.System.currentTimeMillis() - this.start) / 1000);
 			TaskMemory.getInstance().aborted(this);
@@ -72,7 +74,7 @@ public class Task extends Thread {
 	@Override
 	public void interrupt() {
 		if (this.process != null) {
-			this.destroyed = true;
+			this.interrupted = true;
 
 			new ExtraTask(this.taskinfo, TaskStatus.STATUS_ABORT).runAndWait();
 
@@ -99,39 +101,21 @@ public class Task extends Thread {
 		super.interrupt();
 	}
 
-	public void setupProcess(Process process, boolean ignore) throws IOException {
-		this.process = process;
-		this.taskinfo.setPID(Helper.getPid(process));
+	public int waitFor(String[] runCmd, String path) throws Exception {
+		this.process = new ProcessBuilder(runCmd).directory(new File(path)).start();
+		this.taskinfo.setPID(Helper.getPid(this.process));
 
-		if (ignore || Log.logIt(Log.DEBUG_DETAILED)) {
-			String line;
-			final BufferedReader input1 = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
-			while ((line = input1.readLine()) != null) {
-				Log.msg("Process (output): " + line, Log.DEBUG_DETAILED);
-			}
-			input1.close();
-
-			final BufferedReader input2 = new BufferedReader(new InputStreamReader(this.process.getErrorStream()));
-			while ((line = input2.readLine()) != null) {
-				Log.msg("Process (error): " + line, Log.DEBUG_DETAILED);
-			}
-			input2.close();
-		} else {
-			this.process.getErrorStream().close();
-			this.process.getOutputStream().close();
-		}
+		this.processWrapper = new ProcessWrapper(this.process);
+		return this.processWrapper.waitFor();
 	}
 
-	// Replace %TIME% by actual time
 	public void successPart1(String msg) {
-		this.time = Math.max(1, (java.lang.System.currentTimeMillis() - this.start) / 1000);
-		msg = msg.replaceAll("%TIME%", String.valueOf(this.time));
-		Log.msg(msg, Log.IMPORTANT);
+		Log.msg(replaceTime(msg), Log.IMPORTANT);
 		this.executed = true;
 	}
 
 	public void successPart2(boolean wait) throws InterruptedException {
-		if (wait && this.taskinfo.getTool().getInstances() == 1) {
+		if (wait && !this.taskinfo.getTool().isExternal() && this.taskinfo.getTool().getExecute().getInstances() == 1) {
 			Thread.sleep(1000);
 		}
 
@@ -139,18 +123,34 @@ public class Task extends Thread {
 		getParent().getScheduler().finishedTask(this, this.taskinfo, TaskStatus.STATUS_SUCCESS);
 	}
 
-	// Replace %TIME% by actual time
 	public void failed(String msg) throws InterruptedException {
-		if (this.destroyed) {
-			throw new InterruptedException();
+		if (this.interrupted) {
+			Log.msg("Task was interrupted!", Log.DEBUG);
 		}
-		this.time = Math.max(1, (java.lang.System.currentTimeMillis() - this.start) / 1000);
 
-		msg = msg.replaceAll("%TIME%", String.valueOf(this.time));
-		Log.msg(msg, Log.IMPORTANT);
+		Log.msg(replaceTime(msg), Log.IMPORTANT);
 
 		new ExtraTask(this.taskinfo, TaskStatus.STATUS_FAIL).runAndWait();
 		this.parent.getScheduler().finishedTask(this, this.taskinfo, TaskStatus.STATUS_FAIL);
+	}
+
+	private void executeTaskHooks(boolean before) {
+		final List<ITaskHook> hooks;
+		if (before) {
+			hooks = this.parent.getTaskHooksBefore().getHooks().get(this.taskinfo.getTool());
+		} else {
+			hooks = this.parent.getTaskHooksAfter().getHooks().get(this.taskinfo.getTool());
+		}
+		if (hooks != null) {
+			for (final ITaskHook hook : hooks) {
+				try {
+					hook.execute(this.taskinfo);
+				} catch (final Exception e) {
+					Log.warning("Something went wrong while executing hook (" + e.getClass().getName() + "): "
+							+ e.getMessage());
+				}
+			}
+		}
 	}
 
 	// public void interruptJava9() {
@@ -214,6 +214,12 @@ public class Task extends Thread {
 	// super.interrupt();
 	// }
 
+	// Replace %TIME% by actual time
+	private String replaceTime(String msg) {
+		this.time = Math.max(1, (java.lang.System.currentTimeMillis() - this.start) / 1000);
+		return msg.replaceAll("%TIME%", String.valueOf(this.time));
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -255,8 +261,8 @@ public class Task extends Thread {
 		return this.time;
 	}
 
-	public long getTimeout() {
-		return this.timeout;
+	public Process getProcess() {
+		return this.process;
 	}
 
 	public boolean isExecuted() {
@@ -265,9 +271,5 @@ public class Task extends Thread {
 
 	public boolean isDone() {
 		return this.done;
-	}
-
-	public Process getProcess() {
-		return this.process;
 	}
 }

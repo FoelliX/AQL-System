@@ -1,0 +1,11 @@
+de.upb.fpauck.simapp.BuildConfig
+de.upb.fpauck.simapp.R$attr
+de.upb.fpauck.simapp.R$color
+de.upb.fpauck.simapp.R$dimen
+de.upb.fpauck.simapp.R$id
+de.upb.fpauck.simapp.R$layout
+de.upb.fpauck.simapp.R$mipmap
+de.upb.fpauck.simapp.R$string
+de.upb.fpauck.simapp.R$style
+de.upb.fpauck.simapp.R
+de.upb.fpauck.simapp.SIMAppMainActivity

@@ -15,7 +15,6 @@ import de.foellix.aql.helper.Helper;
 
 public class QuestionHandler {
 	private Stack<Question> stack;
-	private List<String> features;
 
 	private QuestionPart currentQuestion;
 	private Reference currentReference;
@@ -37,7 +36,8 @@ public class QuestionHandler {
 	public void startOperator(final String operator) {
 		// Assign type
 		final Question temp;
-		if (operator.equals(KeywordsAndConstants.OPERATOR_FILTER)) {
+		if (operator.equals(KeywordsAndConstants.getFilterOperator())
+				|| operator.equals(KeywordsAndConstants.OPERATOR_FILTER_ORIGINAL)) {
 			temp = new QuestionFilter(operator);
 		} else {
 			temp = new Question(operator);
@@ -52,7 +52,7 @@ public class QuestionHandler {
 	}
 
 	public void setFilterSOI(final String soi) {
-		this.currentSOI = soiToType(soi);
+		this.currentSOI = Helper.soiToType(soi);
 	}
 
 	public void endOperator() {
@@ -79,7 +79,7 @@ public class QuestionHandler {
 
 	public void setMode(final String soi) {
 		// Convert subject of interest to question type
-		final int type = soiToType(soi);
+		final int type = Helper.soiToType(soi);
 
 		// Assign type
 		this.currentQuestion.setMode(type);
@@ -99,7 +99,7 @@ public class QuestionHandler {
 	public void setStatement(String value) {
 		value = init(value);
 
-		final Statement statement = Helper.fromStatementString(value);
+		final Statement statement = Helper.createStatement(value);
 
 		this.currentReference.setStatement(statement);
 	}
@@ -148,26 +148,11 @@ public class QuestionHandler {
 		this.stack.peek().addChild(pq);
 	}
 
-	private int soiToType(final String soi) {
-		switch (soi) {
-		case KeywordsAndConstants.SOI_FLOWS:
-			return KeywordsAndConstants.QUESTION_TYPE_FLOWS;
-		case KeywordsAndConstants.SOI_INTENTFILTERS:
-			return KeywordsAndConstants.QUESTION_TYPE_INTENTFILTER;
-		case KeywordsAndConstants.SOI_INTENTS:
-			return KeywordsAndConstants.QUESTION_TYPE_INTENTS;
-		case KeywordsAndConstants.SOI_INTENTSINKS:
-			return KeywordsAndConstants.QUESTION_TYPE_INTENTSINKS;
-		case KeywordsAndConstants.SOI_INTENTSOURCES:
-			return KeywordsAndConstants.QUESTION_TYPE_INTENTSOURCES;
-		case KeywordsAndConstants.SOI_PERMISSIONS:
-			return KeywordsAndConstants.QUESTION_TYPE_PERMISSIONS;
-		default:
-			return KeywordsAndConstants.QUESTION_TYPE_UNKNOWN;
-		}
-	}
-
 	public void addFeature(String feature) {
 		this.currentQuestion.getFeatures().add(feature.substring(1, feature.length() - 1));
+	}
+
+	public void addUse(String use) {
+		this.currentQuestion.getUses().add(use.substring(1, use.length() - 1));
 	}
 }

@@ -1,0 +1,26 @@
+record `edu.mit.icc_action_string_operations.InFlowActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `<init>`(`edu.mit.icc_action_string_operations.InFlowActivity` v0 @kind this) @signature `Ledu/mit/icc_action_string_operations/InFlowActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L046dbc.  call `<init>`(v0) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L046dc2.  return @kind void;
+}
+procedure `void` `onCreate`(`edu.mit.icc_action_string_operations.InFlowActivity` v3 @kind this, `android.os.Bundle` v4 @kind object @name `savedInstanceState`) @signature `Ledu/mit/icc_action_string_operations/InFlowActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+
+  #L046dd4.  call `onCreate`(v3, v4) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L046dda.  v2:= 2130903040I;
+  #L046dde.  call `setContentView`(v3, v2) @signature `Ledu/mit/icc_action_string_operations/InFlowActivity;.setContentView:(I)V` @kind virtual;
+  #L046de4.  call temp:= `getIntent`(v3) @signature `Ledu/mit/icc_action_string_operations/InFlowActivity;.getIntent:()Landroid/content/Intent;` @kind virtual;
+  #L046dea.  v0:= temp @kind object;
+  #L046dec.  v2:= "DroidBench" @kind object;
+  #L046df0.  call temp:= `getStringExtra`(v0, v2) @signature `Landroid/content/Intent;.getStringExtra:(Ljava/lang/String;)Ljava/lang/String;` @kind virtual;
+  #L046df6.  v1:= temp @kind object;
+  #L046df8.  v2:= "DroidBench" @kind object;
+  #L046dfc.  call temp:= `i`(v2, v1) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L046e02.  return @kind void;
+}

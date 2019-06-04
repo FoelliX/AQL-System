@@ -39,8 +39,12 @@ public class Log {
 	private static boolean shorten = false;
 
 	public static void msg(final String msg, final int loglevel) {
+		msg(msg, loglevel, true);
+	}
+
+	public static void msg(final String msg, final int loglevel, boolean newLine) {
 		if (loglevel <= Log.loglevel) {
-			System.out.println(prefix(true) + msg);
+			outPrint(prefix(msg.contains("\n")) + msg + (newLine ? "\n" : ""));
 
 			if (loglevel == IMPORTANT) {
 				logToGUI(msg);
@@ -51,14 +55,14 @@ public class Log {
 
 	public static void msg(final Ansi msg, final int loglevel) {
 		if (loglevel <= Log.loglevel) {
-			System.out.println(prefix(true) + msg);
+			outPrintLn(prefix(true) + msg);
 		}
 	}
 
 	public static void warning(final String msg) {
 		if (!log.contains(msg)) {
 			if (Log.WARNING <= Log.loglevel) {
-				System.err.println(prefix(true) + ansi().fg(YELLOW).a("Warning: " + msg).reset());
+				errPrintLn(prefix(msg.contains("\n")) + ansi().fg(YELLOW).a("Warning: " + msg).reset());
 				logToGUI("Warning: " + msg);
 				log.add(msg);
 			}
@@ -71,7 +75,7 @@ public class Log {
 
 	public static void error(final String msg, boolean logToFile) {
 		if (!log.contains(msg)) {
-			System.err.println(prefix(true) + ansi().fg(RED).a("Error: " + msg).reset());
+			errPrintLn(prefix(msg.contains("\n")) + ansi().fg(RED).a("Error: " + msg).reset());
 			logToGUI("Error: " + msg);
 			if (logToFile) {
 				logToFile(msg);
@@ -97,7 +101,7 @@ public class Log {
 			final Date date = new Date();
 			final SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy - hh:mm:ss");
 
-			return Properties.info().ABBRRVIATION + " " + format.format(date) + (nl ? "\n" : " ");
+			return Properties.info().ABBREVIATION + " " + format.format(date) + (nl ? "\n" : " ");
 		} else {
 			return "";
 		}
@@ -134,5 +138,27 @@ public class Log {
 
 	public static int getLogLevel() {
 		return loglevel;
+	}
+
+	public static void setDifferentLogFile(File newLogFile) {
+		logfile = newLogFile;
+	}
+
+	private static void outPrint(String str) {
+		synchronized (System.out) {
+			System.out.print(str);
+		}
+	}
+
+	private static void outPrintLn(String str) {
+		synchronized (System.out) {
+			System.out.println(str);
+		}
+	}
+
+	private static void errPrintLn(String str) {
+		synchronized (System.err) {
+			System.err.println(str);
+		}
 	}
 }

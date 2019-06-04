@@ -108,7 +108,7 @@ public class ConverterDidFail implements IConverter {
 						final String method = Helper.cut(line, " in method ", ")>") + ")>";
 						final String classname = Helper.cut(method, "<", ": ");
 						final Reference reference = new Reference();
-						for (final Reference appCandidate : this.question.getReferences()) {
+						for (final Reference appCandidate : this.question.getAllReferences()) {
 							if (appCandidate.getApp().getFile().toLowerCase().contains(file.getName()
 									.substring(0, file.getName().indexOf("flowdroid.log") - 1).toLowerCase())) {
 								reference.setApp(appCandidate.getApp());
@@ -122,7 +122,7 @@ public class ConverterDidFail implements IConverter {
 						}
 						reference.setClassname(classname);
 						reference.setMethod(method);
-						reference.setStatement(Helper.fromStatementString(statement));
+						reference.setStatement(Helper.createStatement(statement));
 
 						returnList.add(reference);
 					}

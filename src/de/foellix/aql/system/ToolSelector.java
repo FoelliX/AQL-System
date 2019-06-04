@@ -25,7 +25,7 @@ public class ToolSelector {
 	public boolean detectInterApp(final QuestionPart question) {
 		boolean interApp = false;
 		Reference firstReference = null;
-		for (final Reference reference : question.getReferences()) {
+		for (final Reference reference : question.getAllReferences()) {
 			if (firstReference == null) {
 				firstReference = reference;
 			} else if (!EqualsHelper.equals(firstReference.getApp().getHashes(), reference.getApp().getHashes())) {
@@ -43,7 +43,7 @@ public class ToolSelector {
 	public Tool selectTool(final QuestionPart question, final int priority) {
 		final List<Tool> choices = new ArrayList<>();
 
-		if (!question.getReferences().isEmpty()) {
+		if (!question.getAllReferences().isEmpty()) {
 			for (final Tool tool : ConfigHandler.getInstance().getConfig().getTools().getTool()) {
 				if (question.getMode() == KeywordsAndConstants.QUESTION_TYPE_FLOWS) {
 					// Detect inter-app flow
@@ -130,7 +130,7 @@ public class ToolSelector {
 			Tool selectedChoice = null;
 			int selectedPriority = -1;
 			for (final Tool choice : choices) {
-				final int newPriority = getPriority(choice, question.getFeatures());
+				final int newPriority = getPriority(choice, question);
 				if ((newPriority > priority) && (selectedChoice == null || selectedPriority < newPriority)) {
 					selectedChoice = choice;
 					selectedPriority = newPriority;
@@ -142,15 +142,30 @@ public class ToolSelector {
 		}
 	}
 
-	public int getPriority(Tool tool, List<String> features) {
-		if (features != null && !features.isEmpty()) {
-			for (final Priority priority : tool.getPriority()) {
-				if (features.contains(priority.getFeature())) {
-					return priority.getValue();
+	public int getPriority(Tool tool, QuestionPart question) {
+		if (question != null) {
+			if (question.getUses() != null && !question.getUses().isEmpty()) {
+				for (final String use : question.getUses()) {
+					if (tool.getName().equals(use)) {
+						return ConfigHandler.getInstance().getMaxConfiguredPriority()
+								+ getPriorityByFeatures(tool, question);
+					}
 				}
+			} else if (question.getFeatures() != null && !question.getFeatures().isEmpty()) {
+				return getPriorityByFeatures(tool, question);
 			}
 		}
 		return getPriority(tool);
+	}
+
+	public int getPriorityByFeatures(Tool tool, QuestionPart question) {
+		int priorityValue = getPriority(tool);
+		for (final Priority priority : tool.getPriority()) {
+			if (question.getFeatures().contains(priority.getFeature())) {
+				priorityValue += priority.getValue();
+			}
+		}
+		return priorityValue;
 	}
 
 	public int getPriority(Tool tool) {

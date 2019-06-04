@@ -8,8 +8,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class EditorXML extends ViewerXML implements IAnswerAvailable {
+	private boolean syncActive;
+
 	public EditorXML(final ConfigWizard parent) {
 		super();
+
+		this.syncActive = true;
 
 		setContent(ConfigHandler.toXML(parent.getConfig()));
 
@@ -17,7 +21,9 @@ public class EditorXML extends ViewerXML implements IAnswerAvailable {
 			@Override
 			public void changed(final ObservableValue<? extends String> observable, final String oldValue,
 					final String newValue) {
-				parent.syncOverview();
+				if (EditorXML.this.syncActive) {
+					parent.syncOverview();
+				}
 			}
 		});
 	}
@@ -25,7 +31,11 @@ public class EditorXML extends ViewerXML implements IAnswerAvailable {
 	public void setContent(final String content) {
 		if (content != null) {
 			Platform.runLater(() -> {
-				super.codeArea.replaceText(content);
+				this.syncActive = false;
+				super.codeArea.clear();
+				this.syncActive = true;
+				super.codeArea.insertText(0, content);
+				// super.codeArea.replaceText(content);
 				super.codeArea.scrollYBy(0);
 			});
 		}

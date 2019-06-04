@@ -40,11 +40,25 @@ SKIP :
 
 TOKEN :
 {
+  < IN : "IN" >
+| 
+  < FROM : "FROM" >
+| 
+  < TO : "TO" >
+| 
+  < FEATURING : "FEATURING" >
+| 
+  < USES : "USES" >
+| 
   < OPERATOR1 : "FILTER" >
 | 
   < OPERATOR2 :
     "UNIFY"
-  | "CONNECT" >
+  | "CONNECT"
+  | "MINUS"
+  | "INTERSECT" >
+| 
+  < OPERATOR3 : ([ "A"-"Z" ])+ >
 | < SOIS1 : 
     "Flows" >
 | < SOIS2 :
@@ -76,7 +90,14 @@ void questionOrOperator() :
     {
       questionHandler.startQuestion();
     }
-    question() featuring() "?"
+    question()
+    (
+      < FEATURING > features()
+    )?
+    (
+      < USES > uses()
+    )?
+    "?"
     {
       questionHandler.endQuestion();
     }
@@ -92,14 +113,6 @@ void questionOrOperator() :
       questionHandler.endOperator();
     }
   )
-}
-
-void featuring() :
-{}
-{
-  (
-    "FEATURING" features()
-  )?
 }
 
 void features() :
@@ -119,6 +132,26 @@ void feature() :
   t = < STRING >
   {
     questionHandler.addFeature(t.toString());
+  }
+}
+
+void uses() :
+{}
+{
+  use()
+  (
+    "," uses()
+  )?
+}
+
+void use() :
+{
+  Token t;
+}
+{
+  t = < STRING >
+  {
+    questionHandler.addUse(t.toString());
   }
 }
 
@@ -175,6 +208,12 @@ void operator() :
     )
   )?
   "]"
+| 
+  t1 = < OPERATOR3 >
+  {
+    questionHandler.startOperator(t1.toString());
+  }
+  "[" questions() "]"
 }
 
 void pair() :
@@ -214,12 +253,12 @@ void fromTo() :
 {
 }
 {
-  "FROM" reference()
+  < FROM > reference()
   {
     questionHandler.setReferenceType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
     questionHandler.addReference();
   }
-  "TO" reference()
+  < TO > reference()
   {
     questionHandler.setReferenceType(KeywordsAndConstants.REFERENCE_TYPE_TO);
     questionHandler.addReference();
@@ -230,7 +269,7 @@ void in() :
 {
 }
 {
-  "IN" reference()
+  < IN > reference()
   {
     questionHandler.addReference();
   }

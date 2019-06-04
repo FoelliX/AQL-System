@@ -112,9 +112,9 @@
   <xs:element name="target">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="action" minOccurs="0"/>
+        <xs:element ref="action" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="category" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element ref="data" minOccurs="0"/>
+        <xs:element ref="data" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="reference" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
@@ -150,9 +150,9 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="reference"/>
-        <xs:element ref="action"/>
+        <xs:element ref="action" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="category" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element ref="data" minOccurs="0"/>
+        <xs:element ref="data" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="attributes" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
