@@ -99,23 +99,29 @@ The AQL-System or only its internal datastructure (AQL-Lib) can be used by or in
 - .jar Import  
 All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/).
 
-**Building from source code**  
+**Building from source code (Terminal)**  
+- Clone repository
+- Navigate to repository ``cd AQL-System``
+- Use Maven to build: ``mvn``
+	- Build is stored inside the project's directory: ``AQL-System/target/build``  
+- Run the build ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki)):
+	```bash
+	cd AQL-System/target/build
+	java -jar AQL-System-XXX.jar
+	```
+
+**Building from source code (Eclipse)**  
 - Import *Maven project* to Eclipse
 - Build pom.xml as *Maven project*
 	- Build is stored inside the project's directory: ``projectDirectory/target/build``  
-	*(``projectDirectory`` refers to your local project directory and consequently has to be replaced by the actual directory and its path)*
-- Run the build ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki)):
-	- Option 1:
-	```bash
-	cd projectDirectory/target/build
-	java -jar AQL-System-XXX.jar
-	```
-	- Option 2: Run ``de.foellix.aql.ui.cli.CommandLineInterface`` as *Java Application*
+- Run ``de.foellix.aql.ui.cli.CommandLineInterface`` as *Java Application* ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki))
 
 
 ## Publications
 - *Do Android Taint Analysis Tools Keep Their Promises?* (Felix Pauck, Eric Bodden, Heike Wehrheim)  
 ESEC/FSE 2018 [https://dl.acm.org/citation.cfm?id=3236029](https://dl.acm.org/citation.cfm?id=3236029)
+- *Together Strong: Cooperative Android App Analysis* (Felix Pauck, Heike Wehrheim)  
+ESEC/FSE 2019 [https://dl.acm.org/citation.cfm?id=3338915](https://dl.acm.org/citation.cfm?id=3338915)
 
 ## License
 The AQL-System is licensed under the *GNU General Public License v3* (see [LICENSE](https://github.com/FoelliX/AQL-System/blob/master/LICENSE)).
@@ -129,3 +135,4 @@ fpauck@mail.uni-paderborn.de
 # Links
 - The AQL-System is part of BREW: [https://github.com/FoelliX/BREW](https://github.com/FoelliX/BREW)
 - which is used in the ReproDroid toolchain: [https://github.com/FoelliX/ReproDroid](https://github.com/FoelliX/ReproDroid)
+- and in the CoDiDroid framework: [https://github.com/FoelliX/CoDiDroid](https://github.com/FoelliX/CoDiDroid)
