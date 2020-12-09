@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System) ![Java 8](https://img.shields.io/badge/java-8-brightgreen.svg)
+﻿[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.foellix/AQL-System) ![Java 8](https://img.shields.io/badge/java-8-brightgreen.svg)
 ---
 <p align="center">
 	<img src="https://FoelliX.github.io/AQL-System/logo.png" width="300px"/>
@@ -7,7 +7,7 @@
 # AQL
 The *Android App Analysis Query Language (AQL)* consists of two main parts, namely *AQL-Queries* and *AQL-Answers*.
 AQL-Queries enable us to ask for Android specific analysis subjects in a general, tool independent way.
-The grammar defining AQL-Queries can be found [here](https://github.com/FoelliX/AQL-System/wiki "Grammar write up").
+The grammar defining AQL-Queries can be found [here](https://github.com/FoelliX/AQL-System/wiki/Grammar "Grammar write up").
 
 ### Example 1: AQL-Queries
 The following exemplary query can be used to get all ``Flows`` (e.g. taint flows) inside one app:
@@ -31,7 +31,7 @@ TO
 ```
 
 Different operators are available to merge and further filter queries as well as methods to match intents and intent-filters.  
-More information about AQL-Queries can be found [here](https://github.com/FoelliX/AQL-System/wiki).
+More information about AQL-Queries can be found [here](https://github.com/FoelliX/AQL-System/wiki/Questions).
 
 Similarly, AQL-Answers are used to represent analysis results in a standardized form.  
 The syntax of AQL-Answers is defined via an [XML schema definition (XSD)](https://github.com/FoelliX/AQL-System/blob/master/schemas/answer.xsd).
@@ -80,7 +80,7 @@ Consequently, FlowDroid is launched and its result is converted into an AQL-Answ
 Our wiki contains tutorials how to use/extend the AQL-System: [here](https://github.com/FoelliX/AQL-System/wiki)
 
 ### Execution
-One [tutorial](https://github.com/FoelliX/AQL-System/wiki) deals with a simple run-through.
+One [tutorial](https://github.com/FoelliX/AQL-System/wiki/Runthrough) deals with a simple run-through.
 It guides the user how to install, configure and execute an AQL-System, which is setup to use [Amandroid](http://pag.arguslab.org/argus-saf).
 
 ### Development
@@ -104,7 +104,7 @@ All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/
 - Navigate to repository ``cd AQL-System``
 - Use Maven to build: ``mvn``
 	- Build is stored inside the project's directory: ``AQL-System/target/build``  
-- Run the build ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki)):
+- Run the build ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki/Launch_parameters)):
 	```bash
 	cd AQL-System/target/build
 	java -jar AQL-System-XXX.jar
@@ -114,7 +114,7 @@ All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/
 - Import *Maven project* to Eclipse
 - Build pom.xml as *Maven project*
 	- Build is stored inside the project's directory: ``projectDirectory/target/build``  
-- Run ``de.foellix.aql.ui.cli.CommandLineInterface`` as *Java Application* ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki))
+- Run ``de.foellix.aql.ui.cli.CommandLineInterface`` as *Java Application* ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki/Launch_parameters))
 
 
 ## Publications

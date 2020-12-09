@@ -319,12 +319,12 @@ public class EqualsHelper {
 
 	public static boolean equals(Reference reference1, Reference reference2, EqualsOptions options) {
 		boolean returnValue = false;
-		if (options.getOption(EqualsOptions.PRECISELY_REFERENCE)) {
-			if (reference1 == null && reference2 == null) {
-				returnValue = true;
-			} else if (reference1 == null || reference2 == null) {
-				returnValue = false;
-			} else {
+		if (reference1 == null && reference2 == null) {
+			returnValue = true;
+		} else if (reference1 == null || reference2 == null) {
+			returnValue = false;
+		} else {
+			if (options.getOption(EqualsOptions.PRECISELY_REFERENCE)) {
 				if (options.getOption(EqualsOptions.IGNORE_APP)
 						|| equals(reference1.getApp(), reference2.getApp(), options)) {
 					if ((reference1.getClassname() == null && reference2.getClassname() == null)
@@ -339,31 +339,31 @@ public class EqualsHelper {
 						}
 					}
 				}
-			}
-		} else {
-			if (options.getOption(EqualsOptions.IGNORE_APP)
-					|| equals(reference1.getApp(), reference2.getApp(), options)) {
-				if ((options.getOption(EqualsOptions.NULL_ALLOWED_ON_LEFT_HAND_SIDE)
-						&& reference1.getClassname() == null)
-						|| reference1.getClassname().equals(reference2.getClassname())) {
+			} else {
+				if (options.getOption(EqualsOptions.IGNORE_APP)
+						|| equals(reference1.getApp(), reference2.getApp(), options)) {
 					if ((options.getOption(EqualsOptions.NULL_ALLOWED_ON_LEFT_HAND_SIDE)
-							&& reference1.getMethod() == null)
-							|| reference1.getMethod().equals(reference2.getMethod())) {
+							&& reference1.getClassname() == null)
+							|| reference1.getClassname().equals(reference2.getClassname())) {
 						if ((options.getOption(EqualsOptions.NULL_ALLOWED_ON_LEFT_HAND_SIDE)
-								&& reference1.getStatement() == null)
-								|| equals(reference1.getStatement(), reference2.getStatement(), options)) {
-							returnValue = true;
+								&& reference1.getMethod() == null)
+								|| reference1.getMethod().equals(reference2.getMethod())) {
+							if ((options.getOption(EqualsOptions.NULL_ALLOWED_ON_LEFT_HAND_SIDE)
+									&& reference1.getStatement() == null)
+									|| equals(reference1.getStatement(), reference2.getStatement(), options)) {
+								returnValue = true;
+							}
 						}
 					}
 				}
 			}
-		}
 
-		if (returnValue && Log.logIt(Log.DEBUG_DETAILED)) {
-			if (options.getOption(EqualsOptions.IGNORE_APP)
-					&& !equals(reference1.getApp(), reference2.getApp(), options)) {
-				Log.warning(Helper.toString(reference1) + "\nis only equal to\n" + Helper.toString(reference2)
-						+ "\nif the app is ignored. Reason might be an app-merge for example.");
+			if (returnValue && Log.logIt(Log.DEBUG_DETAILED)) {
+				if (options.getOption(EqualsOptions.IGNORE_APP)
+						&& !equals(reference1.getApp(), reference2.getApp(), options)) {
+					Log.warning(Helper.toString(reference1) + "\nis only equal to\n" + Helper.toString(reference2)
+							+ "\nif the app is ignored. Reason might be an app-merge for example.");
+				}
 			}
 		}
 		return returnValue;

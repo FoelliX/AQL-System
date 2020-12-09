@@ -11,8 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import com.mysql.cj.jdbc.MysqlDataSource;
 
 import de.foellix.aql.Log;
 import de.foellix.aql.converter.IConverter;
@@ -31,8 +30,7 @@ public class ConverterDIALDroid implements IConverter {
 	private List<String> logLines;
 
 	@Override
-	public Answer parse(final File resultFile, final ToolTaskInfo taskInfo)
-			throws MySQLIntegrityConstraintViolationException {
+	public Answer parse(final File resultFile, final ToolTaskInfo taskInfo) {
 		final QuestionPart question = taskInfo.getQuestion();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(resultFile))) {
@@ -41,7 +39,7 @@ public class ConverterDIALDroid implements IConverter {
 			while ((line = br.readLine()) != null) {
 				if (line.contains(
 						"com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails")) {
-					throw new MySQLIntegrityConstraintViolationException(line);
+					throw new IOException(line);
 				}
 				if (line.contains(" (in ")) {
 					this.logLines.add(line);
