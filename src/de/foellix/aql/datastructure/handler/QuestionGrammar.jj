@@ -15,7 +15,6 @@ options
 
 PARSER_BEGIN(QuestionParser)
 package de.foellix.aql.datastructure.handler;
-import de.foellix.aql.datastructure.KeywordsAndConstants;
 import de.foellix.aql.datastructure.handler.QuestionHandler;
 
 public class QuestionParser
@@ -46,73 +45,175 @@ TOKEN :
 | 
   < TO : "TO" >
 | 
-  < FEATURING : "FEATURING" >
+  < FEATURING :
+    "FEATURING"
+  | "FEATURES" >
 | 
-  < USES : "USES" >
+  < USES :
+    "USING"
+  | "USES" >
 | 
-  < OPERATOR1 : "FILTER" >
+  < WITH : "WITH" >
 | 
-  < OPERATOR2 :
+  < FILTER_OPERATOR : "FILTER" >
+| 
+  < OTHER_OPERATORS :
     "UNIFY"
   | "CONNECT"
+  | "CONNECT~"
   | "MINUS"
-  | "INTERSECT" >
+  | "INTERSECT"
+  | "SIGN" >
 | 
-  < OPERATOR3 : ([ "A"-"Z" ])+ >
-| < SOIS1 : 
-    "Flows" >
+  < CUSTOM_OPERATORS : ([ "A"-"Z" ] )+ ("~")? >
+| 
+  < VARIABLE :
+    [ "a"-"z" ]
+    (
+      [ "a"-"z" ]
+    | [ "0"-"9" ]
+    )* >
+| < SOIS1 :
+    "Flows"
+  | "Slice" >
 | < SOIS2 :
     "Permissions"
   | "IntentSources"
   | "IntentSinks"
   | "IntentFilters"
-  | "Intents" >
+  | "Intents"
+  | "Sources"
+  | "Sinks"
+  | "Arguments" >
+| < ENDING :
+    "?"
+  | "!"
+  | "." 
+  >
 | 
   < STRING : "'" (~[ "'" ])* "'" >
+| < INT : ("-")? ([ "0"-"9" ])+ >
+}
+
+void queries() :
+{
+  Token variable;
+}
+{
+  {
+    questionHandler.startQueries();
+  }
+  (
+    {
+      questionHandler.startQuery();
+    }
+    (
+      query()
+    |
+      (
+        variable = < VARIABLE > "="
+        {
+          questionHandler.setVariable(variable.toString());
+        }
+        query()
+      )
+    )
+    {
+      questionHandler.endQuery();
+    }
+  )+
+  {
+    questionHandler.endQueries();
+  }
+  < EOF >
 }
 
 void query() :
 {}
 {
   {
-    questionHandler.startQuery();
+    questionHandler.deactivateBrackets();
   }
+  questionOrVariable()
+|
   (
-    questionOrOperator()
-  )+
-  < EOF >
+    {
+      questionHandler.activateBrackets();
+    }
+    "{" questionOrVariable() "}"
+  )
 }
 
-void questionOrOperator() :
-{}
+void questionOrVariable() :
 {
-  (
-    {
-      questionHandler.startQuestion();
-    }
-    question()
-    (
-      < FEATURING > features()
-    )?
-    (
-      < USES > uses()
-    )?
-    "?"
-    {
-      questionHandler.endQuestion();
-    }
-  )
+  Token variable;
+}
+{
+  question()
 |
   (
-    answer() "!"
-  )
-|
-  (
-    operator()
+    "$" variable = < VARIABLE >
     {
-      questionHandler.endOperator();
+      questionHandler.getVariable(variable.toString());
     }
   )
+}
+
+void question() :
+{
+  Token endingSymbol;
+}
+{
+  {
+    questionHandler.startQuestion();
+  }
+  (
+    (
+      defaultQuestion()
+      (
+        {
+          questionHandler.startFeatures();
+        }
+        < FEATURING > 
+        features()
+        {
+          questionHandler.endFeatures();
+        }
+      )?
+      (
+        {
+          questionHandler.startUses();
+        }
+        < USES > 
+        uses()
+        {
+          questionHandler.endUses();
+        }
+      )?
+      (
+        {
+          questionHandler.startWiths();
+        }
+        < WITH > 
+        withs()
+        {
+          questionHandler.endWiths();
+        }
+      )?
+    )
+  |
+    (
+      loadingQuestion()
+    )
+  |
+    (
+      operatorQuestion()
+    )
+  )
+  endingSymbol = < ENDING >
+  {
+    questionHandler.endQuestion(endingSymbol.toString());
+  }
 }
 
 void features() :
@@ -126,13 +227,28 @@ void features() :
 
 void feature() :
 {
-  Token t;
+  Token feature;
 }
 {
-  t = < STRING >
-  {
-    questionHandler.addFeature(t.toString());
-  }
+  (
+    LOOKAHEAD(2)
+    (
+      feature = < STRING >
+      {
+        questionHandler.addFeature(feature.toString());
+      }
+    )
+  |
+    (
+      {
+        questionHandler.startFeaturesQuery();
+      }
+      query()
+      {
+        questionHandler.endFeaturesQuery();
+      }
+    )
+  )
 }
 
 void uses() :
@@ -146,106 +262,276 @@ void uses() :
 
 void use() :
 {
-  Token t;
+  Token use;
 }
 {
-  t = < STRING >
+  (
+    LOOKAHEAD(2)
+    (
+      use = < STRING >
+      {
+        questionHandler.addUse(use.toString());
+      }
+    )
+  |
+    (
+      {
+        questionHandler.startUsesQuery();
+      }
+      query()
+      {
+        questionHandler.endUsesQuery();
+      }
+    )
+  )
+}
+
+void withs() :
+{}
+{
+  with()
+  (
+    "," withs()
+  )?
+}
+
+void with() :
+{
+  Token key;
+  Token value;
+}
+{
   {
-    questionHandler.addUse(t.toString());
+    questionHandler.startWith();
+  }
+  (
+    LOOKAHEAD(2)
+    (
+      key = < STRING >
+      {
+        questionHandler.setWithKey(key.toString());
+      }
+    )
+  |
+    (
+      {
+        questionHandler.startWithKeyQuery();
+      }
+      query()
+      {
+        questionHandler.endWithKeyQuery();
+      }
+    )
+  )
+  "="
+  (
+    LOOKAHEAD(2)
+    (
+      value = < STRING >
+      {
+        questionHandler.setWithValue(value.toString());
+      }
+    )
+  |
+    (
+      {
+        questionHandler.startWithValueQuery();
+      }
+      query()
+      {
+        questionHandler.endWithValueQuery();
+      }
+    )
+  )
+  {
+    questionHandler.endWith();
   }
 }
 
 void questions() :
 {}
 {
-  questionOrOperator()
+  query()
   (
     "," questions()
   )?
 }
 
-void operator() :
+void loadingQuestion() :
 {
-  Token t1;
-  Token t2;
+  Token file;
 }
 {
-  t1 = < OPERATOR2 >
   {
-    questionHandler.startOperator(t1.toString());
+    questionHandler.startLoadingQuestion();
   }
-  "[" questions() "]"
-| 
-  t1 = < OPERATOR1 >
+  file = < STRING >
   {
-    questionHandler.startOperator(t1.toString());
+    questionHandler.addAnswer(file.toString());
   }
-  "[" questionOrOperator()
+  {
+    questionHandler.endLoadingQuestion();
+  }
+}
+
+void operatorQuestion() :
+{
+  Token operator;
+  Token key;
+  Token value;
+  Token soi;
+}
+{
   (
-    "|"
     (
-      (
-        pair()
-        (
-          "|"
-          (
-            t2 = < SOIS1 >
-          | t2 = < SOIS2 >
-          )
-          {
-            questionHandler.setFilterSOI(t2.toString());
-          }
-        )?
-      )
-    |
-      (
-        t2 = < SOIS1 >
-      | t2 = < SOIS2 >
-      )
+      operator = < OTHER_OPERATORS >
       {
-        questionHandler.setFilterSOI(t2.toString());
+        questionHandler.startOperatorQuestion(operator.toString());
+      }
+      "["
+      {
+        questionHandler.startInnerOperatorQuestions();
+      }
+      questions()
+      {
+        questionHandler.endInnerOperatorQuestions();
+      }
+      "]"
+      {
+        questionHandler.endOperatorQuestion();
       }
     )
-  )?
-  "]"
-| 
-  t1 = < OPERATOR3 >
-  {
-    questionHandler.startOperator(t1.toString());
-  }
-  "[" questions() "]"
+  |
+    (
+      operator = < FILTER_OPERATOR >
+      {
+        questionHandler.startFilterQuestion();
+      }
+      "["
+      {
+        questionHandler.startInnerFilterQuestion();
+      }
+      query()
+      {
+        questionHandler.endInnerFilterQuestion();
+      }
+      (
+        LOOKAHEAD(3)
+        {
+          questionHandler.startFilterKeyValuePair();
+        }
+        "|"
+        (
+          LOOKAHEAD(2)
+          {
+            questionHandler.startFilterKeyQuery();
+          }
+          query()
+          {
+            questionHandler.endFilterKeyQuery();
+          }
+        | key = < STRING >
+          {
+            questionHandler.setFilterKey(key.toString());
+          }
+        )
+        "="
+        (
+          LOOKAHEAD(2)
+          {
+            questionHandler.startFilterValueQuery();
+          }
+          query()
+          {
+            questionHandler.endFilterValueQuery();
+          }
+        | value = < STRING >
+          {
+            questionHandler.setFilterValue(value.toString());
+          }
+        )
+        {
+          questionHandler.endFilterKeyValuePair();
+        }
+      )?
+      (
+        LOOKAHEAD(3)
+        {
+          questionHandler.startFilterReference();
+        }
+        "|" reference()
+        {
+          questionHandler.endFilterReference();
+        }
+      )?
+      (
+        LOOKAHEAD(3)
+        "|"
+        (
+          soi = < SOIS1 >
+        | soi = < SOIS2 >
+        )
+        {
+          questionHandler.setFilterSubjectOfInterest(soi.toString());
+        }
+      )?
+      "]"
+      {
+        questionHandler.endFilterQuestion();
+      }
+    )
+  |
+    (
+      operator = < CUSTOM_OPERATORS >
+      {
+        questionHandler.startOperatorQuestion(operator.toString());
+      }
+      "["
+      {
+        questionHandler.startInnerOperatorQuestions();
+      }
+      questions()
+      {
+        questionHandler.endInnerOperatorQuestions();
+      }
+      "]"
+      {
+        questionHandler.endOperatorQuestion();
+      }
+    )
+  )
 }
 
-void pair() :
+void defaultQuestion() :
 {
-  Token t1;
-  Token t2;
+  Token soi;
 }
 {
-  t1 = < STRING > "=" t2 = < STRING >
   {
-    questionHandler.setFilterNameValuePair(t1.toString(), t2.toString());
+    questionHandler.startDefaultQuestion();
   }
-}
-
-void question() :
-{
-  Token token;
-}
-{
-  token = < SOIS1 >
   (
-    fromTo()
-  | in()
+    (
+      soi = < SOIS1 >
+      (
+        fromTo()
+      | in()
+      )
+      {
+        questionHandler.setSubjectOfInterest(soi.toString());
+      }
+    )
+  |
+    (
+      soi = < SOIS2 > 
+      in()
+      {
+        questionHandler.setSubjectOfInterest(soi.toString());
+      }
+    )
   )
   {
-    questionHandler.setMode(token.toString());
-  }
-| 
-  token = < SOIS2 > 
-  in()
-  {
-    questionHandler.setMode(token.toString());
+    questionHandler.endDefaultQuestion();
   }
 }
 
@@ -253,15 +539,45 @@ void fromTo() :
 {
 }
 {
+  (
+    LOOKAHEAD(42)
+    (
+      from() to()
+    )
+  |
+    (
+      from()
+    )
+  |
+    (
+      to()
+    )
+  )
+}
+
+void from() :
+{
+}
+{
+  {
+    questionHandler.startFrom();
+  }
   < FROM > reference()
   {
-    questionHandler.setReferenceType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
-    questionHandler.addReference();
+    questionHandler.endFrom();
+  }
+}
+
+void to() :
+{
+}
+{
+  {
+    questionHandler.startTo();
   }
   < TO > reference()
   {
-    questionHandler.setReferenceType(KeywordsAndConstants.REFERENCE_TYPE_TO);
-    questionHandler.addReference();
+    questionHandler.endTo();
   }
 }
 
@@ -269,46 +585,137 @@ void in() :
 {
 }
 {
+  {
+    questionHandler.startIn();
+  }
   < IN > reference()
   {
-    questionHandler.addReference();
+    questionHandler.endIn();
   }
 }
 
 void reference() :
 {
-  Token t1;
-  Token t2;
-  Token t3;
-  Token t4;
+  Token statement;
+  Token lineNumber;
+  Token method;
+  Token classname;
+  Token app;
 }
 {
+  {
+    questionHandler.startReference();
+  }
   (
-    "Statement" "(" t1 = < STRING > ")" "->"
-    {
-      questionHandler.setStatement(t1.toString());
-    }
+    "Statement" "("
+    (
+      LOOKAHEAD(4)
+      (
+        statement = < STRING >
+        (
+          "," lineNumber = < INT >
+          {
+            questionHandler.setLineNumber(lineNumber.toString());
+          }
+        )?
+        {
+          questionHandler.setStatement(statement.toString());
+        }
+      )
+    |
+      (
+        {
+          questionHandler.startStatementQuery();
+        }
+        query()
+        {
+          questionHandler.endStatementQuery();
+        }
+      )
+    )
+    ")" "->"
   )?
   (
-    "Method" "(" t2 = < STRING > ")" "->"
-    {
-      questionHandler.setMethod(t2.toString());
-    }
+    "Method" "("
+    (
+      LOOKAHEAD(2)
+      (
+        method = < STRING >
+        {
+          questionHandler.setMethod(method.toString());
+        }
+      )
+    |
+      (
+        {
+          questionHandler.startMethodQuery();
+        }
+        query()
+        {
+          questionHandler.endMethodQuery();
+        }
+      )
+    )
+    ")" "->"
   )?
   (
-    "Class" "(" t3 = < STRING > ")" "->"
-    {
-      questionHandler.setClass(t3.toString());
-    }
+    "Class" "("
+    (
+      LOOKAHEAD(2)
+      (
+        classname = < STRING >
+        {
+          questionHandler.setClass(classname.toString());
+        }
+      )
+    |
+      (
+        {
+          questionHandler.startClassQuery();
+        }
+        query()
+        {
+          questionHandler.endClassQuery();
+        }
+      )
+    )
+    ")" "->"
   )?
-  "App" "(" t4 = < STRING >
+  "App" "("
+  (
+    LOOKAHEAD(2)
+    (
+      app = < STRING >
+      {
+        questionHandler.setApp(app.toString());
+      }
+      appEnd()
+    )
+  |
+    (
+      {
+        questionHandler.startAppQuery();
+      }
+      query()
+      {
+        questionHandler.endAppQuery();
+      }
+      appEnd()
+    )
+  )
+  {
+    questionHandler.endReference();
+  }
+}
+
+void appEnd() :
+{
+}
+{
   (
     preprocessors()
   )?
   ")"
-  {
-    questionHandler.setApp(t4.toString());
-  }
 }
 
 void preprocessors() :
@@ -323,22 +730,27 @@ void preprocessors() :
 
 void preprocessor() :
 {
-  Token token;
+  Token keyword;
 }
 {
-  "|" token = < STRING >
-  {
-    questionHandler.addPreprocessor(token.toString());
-  }
-}
-
-void answer() :
-{
-  Token token;
-}
-{
-  token = < STRING >
-  {
-    questionHandler.addAnswer(token.toString());
-  }
+  "|"
+  (
+    LOOKAHEAD(2)
+    (
+      keyword = < STRING >
+      {
+        questionHandler.setKeyword(keyword.toString());
+      }
+    )
+  |
+    (
+      {
+        questionHandler.startKeywordQuery();
+      }
+      query()
+      {
+        questionHandler.endKeywordQuery();
+      }
+    )
+  )
 }

@@ -14,6 +14,7 @@ import de.foellix.aql.datastructure.handler.AnswerHandler;
 import de.foellix.aql.helper.EqualsHelper;
 import de.foellix.aql.helper.EqualsOptions;
 import de.foellix.aql.helper.Helper;
+import de.foellix.aql.helper.KeywordsAndConstantsHelper;
 
 public class Node {
 	private int id;
@@ -49,33 +50,41 @@ public class Node {
 
 		if (this.item instanceof Intentsource) {
 			color = "#f29c9c";
-			if (((Intentsource) this.item).getTarget().getAction() != null
-					&& !((Intentsource) this.item).getTarget().getAction().isEmpty()) {
-				label = ((Intentsource) this.item).getTarget().getAction() + "\n"
-						+ (((Intentsource) this.item).getTarget().getCategory() == null ? "-"
-								: ((Intentsource) this.item).getTarget().getCategory());
-			} else {
-				if (((Intentsource) this.item).getTarget().getReference() != null
-						&& ((Intentsource) this.item).getTarget().getReference().getClassname() != null) {
-					label = ((Intentsource) this.item).getTarget().getReference().getClassname();
+			if (((Intentsource) this.item).getTarget() != null) {
+				if (((Intentsource) this.item).getTarget().getAction() != null
+						&& !((Intentsource) this.item).getTarget().getAction().isEmpty()) {
+					label = ((Intentsource) this.item).getTarget().getAction() + "\n"
+							+ (((Intentsource) this.item).getTarget().getCategory() == null ? "-"
+									: ((Intentsource) this.item).getTarget().getCategory());
 				} else {
-					label = "No short info except:\nImplicit without action";
+					if (((Intentsource) this.item).getTarget().getReference() != null
+							&& ((Intentsource) this.item).getTarget().getReference().getClassname() != null) {
+						label = ((Intentsource) this.item).getTarget().getReference().getClassname();
+					} else {
+						label = "No short info except:\nImplicit without action";
+					}
 				}
+			} else {
+				label = "No target info!";
 			}
 		} else if (this.item instanceof Intentsink) {
 			color = "#c0d6a3";
-			if (((Intentsink) this.item).getTarget().getAction() != null
-					&& !((Intentsink) this.item).getTarget().getAction().isEmpty()) {
-				label = ((Intentsink) this.item).getTarget().getAction() + "\n"
-						+ (((Intentsink) this.item).getTarget().getCategory() == null ? "-"
-								: ((Intentsink) this.item).getTarget().getCategory());
-			} else {
-				if (((Intentsink) this.item).getTarget().getReference() != null
-						&& ((Intentsink) this.item).getTarget().getReference().getClassname() != null) {
-					label = ((Intentsink) this.item).getTarget().getReference().getClassname();
+			if (((Intentsink) this.item).getTarget() != null) {
+				if (((Intentsink) this.item).getTarget().getAction() != null
+						&& !((Intentsink) this.item).getTarget().getAction().isEmpty()) {
+					label = ((Intentsink) this.item).getTarget().getAction() + "\n"
+							+ (((Intentsink) this.item).getTarget().getCategory() == null ? "-"
+									: ((Intentsink) this.item).getTarget().getCategory());
 				} else {
-					label = "No short info except:\nImplicit without action";
+					if (((Intentsink) this.item).getTarget().getReference() != null
+							&& ((Intentsink) this.item).getTarget().getReference().getClassname() != null) {
+						label = ((Intentsink) this.item).getTarget().getReference().getClassname();
+					} else {
+						label = "No short info except:\nImplicit without action";
+					}
 				}
+			} else {
+				label = "No target info!";
 			}
 		} else if (this.item instanceof Permission) {
 			color = "#d6ace4";
@@ -86,11 +95,20 @@ public class Node {
 			} else {
 				color = "#a3d6d6";
 			}
-			String statement = Helper.cut(
-					Helper.cut(((Reference) this.item).getStatement().getStatementfull(), "<", ">"), " ",
-					Helper.OCCURENCE_LAST);
-			if (Helper.cut(statement, "(", ")").length() > 22) {
-				statement = Helper.cutFromStart(statement, "(") + "(..)";
+			String statement = ((Reference) this.item).getStatement().getStatementfull();
+			if (statement.contains(KeywordsAndConstantsHelper.CONSTRUCTOR_NAME)) {
+				statement = statement.substring(0, statement.indexOf(':'));
+				statement = statement.substring(statement.lastIndexOf('.') + 1) + " "
+						+ KeywordsAndConstantsHelper.CONSTRUCTOR_NAME;
+			} else if (statement.contains(KeywordsAndConstantsHelper.STATIC_CONSTRUCTOR_NAME)) {
+				statement = statement.substring(0, statement.indexOf(':'));
+				statement = statement.substring(statement.lastIndexOf('.') + 1) + " "
+						+ KeywordsAndConstantsHelper.STATIC_CONSTRUCTOR_NAME;
+			} else {
+				statement = Helper.cut(Helper.cut(statement, "<", ">"), " ", Helper.OCCURENCE_LAST);
+				if (Helper.cut(statement, "(", ")").length() > 22) {
+					statement = Helper.cutFromStart(statement, "(") + "(..)";
+				}
 			}
 			String app = Helper.cut(Helper.cut(((Reference) this.item).getApp().getFile(), "/", Helper.OCCURENCE_LAST),
 					"\\", Helper.OCCURENCE_LAST);
@@ -104,6 +122,8 @@ public class Node {
 			label = super.toString();
 		}
 
+		final int height = height(label);
+		final int width = width(label);
 		label = escape(label);
 
 		int counter = 1;
@@ -125,12 +145,28 @@ public class Node {
 			xml = escape(AnswerHandler.createXMLString(this.item));
 		}
 
-		return "{ \"data\": { \"id\": \"" + this.id + "\", \"label\": \"" + label + "\", \"color\": \"" + color
-				+ "\", \"verbose\": \"" + verbose + "\", \"xml\": \"" + xml + "\" }},";
+		return "{ \"data\": { \"id\": \"" + this.id + "\", \"label\": \"" + label + "\", \"width\": \"" + width
+				+ "px\", \"height\": \"" + height + "px\", \"color\": \"" + color + "\", \"verbose\": \"" + verbose
+				+ "\", \"xml\": \"" + xml + "\" }},";
+	}
+
+	private int width(String label) {
+		int max = 0;
+		for (final String line : label.split("\\n")) {
+			if (line.length() > max) {
+				max = line.length();
+			}
+		}
+
+		return max * 7;
+	}
+
+	private int height(String label) {
+		return Math.max(1, Helper.countStringOccurences(label, "\n")) * 17;
 	}
 
 	private String escape(String input) {
-		return input.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"").replaceAll("\n", "\\\\n");
+		return input.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n");
 	}
 
 	public void addReference(Reference ref1) {

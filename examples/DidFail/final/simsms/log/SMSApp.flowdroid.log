@@ -1,0 +1,250 @@
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/fpauck/workspace/heros/slf4j-simple-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/fpauck/workspace/soot-infoflow/lib/slf4j-simple-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.SimpleLoggerFactory]
+[main] INFO soot.jimple.infoflow.taintWrappers.EasyTaintWrapper - Loaded wrapper entries for 53 classes and 4 exclusions.
+[main] INFO soot.jimple.infoflow.android.SetupApplication - ARSC file parsing took 0.020742613 seconds
+Using '/media/sf_sdks/platforms/android-23/android.jar' as android.jar
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator - Generated main method:
+    public static void dummyMainMethod()
+    {
+        int $i0;
+        de.upb.fpauck.smsapp.SMSAppMainActivity $r0;
+        android.os.Bundle $r1;
+
+        $i0 = 0;
+
+     label1:
+        if $i0 == 0 goto label3;
+
+        $r0 = new de.upb.fpauck.smsapp.SMSAppMainActivity;
+
+        specialinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label3;
+
+        $r1 = new android.os.Bundle;
+
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void onCreate(android.os.Bundle)>($r1);
+
+        $r1 = null;
+
+     label2:
+        if $i0 == 3 goto label3;
+
+        if $i0 == 4 goto label2;
+
+     label3:
+        if $i0 == 6 goto label1;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.1 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.2 seconds.
+[Spark] Solution found in 0.2 seconds.
+Callback analysis done.
+Warning: RelativeLayout is a phantom class!
+Warning: de.upb.fpauck.smsapp.RelativeLayout is a phantom class!
+Warning: android.view.RelativeLayout is a phantom class!
+Warning: TextView is a phantom class!
+Warning: de.upb.fpauck.smsapp.TextView is a phantom class!
+Warning: android.view.TextView is a phantom class!
+Found 1 layout controls in file res/layout/activity_sink_main.xml
+Found 1 layout controls
+Using '/media/sf_sdks/platforms/android-23/android.jar' as android.jar
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator - Generated main method:
+    public static void dummyMainMethod()
+    {
+        int $i0, $i1;
+        de.upb.fpauck.smsapp.SMSAppMainActivity $r0;
+        android.os.Bundle $r1;
+        java.lang.String[] $r2, $r4;
+        int[] $r3;
+
+        $i0 = 0;
+
+     label1:
+        if $i0 == 0 goto label3;
+
+        $r0 = new de.upb.fpauck.smsapp.SMSAppMainActivity;
+
+        specialinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label3;
+
+        $r1 = new android.os.Bundle;
+
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void onCreate(android.os.Bundle)>($r1);
+
+        $r1 = null;
+
+     label2:
+        $r2 = newarray (java.lang.String)[1];
+
+        $r2[0] = "";
+
+        $r3 = newarray (int)[1];
+
+        $r3[0] = 0;
+
+        virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r2, $r3);
+
+        $r4 = newarray (java.lang.String)[1];
+
+        $r4[0] = "";
+
+        virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void requestPermissions(java.lang.String[],int)>($r4, 0);
+
+        $i1 = virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: int checkSelfPermission(java.lang.String)>("");
+
+        if $i0 == 5 goto label2;
+
+        if $i0 == 6 goto label2;
+
+        if $i0 == 7 goto label2;
+
+        if $i0 == 8 goto label3;
+
+        if $i0 == 9 goto label2;
+
+     label3:
+        if $i0 == 11 goto label1;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.0 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.0 seconds.
+[Spark] Solution found in 0.0 seconds.
+Running incremental callback analysis for 1 components...
+Incremental callback analysis done.
+Found 1 layout controls
+Found 4 callback methods for 1 components
+Entry point calculation done.
+Created a SourceSinkManager with 91 sources, 127 sinks, and 4 callback methods.
+Running data flow analysis on /home/fpauck/didfail/simsms/out/SMSApp.apk with 91 sources and 127 sinks...
+Starting infoflow computation...
+[main] INFO soot.jimple.infoflow.Infoflow - Resetting Soot...
+Using '/media/sf_sdks/platforms/android-23/android.jar' as android.jar
+Warning: java.lang.ref.Finalizer is a phantom class!
+[main] INFO soot.jimple.infoflow.Infoflow - Basic class loading done.
+[main] ERROR soot.jimple.infoflow.Infoflow - Only phantom classes loaded, skipping analysis...
+[main] INFO soot.jimple.infoflow.entryPointCreators.AndroidEntryPointCreator - Generated main method:
+    public static void dummyMainMethod()
+    {
+        int $i0, $i1;
+        de.upb.fpauck.smsapp.SMSAppMainActivity $r0;
+        android.os.Bundle $r1;
+        java.lang.String[] $r2, $r3;
+        int[] $r4;
+
+        $i0 = 0;
+
+     label1:
+        if $i0 == 0 goto label3;
+
+        $r0 = new de.upb.fpauck.smsapp.SMSAppMainActivity;
+
+        specialinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void <init>()>();
+
+        if $i0 == 1 goto label3;
+
+        $r1 = new android.os.Bundle;
+
+        specialinvoke $r1.<android.os.Bundle: void <init>()>();
+
+        virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void onCreate(android.os.Bundle)>($r1);
+
+        $r1 = null;
+
+     label2:
+        $i1 = virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: int checkSelfPermission(java.lang.String)>("");
+
+        $r2 = newarray (java.lang.String)[1];
+
+        $r2[0] = "";
+
+        virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void requestPermissions(java.lang.String[],int)>($r2, 0);
+
+        $r3 = newarray (java.lang.String)[1];
+
+        $r3[0] = "";
+
+        $r4 = newarray (int)[1];
+
+        $r4[0] = 0;
+
+        virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: void onRequestPermissionsResult(int,java.lang.String[],int[])>(0, $r3, $r4);
+
+        if $i0 == 5 goto label2;
+
+        if $i0 == 6 goto label2;
+
+        if $i0 == 7 goto label2;
+
+        if $i0 == 8 goto label3;
+
+        if $i0 == 9 goto label2;
+
+     label3:
+        if $i0 == 11 goto label1;
+
+        return;
+    }
+
+[Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[Spark] Pointer Assignment Graph in 0.0 seconds.
+[Spark] Type masks in 0.0 seconds.
+[Spark] Pointer Graph simplified in 0.0 seconds.
+[Spark] Propagation in 0.0 seconds.
+[Spark] Solution found in 0.0 seconds.
+[main] INFO soot.jimple.infoflow.Infoflow - Callgraph has 53 edges
+[main] WARN soot.jimple.infoflow.Infoflow - Static field tracking is disabled, results may be incomplete
+[main] WARN soot.jimple.infoflow.Infoflow - Using flow-insensitive alias tracking, results may be imprecise
+[main] INFO soot.jimple.infoflow.Infoflow - Looking for sources and sinks...
+[main] INFO soot.jimple.infoflow.Infoflow - Source lookup done, found 8 sources and 1 sinks.
+[main] INFO soot.jimple.infoflow.Infoflow - Taint wrapper hits: 11
+[main] INFO soot.jimple.infoflow.Infoflow - Taint wrapper misses: 20
+[main] INFO soot.jimple.infoflow.Infoflow - IFDS problem with 113 forward and 0 backward edges solved, processing 1 results...
+[main] INFO soot.jimple.infoflow.data.pathBuilders.SemiThreadedPathBuilder - Obtainted 1 connections between sources and sinks
+[main] INFO soot.jimple.infoflow.data.pathBuilders.SemiThreadedPathBuilder - Building path 1
+[main] INFO soot.jimple.infoflow.data.pathBuilders.SemiThreadedPathBuilder - Path processing took 0.005281066 seconds in total for 3 edges
+[main] INFO soot.jimple.infoflow.data.pathBuilders.SemiThreadedPathBuilder - Running path extension on 1 roots
+[main] INFO soot.jimple.infoflow.data.pathBuilders.SemiThreadedPathBuilder - Path extension took 0.00580759 seconds.
+[main] INFO soot.jimple.infoflow.data.pathBuilders.SemiThreadedPathBuilder - Path proecssing took 0.006390739 seconds in total
+[main] INFO soot.jimple.infoflow.Infoflow - The sink virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null) in method <de.upb.fpauck.smsapp.SMSAppMainActivity: void sink()> was called with values from the following sources:
+[main] INFO soot.jimple.infoflow.Infoflow - - $r1 = virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: android.content.Intent getIntent()>() on line 31 in method <de.upb.fpauck.smsapp.SMSAppMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 	on Path: 
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.upb.fpauck.smsapp.SMSAppMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> $r1 = virtualinvoke $r0.<de.upb.fpauck.smsapp.SMSAppMainActivity: android.content.Intent getIntent()>()
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.upb.fpauck.smsapp.SMSAppMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> $r2 = virtualinvoke $r1.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>("Secret")
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.upb.fpauck.smsapp.SMSAppMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null)
+[main] INFO soot.jimple.infoflow.Infoflow - 	 -> <de.upb.fpauck.smsapp.SMSAppMainActivity: void sink()>
+[main] INFO soot.jimple.infoflow.Infoflow - 		 -> virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>("+49111111111", null, $r2, null, null)
+<?xml version="1.0" encoding="UTF-8"?>
+<results package="de.upb.fpauck.smsapp">
+<flow>
+    <sink method="&lt;android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)&gt;"></sink>
+    <source method="&lt;android.app.Activity: android.content.Intent getIntent()&gt;"
+     component="de.upb.fpauck.smsapp.SMSAppMainActivity"
+     in="sink"
+    ></source>
+</flow>
+</results>
+Analysis has run for 7.608630072 seconds

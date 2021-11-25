@@ -1,0 +1,32 @@
+record `com.adobe.flashplayer.Certificate$1` @kind class @AccessFlag  extends `android.view.View$OnClickListener` @kind interface {
+  `com.adobe.flashplayer.Certificate` `com.adobe.flashplayer.Certificate$1.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer.Certificate$1` v0 @kind this, `com.adobe.flashplayer.Certificate` v1 @kind object) @signature `Lcom/adobe/flashplayer/Certificate$1;.<init>:(Lcom/adobe/flashplayer/Certificate;)V` @AccessFlag CONSTRUCTOR {
+    temp;
+
+  #L0308b0.  v0.`com.adobe.flashplayer.Certificate$1.this$0` @type ^`com.adobe.flashplayer.Certificate` := v1 @kind object;
+  #L0308b4.  call `<init>`(v0) @signature `Ljava/lang/Object;.<init>:()V` @kind direct;
+  #L0308ba.  return @kind void;
+}
+procedure `void` `onClick`(`com.adobe.flashplayer.Certificate$1` v2 @kind this, `android.view.View` v3 @kind object @name `v`) @signature `Lcom/adobe/flashplayer/Certificate$1;.onClick:(Landroid/view/View;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+
+  #L0308cc.  v0:= new `android.content.Intent`;
+  #L0308d0.  v1:= "android.settings.SETTINGS" @kind object;
+  #L0308d4.  call `<init>`(v0, v1) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L0308da.  v1:= 1048576I;
+  #L0308de.  call temp:= `setFlags`(v0, v1) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L0308e4.  v1:= 2.0F;
+  #L0308e8.  call temp:= `setFlags`(v0, v1) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L0308ee.  v1:= 268435456I;
+  #L0308f2.  call temp:= `setFlags`(v0, v1) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L0308f8.  v1:= 67108864I;
+  #L0308fc.  call temp:= `addFlags`(v0, v1) @signature `Landroid/content/Intent;.addFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030902.  v1:= v2.`com.adobe.flashplayer.Certificate$1.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L030906.  call `startActivity`(v1, v0) @signature `Lcom/adobe/flashplayer/Certificate;.startActivity:(Landroid/content/Intent;)V` @kind virtual;
+  #L03090c.  v1:= 0I;
+  #L03090e.  call `exit`(v1) @signature `Ljava/lang/System;.exit:(I)V` @kind static;
+  #L030914.  return @kind void;
+}

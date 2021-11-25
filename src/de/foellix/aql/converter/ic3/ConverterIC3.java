@@ -8,6 +8,7 @@ import java.io.InputStream;
 import de.foellix.aql.Log;
 import de.foellix.aql.converter.IConverter;
 import de.foellix.aql.datastructure.Answer;
+import de.foellix.aql.datastructure.App;
 import de.foellix.aql.datastructure.Data;
 import de.foellix.aql.datastructure.Intentfilter;
 import de.foellix.aql.datastructure.Intentfilters;
@@ -16,11 +17,11 @@ import de.foellix.aql.datastructure.Intentsink;
 import de.foellix.aql.datastructure.Intentsinks;
 import de.foellix.aql.datastructure.Intentsource;
 import de.foellix.aql.datastructure.Intentsources;
-import de.foellix.aql.datastructure.QuestionPart;
 import de.foellix.aql.datastructure.Reference;
 import de.foellix.aql.datastructure.Target;
 import de.foellix.aql.helper.Helper;
-import de.foellix.aql.system.task.ToolTaskInfo;
+import de.foellix.aql.system.task.ConverterTask;
+import de.foellix.aql.system.task.ConverterTaskInfo;
 import edu.psu.cse.siis.ic3.Ic3Data;
 import edu.psu.cse.siis.ic3.Ic3Data.Application;
 import edu.psu.cse.siis.ic3.Ic3Data.Application.Component;
@@ -34,7 +35,10 @@ import edu.psu.cse.siis.ic3.Ic3Data.AttributeKind;
 
 public class ConverterIC3 implements IConverter {
 	@Override
-	public Answer parse(final File resultFile, final ToolTaskInfo taskInfo) {
+	public Answer parse(ConverterTask task) {
+		final File resultFile = new File(task.getTaskInfo().getData(ConverterTaskInfo.RESULT_FILE));
+		final App appRef = Helper.createApp(Helper.getAppFromData(task.getTaskInfo()));
+
 		final Application app;
 
 		try {
@@ -46,10 +50,10 @@ public class ConverterIC3 implements IConverter {
 			return null;
 		}
 
-		return convert(app, taskInfo.getQuestion());
+		return convert(app, appRef);
 	}
 
-	private Answer convert(final Application data, final QuestionPart question) {
+	private Answer convert(final Application data, final App appRef) {
 		final Answer answer = new Answer();
 
 		Log.msg(data.toString(), Log.DEBUG_DETAILED);
@@ -65,12 +69,7 @@ public class ConverterIC3 implements IConverter {
 					// Origin
 					final Reference originReduced = new Reference();
 					originReduced.setClassname(instruction.getClassName());
-					originReduced.setApp(question.getAllReferences().get(0).getApp());
-					final Reference origin = new Reference();
-					origin.setStatement(Helper.createStatement(instruction.getStatement()));
-					origin.setMethod(instruction.getMethod());
-					origin.setClassname(instruction.getClassName());
-					origin.setApp(question.getAllReferences().get(0).getApp());
+					originReduced.setApp(appRef);
 
 					if (!component.getIntentFiltersList().isEmpty()) {
 						// Action
@@ -91,49 +90,67 @@ public class ConverterIC3 implements IConverter {
 									}
 								} else if (attribute.getKind() == AttributeKind.TYPE) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getType() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setType(value);
 										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SCHEME) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getScheme() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setScheme(value);
 										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SSP) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getSsp() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setSsp(value);
 										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.HOST) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getHost() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setHost(value);
 										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PORT) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getPort() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setPort(value);
 										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PATH) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getPath() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setPath(value);
 										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.URI) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getScheme() != null || dataObj.getHost() != null
+												|| dataObj.getPort() != null || dataObj.getPath() != null) {
+											dataObj = new Data();
+										}
 										Helper.extractDataFromURI(value, dataObj);
 										intentfilterObj.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.AUTHORITY) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getHost() != null
+												|| (value.contains(":") && dataObj.getPort() != null)) {
+											dataObj = new Data();
+										}
 										Helper.extractDataFromAuthority(value, dataObj);
 										intentfilterObj.getData().add(dataObj);
 									}
@@ -156,12 +173,11 @@ public class ConverterIC3 implements IConverter {
 						// Origin
 						final Reference originReduced = new Reference();
 						originReduced.setClassname(instruction.getClassName());
-						originReduced.setApp(question.getAllReferences().get(0).getApp());
 						final Reference origin = new Reference();
 						origin.setStatement(Helper.createStatement(instruction.getStatement()));
 						origin.setMethod(instruction.getMethod());
 						origin.setClassname(instruction.getClassName());
-						origin.setApp(question.getAllReferences().get(0).getApp());
+						origin.setApp(appRef);
 
 						// Explicit
 						final Intentsource intentsourceExp = new Intentsource();
@@ -192,49 +208,68 @@ public class ConverterIC3 implements IConverter {
 										}
 									} else if (attribute.getKind() == AttributeKind.TYPE) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getType() != null) {
+												dataObj = new Data();
+											}
 											dataObj.setType(value);
 											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.SCHEME) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getScheme() != null) {
+												dataObj = new Data();
+											}
 											dataObj.setScheme(value);
 											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.SSP) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getSsp() != null) {
+												dataObj = new Data();
+											}
 											dataObj.setSsp(value);
 											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.HOST) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getHost() != null) {
+												dataObj = new Data();
+											}
 											dataObj.setHost(value);
 											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.PORT) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getPort() != null) {
+												dataObj = new Data();
+											}
 											dataObj.setPort(value);
 											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.PATH) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getPath() != null) {
+												dataObj = new Data();
+											}
 											dataObj.setPath(value);
 											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.URI) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getScheme() != null
+													|| dataObj.getHost() != null || dataObj.getPort() != null
+													|| dataObj.getPath() != null) {
+												dataObj = new Data();
+											}
 											Helper.extractDataFromURI(value, dataObj);
 											targetImp.getData().add(dataObj);
 										}
 									} else if (attribute.getKind() == AttributeKind.AUTHORITY) {
 										for (final String value : attribute.getValueList()) {
-											dataObj = new Data();
+											if (dataObj == null || dataObj.getHost() != null
+													|| (value.contains(":") && dataObj.getPort() != null)) {
+												dataObj = new Data();
+											}
 											Helper.extractDataFromAuthority(value, dataObj);
 											targetImp.getData().add(dataObj);
 										}
@@ -263,7 +298,7 @@ public class ConverterIC3 implements IConverter {
 						origin.setStatement(Helper.createStatement(instruction.getStatement()));
 						origin.setMethod(instruction.getMethod());
 						origin.setClassname(instruction.getClassName());
-						origin.setApp(question.getAllReferences().get(0).getApp());
+						origin.setApp(appRef);
 
 						// Action & Package + Class
 						for (final Intent intent : exitpoint.getIntentsList()) {
@@ -286,49 +321,67 @@ public class ConverterIC3 implements IConverter {
 									}
 								} else if (attribute.getKind() == AttributeKind.TYPE) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getType() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setType(value);
 										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SCHEME) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getScheme() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setScheme(value);
 										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.SSP) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getSsp() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setSsp(value);
 										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.HOST) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getHost() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setHost(value);
 										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PORT) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getPort() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setPort(value);
 										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.PATH) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getPath() != null) {
+											dataObj = new Data();
+										}
 										dataObj.setPath(value);
 										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.URI) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getScheme() != null || dataObj.getHost() != null
+												|| dataObj.getPort() != null || dataObj.getPath() != null) {
+											dataObj = new Data();
+										}
 										Helper.extractDataFromURI(value, dataObj);
 										target.getData().add(dataObj);
 									}
 								} else if (attribute.getKind() == AttributeKind.AUTHORITY) {
 									for (final String value : attribute.getValueList()) {
-										dataObj = new Data();
+										if (dataObj == null || dataObj.getHost() != null
+												|| (value.contains(":") && dataObj.getPort() != null)) {
+											dataObj = new Data();
+										}
 										Helper.extractDataFromAuthority(value, dataObj);
 										target.getData().add(dataObj);
 									}

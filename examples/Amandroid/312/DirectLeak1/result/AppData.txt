@@ -1,0 +1,27 @@
+Application Name: DirectLeak1.apk
+Uses Permissions: android.permission.SEND_SMS, android.permission.READ_PHONE_STATE
+
+Component de.ecspride.MainActivity
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.MAIN"],Categories:["android.intent.category.LAUNCHER"])
+
+  Inter-component communication (ICC) Result:
+
+
+
+Taint analysis result:
+  Sources found:
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+  Sinks found:
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V 3>
+  Discovered taint paths are listed below:
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V 3>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(MainActivity.onCreate,L026e62)(MainActivity.envMain,L9), Call@(MainActivity.onCreate,L026e6e)(MainActivity.envMain,L9) param: 3)

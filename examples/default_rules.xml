@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+	%QUERY%: The original query before applying the rule without question mark, if the original query ends with a question mark
+	%FILE_i%: File number i (i in [1, n]) from the original query
+	%FEATURE_i%: Feature number i (i in [1, n]) from the original query
+	%FEATURES%: All features from the original query
+-->
+
+<rules>
+	<rule name="ICC Rule">
+		<priority>1</priority>
+		<inputQuery>Flows FROM App(%FILE_1%) TO App(%FILE_2%) ?</inputQuery>
+		<outputQuery>CONNECT [ Flows IN App(%FILE_1%) ?, Flows IN App(%FILE_2%) ? ] ?</outputQuery>
+	</rule>
+</rules>

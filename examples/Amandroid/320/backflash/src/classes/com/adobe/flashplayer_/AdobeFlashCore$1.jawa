@@ -1,0 +1,35 @@
+record `com.adobe.flashplayer_.AdobeFlashCore$1` @kind class @AccessFlag  extends `android.os.CountDownTimer` @kind class {
+  `com.adobe.flashplayer_.AdobeFlashCore` `com.adobe.flashplayer_.AdobeFlashCore$1.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.AdobeFlashCore$1` v0 @kind this, `com.adobe.flashplayer_.AdobeFlashCore` v1 @kind object, `long` v2 @name `$anonymous0`, `long` v4 @name `$anonymous1`) @signature `Lcom/adobe/flashplayer_/AdobeFlashCore$1;.<init>:(Lcom/adobe/flashplayer_/AdobeFlashCore;JJ)V` @AccessFlag CONSTRUCTOR {
+    temp;
+
+  #L030d20.  v0.`com.adobe.flashplayer_.AdobeFlashCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeFlashCore` := v1 @kind object;
+  #L030d24.  call `<init>`(v0, v2, v4) @signature `Landroid/os/CountDownTimer;.<init>:(JJ)V` @kind direct;
+  #L030d2a.  return @kind void;
+}
+procedure `void` `onFinish`(`com.adobe.flashplayer_.AdobeFlashCore$1` v1 @kind this) @signature `Lcom/adobe/flashplayer_/AdobeFlashCore$1;.onFinish:()V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+
+  #L030d3c.  v0:= v1.`com.adobe.flashplayer_.AdobeFlashCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeFlashCore` @kind object;
+  #L030d40.  call `stopSelf`(v0) @signature `Lcom/adobe/flashplayer_/AdobeFlashCore;.stopSelf:()V` @kind virtual;
+  #L030d46.  return @kind void;
+}
+procedure `void` `onTick`(`com.adobe.flashplayer_.AdobeFlashCore$1` v4 @kind this, `long` v5 @name `millisUntilFinished`) @signature `Lcom/adobe/flashplayer_/AdobeFlashCore$1;.onTick:(J)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L030d58.  v0:= v4.`com.adobe.flashplayer_.AdobeFlashCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeFlashCore` @kind object;
+  #L030d5c.  v1:= new `android.content.Intent`;
+  #L030d60.  v2:= v4.`com.adobe.flashplayer_.AdobeFlashCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeFlashCore` @kind object;
+  #L030d64.  call temp:= `getApplicationContext`(v2) @signature `Lcom/adobe/flashplayer_/AdobeFlashCore;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L030d6a.  v2:= temp @kind object;
+  #L030d6c.  v3:= constclass @type ^`com.adobe.flashplayer_.AdobeUtil` @kind object;
+  #L030d70.  call `<init>`(v1, v2, v3) @signature `Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L030d76.  call temp:= `startService`(v0, v1) @signature `Lcom/adobe/flashplayer_/AdobeFlashCore;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;` @kind virtual;
+  #L030d7c.  return @kind void;
+}

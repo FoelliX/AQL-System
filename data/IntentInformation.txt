@@ -1,0 +1,111 @@
+% Intents
+<android.content.Intent: void <init>()> -> Intent
+<android.content.Intent: void <init>(android.content.Intent)> -> Intent
+<android.content.Intent: void <init>(java.lang.String)> -> Intent
+<android.content.Intent: void <init>(java.lang.String,android.net.Uri)> -> Intent
+<android.content.Intent: void <init>(android.content.Context,java.lang.Class)> -> Intent
+<android.content.Intent: void <init>(java.lang.String,android.net.Uri,android.content.Context,java.lang.Class)> -> Intent
+
+% Intentfilters
+<android.content.IntentFilter: void <init>()> -> Intentfilter
+<android.content.IntentFilter: void <init>(java.lang.String)> -> Intentfilter
+<android.content.IntentFilter: void <init>(java.lang.String,java.lang.String)> -> Intentfilter
+<android.content.IntentFilter: void <init>(android.content.IntentFilter)> -> Intentfilter
+
+% Intentsinks
+<android.content.Context: void sendBroadcast(android.content.Intent)> -> Intentsink
+<android.content.Context: void sendBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<android.content.Context: void startActivity(android.content.Intent)> -> Intentsink
+<android.content.Context: void startActivity(android.content.Intent,android.os.Bundle)> -> Intentsink
+<android.content.Context: void startActivities(android.content.Intent[])> -> Intentsink
+<android.content.Context: void startActivities(android.content.Intent[],android.os.Bundle)> -> Intentsink
+<android.content.Context: android.content.ComponentName startService(android.content.Intent)> -> Intentsink
+<android.content.Context: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)> -> Intentsink
+<android.content.Context: void sendBroadcast(android.content.Intent)> -> Intentsink
+<android.content.Context: void sendBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<android.content.ContextWrapper: void sendOrderedBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<android.content.ContextWrapper: void startActivity(android.content.Intent)> -> Intentsink
+<android.app.Activity: void startActivity(android.content.Intent)> -> Intentsink
+<android.app.Activity: void startActivity(android.content.Intent,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void startActivities(android.content.Intent[])> -> Intentsink
+<android.app.Activity: void startActivities(android.content.Intent[],android.os.Bundle)> -> Intentsink
+<android.app.Activity: void startActivityForResult(android.content.Intent,int)> -> Intentsink
+<android.app.Activity: void startActivityForResult(android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void startActivityFromChild(android.app.Activity,android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void startActivityFromChild(android.app.Activity,android.content.Intent,int)> -> Intentsink
+<android.app.Activity: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)> -> Intentsink
+<android.app.Activity: void startActivityIfNeeded(android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void startActivityIfNeeded(android.content.Intent,int)> -> Intentsink
+<android.app.Activity: android.content.ComponentName startService(android.content.Intent)> -> Intentsink
+<android.app.Activity: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)> -> Intentsink
+<android.app.Activity: void sendBroadcast(android.content.Intent)> -> Intentsink
+<android.app.Activity: void sendBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<android.app.Activity: void sendBroadcastAsUser(android.content.Intent,android.os.UserHandle)> -> Intentsink
+<android.app.Activity: void sendBroadcastAsUser(android.content.Intent,android.os.UserHandle,java.lang.String)> -> Intentsink
+<android.app.Activity: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void sendOrderedBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<android.app.Activity: void sendOrderedBroadcastAsUser(android.content.Intent,android.os.UserHandle,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void sendStickyBroadcast(android.content.Intent)> -> Intentsink
+<android.app.Activity: void sendStickyBroadcastAsUser(android.content.Intent,android.os.UserHandle)> -> Intentsink
+<android.app.Activity: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+<android.app.Activity: void sendStickyOrderedBroadcastAsUser(android.content.Intent,android.os.UserHandle,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+<*: void startActivity(android.content.Intent)> -> Intentsink
+<*: void startActivity(android.content.Intent,android.os.Bundle)> -> Intentsink
+<*: void startActivities(android.content.Intent[])> -> Intentsink
+<*: void startActivities(android.content.Intent[],android.os.Bundle)> -> Intentsink
+<*: void startActivityForResult(android.content.Intent,int)> -> Intentsink
+<*: void startActivityForResult(android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<*: void startActivityFromChild(android.app.Activity,android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<*: void startActivityFromChild(android.app.Activity,android.content.Intent,int)> -> Intentsink
+<*: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<*: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)> -> Intentsink
+<*: void startActivityIfNeeded(android.content.Intent,int,android.os.Bundle)> -> Intentsink
+<*: void startActivityIfNeeded(android.content.Intent,int)> -> Intentsink
+<*: android.content.ComponentName startService(android.content.Intent)> -> Intentsink
+<*: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)> -> Intentsink
+<*: void sendBroadcast(android.content.Intent)> -> Intentsink
+<*: void sendBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<*: void sendBroadcastAsUser(android.content.Intent,android.os.UserHandle)> -> Intentsink
+<*: void sendBroadcastAsUser(android.content.Intent,android.os.UserHandle,java.lang.String)> -> Intentsink
+<*: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+<*: void sendOrderedBroadcast(android.content.Intent,java.lang.String)> -> Intentsink
+<*: void sendOrderedBroadcastAsUser(android.content.Intent,android.os.UserHandle,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+<*: void sendStickyBroadcast(android.content.Intent)> -> Intentsink
+<*: void sendStickyBroadcastAsUser(android.content.Intent,android.os.UserHandle)> -> Intentsink
+<*: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+<*: void sendStickyOrderedBroadcastAsUser(android.content.Intent,android.os.UserHandle,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)> -> Intentsink
+
+% Intentsources
+<android.content.Intent: boolean[] getBooleanArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: boolean getBooleanExtra(java.lang.String, boolean)> -> Intentsource
+<android.content.Intent: android.os.Bundle getBundleExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: byte[] getByteArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: byte getByteExtra(java.lang.String, byte)> -> Intentsource
+<android.content.Intent: char[] getCharArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: char getCharExtra(java.lang.String, char)> -> Intentsource
+<android.content.Intent: java.lang.CharSequence[] getCharSequenceArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: java.util.ArrayList getCharSequenceArrayListExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: java.lang.CharSequence getCharSequenceExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: double[] getDoubleArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: double getDoubleExtra(java.lang.String, double)> -> Intentsource
+<android.content.Intent: android.os.Bundle getExtras()> -> Intentsource
+<android.content.Intent: float[] getFloatArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: float getFloatExtra(java.lang.String, float)> -> Intentsource
+<android.content.Intent: int[] getIntArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: java.util.ArrayList getIntegerArrayListExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: int getIntExtra(java.lang.String, int)> -> Intentsource
+<android.content.Intent: long[] getLongArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: long getLongExtra(java.lang.String, long)> -> Intentsource
+<android.content.Intent: android.os.Parcelable[] getParcelableArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: java.util.ArrayList getParcelableArrayListExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: android.os.Parcelable getParcelableExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: java.io.Serializable getSerializableExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: short[] getShortArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: short getShortExtra(java.lang.String, short)> -> Intentsource
+<android.content.Intent: java.lang.String[] getStringArrayExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: java.util.ArrayList getStringArrayListExtra(java.lang.String)> -> Intentsource
+<android.content.Intent: java.lang.String getStringExtra(java.lang.String)> -> Intentsource
+<android.app.Activity: android.content.Intent getIntent()> -> Intentsource
+<*: android.content.Intent getIntent()> -> Intentsource

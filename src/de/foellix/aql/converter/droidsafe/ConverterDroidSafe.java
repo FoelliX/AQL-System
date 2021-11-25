@@ -10,18 +10,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.foellix.aql.Log;
 import de.foellix.aql.converter.IConverter;
 import de.foellix.aql.datastructure.Answer;
+import de.foellix.aql.datastructure.App;
 import de.foellix.aql.datastructure.Flow;
 import de.foellix.aql.datastructure.Flows;
-import de.foellix.aql.datastructure.KeywordsAndConstants;
 import de.foellix.aql.datastructure.Reference;
 import de.foellix.aql.helper.Helper;
-import de.foellix.aql.system.task.ToolTaskInfo;
+import de.foellix.aql.helper.KeywordsAndConstantsHelper;
+import de.foellix.aql.system.task.ConverterTask;
+import de.foellix.aql.system.task.ConverterTaskInfo;
 
 public class ConverterDroidSafe implements IConverter {
 	private JSONReader json;
 
 	@Override
-	public Answer parse(File resultFolder, ToolTaskInfo taskInfo) {
+	public Answer parse(ConverterTask task) {
+		File resultFolder = new File(task.getTaskInfo().getData(ConverterTaskInfo.RESULT_FILE));
+		final App app = Helper.createApp(Helper.getAppFromData(task.getTaskInfo()));
+
 		final Answer answer = new Answer();
 		final Flows flows = new Flows();
 
@@ -51,13 +56,13 @@ public class ConverterDroidSafe implements IConverter {
 			while ((line = br.readLine()) != null) {
 				if (line.startsWith("Sink: ")) {
 					to = new Reference();
-					to.setStatement(Helper.createStatement(Helper.cutFromFirstToLast(line, "<", ">")));
+					to.setStatement(Helper.createStatement(Helper.cutFromFirstToLast(line, "<", ">"), false));
 					final String method = findMethodRecursively(to.getStatement().getStatementgeneric());
 					if (method != null) {
 						to.setMethod(method);
 						to.setClassname(Helper.cut(to.getMethod(), "<", ":"));
-						to.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
-						to.setType(KeywordsAndConstants.REFERENCE_TYPE_TO);
+						to.setApp(app);
+						to.setType(KeywordsAndConstantsHelper.REFERENCE_TYPE_TO);
 					} else {
 						Log.error("Could not find method for the following statement: "
 								+ to.getStatement().getStatementgeneric());
@@ -70,13 +75,13 @@ public class ConverterDroidSafe implements IConverter {
 					sources = false;
 				} else if (sources) {
 					from = new Reference();
-					from.setStatement(Helper.createStatement(Helper.cut(line, "\t", " (UNIQUE_IDENTIFIER)")));
+					from.setStatement(Helper.createStatement(Helper.cut(line, "\t", " (UNIQUE_IDENTIFIER)"), false));
 					final String method = findMethodRecursively(from.getStatement().getStatementgeneric());
 					if (method != null) {
 						from.setMethod(method);
 						from.setClassname(Helper.cut(from.getMethod(), "<", ":"));
-						from.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
-						from.setType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
+						from.setApp(app);
+						from.setType(KeywordsAndConstantsHelper.REFERENCE_TYPE_FROM);
 
 						final Flow flow = new Flow();
 						flow.getReference().add(from);

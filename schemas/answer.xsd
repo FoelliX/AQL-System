@@ -66,9 +66,13 @@
   <xs:element name="type" type="xs:string"/>
   <xs:element name="scheme" type="xs:string"/>
   <xs:element name="ssp" type="xs:string"/>
+  <xs:element name="sspPattern" type="xs:string"/>
+  <xs:element name="sspPrefix" type="xs:string"/>
   <xs:element name="host" type="xs:string"/>
   <xs:element name="port" type="xs:string"/>
   <xs:element name="path" type="xs:string"/>
+  <xs:element name="pathPattern" type="xs:string"/>
+  <xs:element name="pathPrefix" type="xs:string"/>
   <xs:element name="action" type="xs:string"/>
   <xs:element name="category" type="xs:string"/>
   <xs:element name="data">
@@ -77,9 +81,13 @@
         <xs:element ref="type" minOccurs="0"/>
         <xs:element ref="scheme" minOccurs="0"/>
         <xs:element ref="ssp" minOccurs="0"/>
+		<xs:element ref="sspPattern" minOccurs="0"/>
+		<xs:element ref="sspPrefix" minOccurs="0"/>
         <xs:element ref="host" minOccurs="0"/>
         <xs:element ref="port" minOccurs="0"/>
         <xs:element ref="path" minOccurs="0"/>
+		<xs:element ref="pathPattern" minOccurs="0"/>
+		<xs:element ref="pathPrefix" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -93,6 +101,7 @@
   </xs:element>
   <xs:element name="statementfull" type="xs:string"/>
   <xs:element name="statementgeneric" type="xs:string"/>
+  <xs:element name="linenumber" type="xs:int"/> 
   <xs:element name="parameters">
     <xs:complexType>
       <xs:sequence>
@@ -105,7 +114,8 @@
       <xs:sequence>
         <xs:element ref="statementfull"/>
         <xs:element ref="statementgeneric"/>
-        <xs:element ref="parameters" minOccurs="0"/>
+        <xs:element ref="linenumber" minOccurs="0"/>
+		<xs:element ref="parameters" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -140,9 +150,9 @@
   <xs:element name="intent">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="reference"/>
         <xs:element ref="target"/>
-        <xs:element ref="attributes" minOccurs="0"/>
+        <xs:element ref="reference"/>
+		<xs:element ref="attributes" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -161,6 +171,22 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="reference" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="reference"/>
+        <xs:element ref="attributes" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sink">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="reference"/>
         <xs:element ref="attributes" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
@@ -207,6 +233,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="sources">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="source" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sinks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sink" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="answer">
     <xs:complexType>
       <xs:sequence>
@@ -216,6 +256,8 @@
         <xs:element ref="intents"/>
         <xs:element ref="intentfilters"/>
         <xs:element ref="flows"/>
+		<xs:element ref="sources"/>
+		<xs:element ref="sinks"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

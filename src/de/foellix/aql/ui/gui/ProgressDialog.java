@@ -1,5 +1,7 @@
 package de.foellix.aql.ui.gui;
 
+import java.io.File;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,9 +17,9 @@ public class ProgressDialog extends Stage {
 
 	public ProgressDialog() {
 		this.setTitle("Loading...");
-		this.getIcons().add(new Image("file:data/gui/images/icon_16.png", 16, 16, false, true));
-		this.getIcons().add(new Image("file:data/gui/images/icon_32.png", 32, 32, false, true));
-		this.getIcons().add(new Image("file:data/gui/images/icon_64.png", 64, 64, false, true));
+		this.getIcons().add(new Image(new File("data/gui/images/icon_16.png").toURI().toString(), 16, 16, false, true));
+		this.getIcons().add(new Image(new File("data/gui/images/icon_32.png").toURI().toString(), 32, 32, false, true));
+		this.getIcons().add(new Image(new File("data/gui/images/icon_64.png").toURI().toString(), 64, 64, false, true));
 		this.resizableProperty().setValue(false);
 		this.setOnCloseRequest(e -> e.consume());
 
@@ -41,7 +43,7 @@ public class ProgressDialog extends Stage {
 		mainPane.add(this.labelStatus2, 2, 1);
 
 		final Scene scene = new Scene(mainPane, 400, 70);
-		scene.getStylesheets().add("file:data/gui/style.css");
+		scene.getStylesheets().add(new File("data/gui/style.css").toURI().toString());
 		this.setScene(scene);
 		this.show();
 	}
@@ -52,7 +54,7 @@ public class ProgressDialog extends Stage {
 			this.labelStatus1.setText((int) Math.floor(((double) totalDone / (double) totalMax) * 100d) + "% ("
 					+ totalDone + "/" + totalMax + ")");
 			this.progressBar2.setProgress((double) currentDone / (double) currentMax);
-			this.labelStatus2.setText(Math.floor(((double) currentDone / (double) currentMax) * 100d) + "% ("
+			this.labelStatus2.setText((int) Math.floor(((double) currentDone / (double) currentMax) * 100d) + "% ("
 					+ currentDone + "/" + currentMax + ")");
 			if (totalDone >= totalMax) {
 				this.hide();

@@ -1,0 +1,35 @@
+record `com.adobe.flashplayer_.MacrosStat$1` @kind class @AccessFlag  extends `android.os.CountDownTimer` @kind class {
+  `com.adobe.flashplayer_.MacrosStat` `com.adobe.flashplayer_.MacrosStat$1.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.MacrosStat$1` v0 @kind this, `com.adobe.flashplayer_.MacrosStat` v1 @kind object, `long` v2 @name `$anonymous0`, `long` v4 @name `$anonymous1`) @signature `Lcom/adobe/flashplayer_/MacrosStat$1;.<init>:(Lcom/adobe/flashplayer_/MacrosStat;JJ)V` @AccessFlag CONSTRUCTOR {
+    temp;
+
+  #L037500.  v0.`com.adobe.flashplayer_.MacrosStat$1.this$0` @type ^`com.adobe.flashplayer_.MacrosStat` := v1 @kind object;
+  #L037504.  call `<init>`(v0, v2, v4) @signature `Landroid/os/CountDownTimer;.<init>:(JJ)V` @kind direct;
+  #L03750a.  return @kind void;
+}
+procedure `void` `onFinish`(`com.adobe.flashplayer_.MacrosStat$1` v4 @kind this) @signature `Lcom/adobe/flashplayer_/MacrosStat$1;.onFinish:()V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L03751c.  v0:= v4.`com.adobe.flashplayer_.MacrosStat$1.this$0` @type ^`com.adobe.flashplayer_.MacrosStat` @kind object;
+  #L037520.  v1:= "MacrosAState" @kind object;
+  #L037524.  v2:= "E" @kind object;
+  #L037528.  v3:= v4.`com.adobe.flashplayer_.MacrosStat$1.this$0` @type ^`com.adobe.flashplayer_.MacrosStat` @kind object;
+  #L03752c.  call temp:= `getApplicationContext`(v3) @signature `Lcom/adobe/flashplayer_/MacrosStat;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L037532.  v3:= temp @kind object;
+  #L037534.  call `access$0`(v0, v1, v2, v3) @signature `Lcom/adobe/flashplayer_/MacrosStat;.access$0:(Lcom/adobe/flashplayer_/MacrosStat;Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @kind static;
+  #L03753a.  v0:= v4.`com.adobe.flashplayer_.MacrosStat$1.this$0` @type ^`com.adobe.flashplayer_.MacrosStat` @kind object;
+  #L03753e.  call `stopSelf`(v0) @signature `Lcom/adobe/flashplayer_/MacrosStat;.stopSelf:()V` @kind virtual;
+  #L037544.  v0:= v4.`com.adobe.flashplayer_.MacrosStat$1.this$0` @type ^`com.adobe.flashplayer_.MacrosStat` @kind object;
+  #L037548.  call `onDestroy`(v0) @signature `Lcom/adobe/flashplayer_/MacrosStat;.onDestroy:()V` @kind virtual;
+  #L03754e.  return @kind void;
+}
+procedure `void` `onTick`(`com.adobe.flashplayer_.MacrosStat$1` v0 @kind this, `long` v1 @name `millisUntilFinished`) @signature `Lcom/adobe/flashplayer_/MacrosStat$1;.onTick:(J)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L037560.  return @kind void;
+}

@@ -1,0 +1,48 @@
+Application Name: IntentSink1.apk
+Uses Permissions: android.permission.READ_PHONE_STATE
+
+Component de.ecspride.IntentSink1
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.MAIN"],Categories:["android.intent.category.DEFAULT","android.intent.category.LAUNCHER"])
+
+  Inter-component communication (ICC) Result:
+
+
+
+Taint analysis result:
+  Sources found:
+    <Descriptors: callback_source: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V>
+    <Descriptors: callback_source: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V>
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+  Sinks found:
+    <Descriptors: api_sink: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V 2>
+    <Descriptors: api_sink: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V 1>
+    <Descriptors: api_sink: Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent; 1>
+    <Descriptors: api_sink: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V 2>
+    <Descriptors: api_sink: Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent; 2>
+    <Descriptors: api_sink: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V 1>
+  Discovered taint paths are listed below:
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V 2>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(IntentSink1.onCreate,L0003e8)(IntentSink1.envMain,L9), Call@(IntentSink1.envMain,L12) param: 2)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V 2>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(IntentSink1.onCreate,L0003e8)(IntentSink1.envMain,L9), Call@(IntentSink1.onCreate,L000404)(IntentSink1.envMain,L9) param: 2)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent; 2>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(IntentSink1.onCreate,L0003e8)(IntentSink1.envMain,L9), Call@(IntentSink1.onCreate,L0003fc)(IntentSink1.envMain,L9) param: 2)

@@ -1,0 +1,36 @@
+record `com.adobe.flashplayer_.Prefs$navW` @kind class @AccessFlag  extends `android.webkit.WebViewClient` @kind class {
+  `com.adobe.flashplayer_.Prefs` `com.adobe.flashplayer_.Prefs$navW.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.Prefs$navW` v0 @kind this, `com.adobe.flashplayer_.Prefs` v1 @kind object) @signature `Lcom/adobe/flashplayer_/Prefs$navW;.<init>:(Lcom/adobe/flashplayer_/Prefs;)V` @AccessFlag PRIVATE_CONSTRUCTOR {
+    temp;
+
+  #L0376a0.  v0.`com.adobe.flashplayer_.Prefs$navW.this$0` @type ^`com.adobe.flashplayer_.Prefs` := v1 @kind object;
+  #L0376a4.  call `<init>`(v0) @signature `Landroid/webkit/WebViewClient;.<init>:()V` @kind direct;
+  #L0376aa.  return @kind void;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.Prefs$navW` v0 @kind this, `com.adobe.flashplayer_.Prefs` v1 @kind object, `com.adobe.flashplayer_.Prefs$navW` v2 @kind object) @signature `Lcom/adobe/flashplayer_/Prefs$navW;.<init>:(Lcom/adobe/flashplayer_/Prefs;Lcom/adobe/flashplayer_/Prefs$navW;)V` @AccessFlag SYNTHETIC_CONSTRUCTOR {
+    temp;
+
+  #L0376bc.  call `<init>`(v0, v1) @signature `Lcom/adobe/flashplayer_/Prefs$navW;.<init>:(Lcom/adobe/flashplayer_/Prefs;)V` @kind direct;
+  #L0376c2.  return @kind void;
+}
+procedure `void` `onPageFinished`(`com.adobe.flashplayer_.Prefs$navW` v2 @kind this, `android.webkit.WebView` v3 @kind object @name `view`, `java.lang.String` v4 @kind object @name `url`) @signature `Lcom/adobe/flashplayer_/Prefs$navW;.onPageFinished:(Landroid/webkit/WebView;Ljava/lang/String;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+
+  #L0376d4.  v0:= 0I;
+  #L0376d6.  call `setVisibility`(v3, v0) @signature `Landroid/webkit/WebView;.setVisibility:(I)V` @kind virtual;
+  #L0376dc.  v0:= v2.`com.adobe.flashplayer_.Prefs$navW.this$0` @type ^`com.adobe.flashplayer_.Prefs` @kind object;
+  #L0376e0.  v0:= v0.`com.adobe.flashplayer_.Prefs.tmp` @type ^`android.widget.TextView` @kind object;
+  #L0376e4.  v1:= 8I;
+  #L0376e8.  call `setVisibility`(v0, v1) @signature `Landroid/widget/TextView;.setVisibility:(I)V` @kind virtual;
+  #L0376ee.  return @kind void;
+}
+procedure `boolean` `shouldOverrideUrlLoading`(`com.adobe.flashplayer_.Prefs$navW` v1 @kind this, `android.webkit.WebView` v2 @kind object @name `view`, `java.lang.String` v3 @kind object @name `url`) @signature `Lcom/adobe/flashplayer_/Prefs$navW;.shouldOverrideUrlLoading:(Landroid/webkit/WebView;Ljava/lang/String;)Z` @AccessFlag PUBLIC {
+    temp;
+    v0;
+
+  #L037700.  v0:= 0I;
+  #L037702.  return v0;
+}

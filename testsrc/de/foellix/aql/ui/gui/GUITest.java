@@ -2,12 +2,14 @@ package de.foellix.aql.ui.gui;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import de.foellix.aql.Log;
 import de.foellix.aql.ui.cli.CommandLineInterface;
 import javafx.application.Platform;
 
+@Tag("guiAvailable")
 public class GUITest {
 	private boolean noException = true;
 
@@ -27,7 +29,7 @@ public class GUITest {
 			}
 		}).start();
 
-		final String query = "FILTER [UNIFY [Flows FROM App('SIMApp.apk') TO App('SMSApp.apk') ?, UNIFY [Permissions IN App('SIMApp.apk') ?, Permissions IN App('SMSApp.apk') ?]]]";
+		final String query = "FILTER [ UNIFY [ Flows FROM App('SIMApp.apk') TO App('SMSApp.apk') ?, UNIFY [Permissions IN App('SIMApp.apk') ?, Permissions IN App('SMSApp.apk') ? ] ? ] ? ] ?";
 		try {
 			CommandLineInterface.main(new String[] { "-gui", "-q", query });
 		} catch (final Exception e) {

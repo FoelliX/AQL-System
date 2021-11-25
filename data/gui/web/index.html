@@ -4,81 +4,42 @@
 		<title>AQL-WebView</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-		<link rel="stylesheet" href="style.css" />
-		<script src="cytoscape.umd.js"></script>
-		<script src="cola.min.js"></script>
-		<script src="cytoscape-cola.js"></script>
+		<link rel="stylesheet" href="../style.css" />
 		
-		<link rel="stylesheet" href="highlight/styles/foellix.css">
-		<script src="highlight/highlight.pack.js"></script>
-		<script>hljs.initHighlightingOnLoad();</script>
-	</head>
-	<body>
-		<div class="content">
-			<div class="menu">
-				<label><input type="checkbox" onclick="toggleRight();" checked="checked" />Show XML</label>
-				<label><input type="checkbox" onclick="toggleBottom();" checked="checked" />Show Details</label>
-				<label>
-					Layout: 
-					<select onchange="layout(this.value);">
-						<option value="breadthfirst">Breadthfirst</option>
-						<option value="circle">Circle</option>
-						<option value="concentric" selected="selected">Concentric</option>
-						<option value="cola">Cola</option>
-						<option value="grid">Grid</option>
-					</select>
-				</label>
-				<label>
-					Node-size:
-					<input type="range" min="0" max="180" value="50" oninput="spacing(this.value)" onchange="spacing(this.value)" style="width:300px;" />
-				</label>
-				<input type="button" onclick="initCytoscape();" value="Reset" />
-			</div>
-			<div id="center" class="center">
-				<div id="cyBox">
-					<div id="cy"></div>
-				</div>
-			</div>
-			<div id="right" class="right">
-				<div id="xmlBox">
-					<div id="xmlInnerBox"><pre><code id="xml" class="xml">-</code></pre></div>
-				</div>
-				<div class="title2">XML</div>
-			</div>
-			<div id="bottom" class="bottom">
-				<div id="verboseBox">
-					<div id="verboseInnerBox"><textarea id="verbose" resizeable="false">-</textarea></div>
-				</div>
-				<div class="title1">Details</div>
-			</div>
-		</div>
+		<!-- cytoscape.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.18.2/cytoscape.min.js"></script>
+		<script src="https://unpkg.com/layout-base@2.0.0/layout-base.js"></script>
+		<script src="https://unpkg.com/cose-base@2.0.0/cose-base.js"></script>
+		<script src="https://unpkg.com/cytoscape-fcose@2.0.0/cytoscape-fcose.js"></script>
+		
+		<!-- XML highlighting -->
+		<link rel="stylesheet" href="../highlight.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		
+		<!-- JQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-resize/1.1/jquery.ba-resize.min.js"></script>
+		
+		<!-- Graph Data -->
+		<script type="application/json">
+%JSON_DATA%
+		</script>
 		
 		<script>
-			var layoutType = "concentric";
-			var layoutSpacing = 1;
-			var edgeLengthValue = 520;
+			var layoutType = "fcose";
+			var layoutSpacing = 2.25;
 			
-			var verbose = document.getElementById('verbose');
-			var xml = document.getElementById('xml');
 			var myObject = {};
 			var cy = {};
-
-			function load(jsonFile) {
-				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function () {
-					myObject = JSON.parse(this.responseText);
-					initCytoscape();
-				};
-				xhttp.open("GET", "temp/" + jsonFile, true);
-				xhttp.send();
-			}
 			
 			function initCytoscape() {
 				cy = cytoscape({
 						container: document.getElementById('cy'),
 						elements: myObject,
 						zoom: 1,
-						style: [{
+						style: [
+							{
 								selector: 'node',
 								style: {
 									'content': 'data(label)',
@@ -86,15 +47,15 @@
 									'border-color': 'data(color)',
 									'border-width': 3,
 									'shape': 'rectangle',
-									'width': 'label',
-									'height': 'label',
+									'width': 'data(width)',
+									'height': 'data(height)',
 									'text-valign': 'center',
 									'text-wrap': 'wrap',
 									'text-max-width': 1000,
 									'font-family': 'Myriad Pro, Calibri, Helvetica, Arial, sans-serif',
-									'font-size': '18px',
+									'font-size': '15px',
 									'font-weight': 'normal',
-									'padding': '10px'
+									'padding': '7px'
 								}
 							}, {
 								selector: '.nodeselected',
@@ -157,10 +118,13 @@
 				});
 				
 				cy.on('vmousedown', 'node', function (e) {
+					var verbose = document.getElementById('verbose');
+					var xml = document.getElementById('xml');
+					
 					for (x in myObject.nodes) {
 						if (myObject.nodes[x].data.id == e.target.id()) {
 							verbose.innerHTML = myObject.nodes[x].data.verbose.replace(new RegExp('->', 'g'), '\n->');
-							xml.innerHTML = hljs.highlight("xml", myObject.nodes[x].data.xml).value;
+							xml.innerHTML = hljs.highlight(myObject.nodes[x].data.xml, {language: "xml", ignoreIllegals: true }).value;
 							break;
 						}
 					}
@@ -190,48 +154,23 @@
 				cy.on('mouseout', 'edge', function (e) {
 					e.target.removeClass('edgehover');
 				});
-				
+
 				refresh(true);
-			}
-			
-			function toggleRight(elementId) {
-				var right = document.getElementById("right");
-				var center = document.getElementById("center");
-				if(right.style.display == "none") {
-					center.style.width = "75%";
-					right.style.display = "block";
-				} else {
-					right.style.display = "none";
-					center.style.width = "100%";
-				}
-				initCytoscape();
-			}
-			function toggleBottom(elementId) {
-				var right = document.getElementById("right");
-				var bottom = document.getElementById("bottom");
-				var center = document.getElementById("center");
-				if(bottom.style.display == "none") {
-					right.style.height = "85%";
-					center.style.height = "85%";
-					bottom.style.display = "block";
-				} else {
-					bottom.style.display = "none";
-					right.style.height = "100%";
-					center.style.height = "100%";
-				}
-				initCytoscape();
 			}
 			
 			function refresh(ani) {
 				var layout;
-				if(layoutType == 'cola') {
+				if(layoutType == 'fcose') {
 					layout = cy.layout({
 						name: layoutType,
+						animate: ani,
+						spacingFactor: layoutSpacing,
+						quality: "proof",
+						randomize: false,
 						animate: true,
-						randomize: ani,
-						avoidOverlap: true,
-						edgeLength: edgeLengthValue,
-						maxSimulationTime: 30000
+						animationDuration: 250,
+						nodeDimensionsIncludeLabels: true,
+						nodeSeparation: 200
 					});
 				} else {
 					layout = cy.layout({
@@ -249,10 +188,59 @@
 			}
 			
 			function spacing(newValue) {
-				layoutSpacing = 2 - (newValue / 100);
-				edgeLengthValue = 720 - (4 * newValue);
+				layoutSpacing = 5 - (newValue / 100);
 				refresh(false);
 			}
+		</script>
+	</head>
+	<body>
+		<content>
+			<menu>
+				<div id="menuBox">
+					<label>
+						Layout: 
+						<select onchange="layout(this.value);">
+							<option value="breadthfirst">Breadthfirst</option>
+							<option value="circle">Circle</option>
+							<option value="concentric">Concentric</option>
+							<option value="grid">Grid</option>
+							<option value="fcose" selected="selected">Physical</option>
+						</select>
+					</label>
+					<input type="button" onclick="refresh(true);" value="Apply" />
+					<label>
+						Node-size:
+						<input type="range" min="150" max="475" value="350" oninput="spacing(this.value)" onchange="spacing(this.value)" style="width:300px;" />
+					</label>
+					<input type="button" onclick="initCytoscape();" value="Reset" />
+				</div>
+			</menu>
+
+			<main id="main">
+				<div id="cy"></div>
+			</main>
+		  
+			<bottom>
+				<textarea id="verbose"></textarea>
+			</bottom>
+			
+			<right>
+				<div style="margin-top: -10px; padding-left: 5px;"><pre><code id="xml"></code></pre></div>
+			</right>
+		</content>
+		
+		<script>
+			(function() {
+				var jsonNode = document.querySelector("script[type=\"application/json\"]");
+				var jsonText = jsonNode.textContent;
+				myObject = JSON.parse(jsonText);
+
+				initCytoscape();
+			})();
+			
+			$('#main').bind('resize', function(){
+				cy.resize();
+            });
 		</script>
 	</body>
 </html>

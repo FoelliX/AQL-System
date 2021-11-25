@@ -1,0 +1,163 @@
+Application Name: backflash.apk
+Uses Permissions: android.permission.RECEIVE_SMS, android.permission.SEND_SMS, android.permission.ACCESS_NETWORK_STATE, android.permission.SYSTEM_ALERT_WINDOW, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.CALL_PHONE, android.permission.READ_SMS, android.permission.WRITE_SETTINGS, android.permission.READ_CONTACTS, android.permission.READ_LOGS, android.permission.BROADCAST_PACKAGE_ADDED, android.permission.CHANGE_WIFI_STATE, com.android.browser.permission.READ_HISTORY_BOOKMARKS, android.permission.RECORD_AUDIO, android.permission.READ_PHONE_STATE, android.permission.ACCESS_WIFI_STATE, android.permission.RECEIVE_BOOT_COMPLETED, android.permission.RESTART_PACKAGES, android.permission.KILL_BACKGROUND_PROCESSES, android.permission.DISABLE_KEYGUARD, android.permission.GET_TASKS, android.permission.BROADCAST_PACKAGE_REPLACED, android.permission.WAKE_LOCK, android.permission.BROADCAST_PACKAGE_INSTALL, android.permission.INTERNET, android.permission.PROCESS_OUTGOING_CALLS, android.permission.CHANGE_NETWORK_STATE
+
+Component com.adobe.flashplayer_.SystemSWF
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.BOOT_COMPLETED"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.AdobeFlashCore
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashW
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.PACKAGE_CHANGED","android.intent.action.PACKAGE_ADDED","android.intent.action.PACKAGE_INSTALL","android.intent.action.PACKAGE_REPLACED","android.intent.action.PACKAGE_REMOVED"],Categories:["android.intent.category.DEFAULT"],Data:[(Schemes:<"package">,)])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.packages.ZLocker
+  Component type: activity
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.ADOBEcoreZa
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: android.permission.BIND_DEVICE_ADMIN
+  IntentFilters:
+    IntentFilter:(Actions:["android.app.action.DEVICE_ADMIN_ENABLED","android.app.action.ACTION_DEVICE_ADMIN_DISABLED","android.app.action.ACTION_DEVICE_ADMIN_DISABLE_REQUESTED"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer.Certificate
+  Component type: activity
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.MacrosStat
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.AdobeZCore
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.adobeCore
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: android.permission.RECEIVE_BOOT_COMPLETED
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.QUICKBOOT_POWERON","android.intent.action.BOOT_COMPLETED"],Categories:["android.intent.category.DEFAULT"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.AdobeUtil
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashURL
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: android.permission.BROADCAST_SMS
+  IntentFilters:
+    IntentFilter:(Actions:["android.provider.Telephony.SMS_RECEIVED"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashARM
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.MAIN"],Categories:["android.intent.category.LAUNCHER"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashY
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.PHONE_STATE"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashZ
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.NEW_OUTGOING_CALL"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.packages.BK
+  Component type: activity
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+
+Taint analysis result:

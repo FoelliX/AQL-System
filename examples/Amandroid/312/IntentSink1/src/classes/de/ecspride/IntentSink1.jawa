@@ -1,0 +1,40 @@
+record `de.ecspride.IntentSink1` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `<init>`(`de.ecspride.IntentSink1` v0 @kind this) @signature `Lde/ecspride/IntentSink1;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L0003b4.  return @kind void;
+}
+procedure `void` `onCreate`(`de.ecspride.IntentSink1` v7 @kind this, `android.os.Bundle` v8 @kind object @name `savedInstanceState`) @signature `Lde/ecspride/IntentSink1;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L0003c8.  v0:= 2130903040I;
+  #L0003ce.  call `setContentView`(v7, v0) @signature `Lde/ecspride/IntentSink1;.setContentView:(I)V` @kind virtual;
+  #L0003d4.  v2:= "phone" @kind object;
+  #L0003d8.  call temp:= `getSystemService`(v7, v2) @signature `Lde/ecspride/IntentSink1;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L0003de.  v1:= temp @kind object;
+  #L0003e0.  v4:= v1 @kind object;
+  #L0003e2.  v4:= (`android.telephony.TelephonyManager`) v4 @kind object;
+  #L0003e6.  v3:= v4 @kind object;
+  #L0003e8.  call temp:= `getDeviceId`(v3) @signature `Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;` @kind virtual;
+  #L0003ee.  v5:= temp @kind object;
+  #L0003f0.  call temp:= `getIntent`(v7) @signature `Lde/ecspride/IntentSink1;.getIntent:()Landroid/content/Intent;` @kind virtual;
+  #L0003f6.  v6:= temp @kind object;
+  #L0003f8.  v2:= "secret" @kind object;
+  #L0003fc.  call temp:= `putExtra`(v6, v2, v5) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L000402.  v0:= -1I;
+  #L000404.  call `setResult`(v7, v0, v6) @signature `Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V` @kind virtual;
+  #L00040a.  return @kind void;
+}
+procedure `void` `setResult`(`de.ecspride.IntentSink1` v0 @kind this, `int` v1 , `android.content.Intent` v2 @kind object) @signature `Lde/ecspride/IntentSink1;.setResult:(ILandroid/content/Intent;)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L00041c.  return @kind void;
+}

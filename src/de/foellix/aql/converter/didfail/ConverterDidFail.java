@@ -11,23 +11,26 @@ import java.util.List;
 import de.foellix.aql.Log;
 import de.foellix.aql.converter.IConverter;
 import de.foellix.aql.datastructure.Answer;
+import de.foellix.aql.datastructure.App;
 import de.foellix.aql.datastructure.Flow;
 import de.foellix.aql.datastructure.Flows;
-import de.foellix.aql.datastructure.KeywordsAndConstants;
-import de.foellix.aql.datastructure.QuestionPart;
 import de.foellix.aql.datastructure.Reference;
+import de.foellix.aql.datastructure.query.Question;
 import de.foellix.aql.helper.EqualsHelper;
 import de.foellix.aql.helper.Helper;
-import de.foellix.aql.system.task.ToolTaskInfo;
+import de.foellix.aql.helper.KeywordsAndConstantsHelper;
+import de.foellix.aql.system.storage.Storage;
+import de.foellix.aql.system.task.ConverterTask;
+import de.foellix.aql.system.task.ConverterTaskInfo;
 
 public class ConverterDidFail implements IConverter {
 	private File resultFolder;
-	private QuestionPart question;
+	private Question question;
 
 	@Override
-	public Answer parse(final File resultFolder, final ToolTaskInfo taskInfo) {
-		this.resultFolder = resultFolder;
-		this.question = taskInfo.getQuestion();
+	public Answer parse(ConverterTask task) {
+		this.resultFolder = new File(task.getTaskInfo().getData(ConverterTaskInfo.RESULT_FILE));
+		this.question = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(task);
 
 		final Answer answer = new Answer();
 		answer.setFlows(new Flows());
@@ -35,7 +38,7 @@ public class ConverterDidFail implements IConverter {
 		try {
 			List<Reference> to = null;
 
-			final File resultFile = new File(resultFolder, "flows.out");
+			final File resultFile = new File(this.resultFolder, "flows.out");
 			final FileReader fr = new FileReader(resultFile);
 			final BufferedReader br = new BufferedReader(fr);
 
@@ -61,9 +64,9 @@ public class ConverterDidFail implements IConverter {
 							for (final Reference toRef : to) {
 								final Flow flow = new Flow();
 
-								fromRef.setType(KeywordsAndConstants.REFERENCE_TYPE_FROM);
+								fromRef.setType(KeywordsAndConstantsHelper.REFERENCE_TYPE_FROM);
 								flow.getReference().add(fromRef);
-								toRef.setType(KeywordsAndConstants.REFERENCE_TYPE_TO);
+								toRef.setType(KeywordsAndConstantsHelper.REFERENCE_TYPE_TO);
 								flow.getReference().add(toRef);
 
 								boolean add = true;
@@ -87,7 +90,7 @@ public class ConverterDidFail implements IConverter {
 			fr.close();
 		} catch (final IOException e) {
 			e.printStackTrace();
-			Log.error("Error while reading files in directory: " + resultFolder.getAbsolutePath());
+			Log.error("Error while reading files in directory: " + this.resultFolder.getAbsolutePath());
 			return null;
 		}
 
@@ -108,10 +111,10 @@ public class ConverterDidFail implements IConverter {
 						final String method = Helper.cut(line, " in method ", ")>") + ")>";
 						final String classname = Helper.cut(method, "<", ": ");
 						final Reference reference = new Reference();
-						for (final Reference appCandidate : this.question.getAllReferences()) {
-							if (appCandidate.getApp().getFile().toLowerCase().contains(file.getName()
+						for (final App appCandidate : this.question.getAllApps()) {
+							if (appCandidate.getFile().toLowerCase().contains(file.getName()
 									.substring(0, file.getName().indexOf("flowdroid.log") - 1).toLowerCase())) {
-								reference.setApp(appCandidate.getApp());
+								reference.setApp(appCandidate);
 							}
 						}
 						if (reference.getApp() == null) {

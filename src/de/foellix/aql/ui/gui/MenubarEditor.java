@@ -1,6 +1,7 @@
 package de.foellix.aql.ui.gui;
 
 import de.foellix.aql.system.IProgressChanged;
+import de.foellix.aql.transformations.RulesHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,7 +38,18 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 
 		final MenuBar menuBar = new MenuBar();
 
+		final MenuFile menuFile = new MenuFile(parent.getParentGUI(), true);
+
 		final Menu menuEdit = new Menu(StringConstants.STR_EDIT);
+		final MenuItem menuItemAutocomplete = new MenuItem();
+		menuItemAutocomplete.setVisible(false);
+		menuItemAutocomplete.setAccelerator(new KeyCodeCombination(KeyCode.SPACE, KeyCombination.CONTROL_DOWN));
+		menuItemAutocomplete.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				parent.autocomplete(true);
+			}
+		});
 		final MenuItem menuItemUndo = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_UNDO,
 				StringConstants.STR_UNDO);
 		menuItemUndo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
@@ -56,15 +68,27 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 				parent.redo();
 			}
 		});
-		final SeparatorMenuItem sep1 = new SeparatorMenuItem();
 		final MenuItem menuItemAutoFormat = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_INDENT_RIGHT,
 				StringConstants.STR_AUTO_FORMAT);
+		menuItemAutoFormat.setAccelerator(
+				new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN));
 		menuItemAutoFormat.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
 				parent.autoformat();
 			}
 		});
+		final MenuItem menuItemTransform = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_RANDOM,
+				StringConstants.STR_TRANSFORM);
+		menuItemTransform.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				parent.transform();
+			}
+		});
+		if (RulesHandler.getInstance().getRules().isEmpty()) {
+			menuItemTransform.setDisable(true);
+		}
 		final MenuItem menuItemInsertFilename = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_FILE_ALT,
 				StringConstants.STR_INSERT_FILENAME);
 		menuItemInsertFilename.setOnAction(new EventHandler<ActionEvent>() {
@@ -73,7 +97,6 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 				parent.insertFilename();
 			}
 		});
-		final SeparatorMenuItem sep2 = new SeparatorMenuItem();
 		this.menuItemAsk = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_PLAY,
 				StringConstants.STR_ASK_QUERY);
 		this.menuItemAsk.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
@@ -83,16 +106,45 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 				parent.ask();
 			}
 		});
-		menuEdit.getItems().addAll(menuItemUndo, menuItemRedo, sep1, menuItemAutoFormat, menuItemInsertFilename, sep2,
+		menuEdit.getItems().addAll(menuItemAutocomplete, menuItemUndo, menuItemRedo, new SeparatorMenuItem(),
+				menuItemAutoFormat, menuItemTransform, menuItemInsertFilename, new SeparatorMenuItem(),
 				this.menuItemAsk);
 
-		menuBar.getMenus().addAll(new MenuFile(parent.getParentGUI()), menuEdit,
-				new MenuHelp(parent.getParentGUI().getStage()));
+		final Menu menuView = new Menu(StringConstants.STR_VIEW);
+		final MenuItem menuItemZoomIn = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_ZOOM_IN,
+				StringConstants.STR_ZOOM_IN);
+		menuItemZoomIn.setAccelerator(new KeyCodeCombination(KeyCode.PLUS, KeyCombination.CONTROL_DOWN));
+		menuItemZoomIn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				parent.zoomIn();
+			}
+		});
+		final MenuItem menuItemZoomOut = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_ZOOM_OUT,
+				StringConstants.STR_ZOOM_OUT);
+		menuItemZoomOut.setAccelerator(new KeyCodeCombination(KeyCode.MINUS, KeyCombination.CONTROL_DOWN));
+		menuItemZoomOut.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				parent.zoomOut();
+			}
+		});
+		final MenuItem menuItemZoomReset = FontAwesome.getInstance().createMenuItem(FontAwesome.ICON_SEARCH,
+				StringConstants.STR_ZOOM_RESET);
+		menuItemZoomReset.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT0, KeyCombination.CONTROL_DOWN));
+		menuItemZoomReset.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				parent.zoomReset();
+			}
+		});
+		menuView.getItems().addAll(menuItemZoomIn, menuItemZoomOut, menuItemZoomReset);
+
+		menuBar.getMenus().addAll(menuFile, menuEdit, menuView, new MenuHelp(parent.getParentGUI().getStage()));
 
 		// Toolbar
 		final ToolBar toolBar = new ToolBar();
 
-		final Separator sep3 = new Separator();
 		final Button btnAutoFormat = FontAwesome.getInstance().createButton(FontAwesome.ICON_INDENT_RIGHT);
 		btnAutoFormat.setTooltip(new Tooltip(StringConstants.STR_AUTO_FORMAT));
 		btnAutoFormat.setOnAction(new EventHandler<ActionEvent>() {
@@ -101,6 +153,17 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 				parent.autoformat();
 			}
 		});
+		final Button btnTransform = FontAwesome.getInstance().createButton(FontAwesome.ICON_RANDOM);
+		btnTransform.setTooltip(new Tooltip(StringConstants.STR_TRANSFORM));
+		btnTransform.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				parent.transform();
+			}
+		});
+		if (RulesHandler.getInstance().getRules().isEmpty()) {
+			btnTransform.setDisable(true);
+		}
 		final Button btnInsertFilename = FontAwesome.getInstance().createButton(FontAwesome.ICON_FILE_ALT);
 		btnInsertFilename.setTooltip(new Tooltip(StringConstants.STR_INSERT_FILENAME));
 		btnInsertFilename.setOnAction(new EventHandler<ActionEvent>() {
@@ -109,7 +172,6 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 				parent.insertFilename();
 			}
 		});
-		final Separator sep4 = new Separator();
 		final HBox progressBox = new HBox(10);
 		HBox.setHgrow(progressBox, Priority.ALWAYS);
 		final HBox indicatorBox = new HBox(0);
@@ -135,8 +197,8 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 			}
 		});
 
-		toolBar.getItems().addAll(new ToolsetFile(parent.getParentGUI()), sep3, btnAutoFormat, btnInsertFilename, sep4,
-				progressBox, indicatorBox, this.btnAsk);
+		toolBar.getItems().addAll(new ToolsetFile(parent.getParentGUI(), menuFile), new Separator(), btnAutoFormat,
+				btnTransform, btnInsertFilename, new Separator(), progressBox, indicatorBox, this.btnAsk);
 
 		this.getChildren().addAll(menuBar, toolBar);
 	}
@@ -145,22 +207,37 @@ public class MenubarEditor extends VBox implements IProgressChanged {
 	public void onProgressChanged(final String step, final int inProgress, final int done, final int max) {
 		Platform.runLater(() -> {
 			final float percentage = (max == 0 ? 0 : (float) done / (float) max);
-			this.progressText.setText(step + " " + Math.round(percentage * 100) + "% (In Progress: " + inProgress
+			this.progressText.setText(step + " - " + Math.round(percentage * 100) + "% (In Progress: " + inProgress
 					+ ", Finished: " + done + " of " + max + ")");
 			this.progressBar.setProgress(percentage);
 			if (done < max) {
-				this.menuItemAsk.setDisable(true);
-				FontAwesome.getInstance().setRed(this.btnAsk);
-				this.btnAsk.setText(FontAwesome.ICON_STOP);
 				this.parent.setStop(true);
 				this.progressIndicator.setVisible(true);
+				FontAwesome.getInstance().setRed(this.btnAsk);
+				this.btnAsk.setText(FontAwesome.ICON_STOP);
+				disableButtonTimed(this.btnAsk, 2000);
 			} else {
-				this.menuItemAsk.setDisable(false);
-				FontAwesome.getInstance().setGreen(this.btnAsk);
-				this.btnAsk.setText(FontAwesome.ICON_PLAY);
 				this.parent.setStop(false);
 				this.progressIndicator.setVisible(false);
+				FontAwesome.getInstance().setGreen(this.btnAsk);
+				this.btnAsk.setText(FontAwesome.ICON_PLAY);
+				disableButtonTimed(this.btnAsk, 2000);
 			}
 		});
+	}
+
+	private void disableButtonTimed(Button btn, int timeInMS) {
+		btn.setDisable(true);
+		new Thread(() -> {
+			try {
+				Thread.sleep(timeInMS);
+			} catch (final InterruptedException e) {
+				// do nothing
+			} finally {
+				Platform.runLater(() -> {
+					btn.setDisable(false);
+				});
+			}
+		}).start();
 	}
 }

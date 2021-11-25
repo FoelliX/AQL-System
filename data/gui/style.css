@@ -102,3 +102,9 @@
 	-fx-background-color: 
         #b5b5b5, #fcfcfc, #8cb8ff;
 }
+
+.root {
+    -fx-accent: #61794b;
+    -fx-focus-color: #AAAAAA;
+	-fx-faint-focus-color: #AAAAAA22;
+}

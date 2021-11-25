@@ -1,68 +1,135 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <config>
-    <androidPlatforms>path/to/Android/sdks/platforms</androidPlatforms>
-    <maxMemory>6</maxMemory>
-    <tools>
-        <tool name="Tool1" version="1" external="false">
-            <priority>1</priority>
-            <execute>
-                <run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool examples/faketool examples/faketool/results -tool1 %APP_APK%</run>
-                <result>examples/faketool/results/%APP_APK_FILENAME%_flows_result.xml</result>
-                <instances>1</instances>
-                <memoryPerInstance>3</memoryPerInstance>
-            </execute>
-            <path>.</path>
-            <questions>IntraAppFlows</questions>
-        </tool>
-        <tool name="Tool2" version="1" external="false">
-            <priority>1</priority>
-            <execute>
-                <run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool examples/faketool examples/faketool/results -tool2 %APP_APK%</run>
-                <result>examples/faketool/results/%APP_APK_FILENAME%_intents_result.xml</result>
-                <instances>0</instances>
-                <memoryPerInstance>3</memoryPerInstance>
-            </execute>
-            <path>.</path>
-            <questions>IntentSinks, IntentSources</questions>
-        </tool>
-    </tools>
-    <preprocessors>
-        <tool name="Preprocessor" version="1" external="false">
-            <priority>1</priority>
-            <execute>
-                <run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool examples/faketool examples/faketool/results -preprocessor %APP_APK%</run>
-                <result>examples/faketool/results/%APP_APK_FILENAME%_preprocessed.apk</result>
-                <instances>0</instances>
-                <memoryPerInstance>3</memoryPerInstance>
-            </execute>
-            <path>.</path>
-            <questions>FAKE</questions>
-        </tool>
-    </preprocessors>
-    <operators>
-        <tool name="Operator" version="1" external="false">
-            <priority>1</priority>
-            <execute>
-                <run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool examples/faketool examples/faketool/results -operator %ANSWERS%</run>
-                <result>examples/faketool/results/operator_result.xml</result>
-                <instances>0</instances>
-                <memoryPerInstance>3</memoryPerInstance>
-            </execute>
-            <path>.</path>
-            <questions>MATCH(*)</questions>
-        </tool>
-    </operators>
-    <converters>
-        <tool name="Converter" version="1" external="false">
-            <priority>1</priority>
-            <execute>
-                <run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool examples/faketool examples/faketool/results -converter %RESULT_FILE%</run>
-                <result>examples/faketool/results/converter_result.xml</result>
-                <instances>0</instances>
-                <memoryPerInstance>3</memoryPerInstance>
-            </execute>
-            <path>.</path>
-            <questions>Tool1</questions>
-        </tool>
-    </converters>
+	<androidPlatforms>path/to/Android/sdks/platforms</androidPlatforms>
+	<maxMemory>6</maxMemory>
+	<tools>
+		<tool name="FakeTool1" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -tool1 %APP_APK%</run>
+				<result>examples/faketool/results/%APP_APK_FILENAME%_flows_result.xml</result>
+				<instances>1</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>IntraAppFlows</questions>
+		</tool>
+		<tool name="FakeTool2" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -tool2 %APP_APK%</run>
+				<result>examples/faketool/results/%APP_APK_FILENAME%_intents_result.xml</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>IntentSinks, IntentSources</questions>
+		</tool>
+		<tool name="FakeTool3" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -tool3 %APP_APK%</run>
+				<result>examples/faketool/results/%APP_APK_FILENAME%_sources_and_sinks_result.xml</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>Sources, Sinks</questions>
+		</tool>
+		<tool name="FakeTool4" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -tool4 %APP_APK%</run>
+				<result>examples/faketool/results/%APP_APK_FILENAME%_sliced.apk</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>Slice, SliceOut</questions>
+		</tool>
+		<tool name="FakeTool5" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -tool5 %APP_APK%</run>
+				<result>examples/faketool/results/%APP_APK_FILENAME%_arguments.txt</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>Arguments</questions>
+		</tool>
+		<tool name="FakeTool6" version="1" external="false">
+			<priority>1</priority>
+			<timeout>10s</timeout>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -tool6 %APP_APK%</run>
+				<result>examples/faketool/results/timeout.txt</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>IntraAppFlows</questions>
+		</tool>
+		<tool name="FakeTool7" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -tool7 %APP_APK%</run>
+				<result>examples/faketool/results/fail.txt</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>IntraAppFlows</questions>
+		</tool>
+	</tools>
+	<preprocessors>
+		<tool name="FakePreprocessor" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -preprocessor %APP_APK%</run>
+				<result>examples/faketool/results/%APP_APK_FILENAME%_preprocessed.apk</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>FAKE</questions>
+		</tool>
+	</preprocessors>
+	<operators>
+		<tool name="FakeOperator1" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -operator1 "%ANSWERS%"</run>
+				<result>examples/faketool/results/operator1_result.xml</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>MATCH(*)</questions>
+		</tool>
+		<tool name="FakeOperator2" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -operator2 "%ANSWERS%"</run>
+				<result>examples/faketool/results/operator2_result.txt</result>
+				<instances>0</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>TOFD(1)</questions>
+		</tool>
+	</operators>
+	<converters>
+		<tool name="FakeConverter" version="1" external="false">
+			<priority>1</priority>
+			<execute>
+				<run>java -cp target/build/%FAKETOOL% de.foellix.aql.faketool.FakeTool -converter %RESULT_FILE%</run>
+				<result>examples/faketool/results/converter_result.xml</result>
+				<instances>1</instances>
+				<memoryPerInstance>3</memoryPerInstance>
+			</execute>
+			<path>.</path>
+			<questions>FakeTool1</questions>
+		</tool>
+	</converters>
 </config>

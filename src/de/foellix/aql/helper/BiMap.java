@@ -26,6 +26,11 @@ public class BiMap<K, V> implements Serializable {
 		}
 	}
 
+	public void clear() {
+		this.map.clear();
+		this.inversedMap.clear();
+	}
+
 	public void put(final K k, final V v) {
 		this.map.put(k, v);
 		this.inversedMap.put(v, k);

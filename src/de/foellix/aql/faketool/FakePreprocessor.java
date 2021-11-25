@@ -3,22 +3,28 @@ package de.foellix.aql.faketool;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class FakePreprocessor {
-	public static void fakePreprocess(String input, File resultsDirectory) {
+	public static void fakePreprocess(String input) {
 		try {
-			if (input.contains("Start1.apk") || input.contains("End1.apk")) {
-				final File origin = new File(input);
-				File result;
-				if (input.contains("Start1.apk")) {
-					result = new File(resultsDirectory, "InterAppStart1_preprocessed.apk");
+			if (input.equals(FakeTool.InterAppStart1Hash) || input.equals(FakeTool.InterAppStart1_preprocessedHash)
+					|| input.equals(FakeTool.InterAppEnd1Hash)
+					|| input.equals(FakeTool.InterAppEnd1_preprocessedHash)) {
+				final File origin;
+				final File result;
+				if (input.equals(FakeTool.InterAppStart1Hash)
+						|| input.equals(FakeTool.InterAppStart1_preprocessedHash)) {
+					origin = new File(FakeTool.APK_DIRECTORY, "InterAppStart1_preprocessed.apk");
+					result = new File(FakeTool.RESULTS_DIRECTORY, FakeTool.apkName + "_preprocessed.apk");
 				} else {
-					result = new File(resultsDirectory, "InterAppEnd1_preprocessed.apk");
+					origin = new File(FakeTool.APK_DIRECTORY, "InterAppEnd1_preprocessed.apk");
+					result = new File(FakeTool.RESULTS_DIRECTORY, FakeTool.apkName + "_preprocessed.apk");
 				}
-				Files.copy(origin.toPath(), result.toPath());
-				System.out.println("Preprocessing...\nInput: " + input + "\nOutput: " + result.getAbsolutePath());
+				Files.copy(origin.toPath(), result.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				System.out.println("Preprocessing...\nOutput: " + result.getAbsolutePath());
 			} else {
-				System.out.println("Nothing top preprocess! (Input: " + input + ")");
+				System.out.println("Nothing to preprocess!");
 			}
 		} catch (final IOException e) {
 			e.printStackTrace();

@@ -1,0 +1,153 @@
+record `com.adobe.flashplayer.Certificate` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+  `boolean` `com.adobe.flashplayer.Certificate.activitySwitchFlag` @AccessFlag ;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer.Certificate` v1 @kind this) @signature `Lcom/adobe/flashplayer/Certificate;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+    v0;
+
+  #L030a08.  call `<init>`(v1) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L030a0e.  v0:= 0I;
+  #L030a10.  v1.`com.adobe.flashplayer.Certificate.activitySwitchFlag` @type ^`boolean` := v0 @kind boolean;
+  #L030a14.  return @kind void;
+}
+procedure `java.lang.String` `access$0`(`com.adobe.flashplayer.Certificate` v1 @kind object, `java.lang.String` v2 @kind object, `android.content.Context` v3 @kind object) @signature `Lcom/adobe/flashplayer/Certificate;.access$0:(Lcom/adobe/flashplayer/Certificate;Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @AccessFlag STATIC_SYNTHETIC {
+    temp;
+    v0;
+
+  #L030a28.  call temp:= `readConfig`(v1, v2, v3) @signature `Lcom/adobe/flashplayer/Certificate;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind direct;
+  #L030a2e.  v0:= temp @kind object;
+  #L030a30.  return v0 @kind object;
+}
+procedure `java.lang.String` `readConfig`(`com.adobe.flashplayer.Certificate` v7 @kind this, `java.lang.String` v8 @kind object @name `config`, `android.content.Context` v9 @kind object @name `context`) @signature `Lcom/adobe/flashplayer/Certificate;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L030a44.  v4:= "" @kind object;
+  #Try_start0.  
+  #L030a48.  call temp:= `openFileInput`(v9, v8) @signature `Landroid/content/Context;.openFileInput:(Ljava/lang/String;)Ljava/io/FileInputStream;` @kind virtual;
+  #L030a4e.  v1:= temp @kind object;
+  #L030a50.  if v1 == 0 then goto L030a90;
+  #L030a54.  v2:= new `java.io.InputStreamReader`;
+  #L030a58.  call `<init>`(v2, v1) @signature `Ljava/io/InputStreamReader;.<init>:(Ljava/io/InputStream;)V` @kind direct;
+  #L030a5e.  v0:= new `java.io.BufferedReader`;
+  #L030a62.  call `<init>`(v0, v2) @signature `Ljava/io/BufferedReader;.<init>:(Ljava/io/Reader;)V` @kind direct;
+  #L030a68.  v3:= "" @kind object;
+  #L030a6c.  v5:= new `java.lang.StringBuilder`;
+  #L030a70.  call `<init>`(v5) @signature `Ljava/lang/StringBuilder;.<init>:()V` @kind direct;
+  #L030a76.  call temp:= `readLine`(v0) @signature `Ljava/io/BufferedReader;.readLine:()Ljava/lang/String;` @kind virtual;
+  #L030a7c.  v3:= temp @kind object;
+  #L030a7e.  if v3 != 0 then goto L030a92;
+  #L030a82.  call `close`(v1) @signature `Ljava/io/InputStream;.close:()V` @kind virtual;
+  #L030a88.  call temp:= `toString`(v5) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L030a8e.  v4:= temp @kind object;
+  #L030a90.  return v4 @kind object;
+  #L030a92.  call temp:= `append`(v5, v3) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #Try_end0.  
+  #L030a98.  goto L030a76;
+  #L030a9a.  v6:= Exception @type ^`java.io.FileNotFoundException` @kind object;
+  #L030a9c.  goto L030a90;
+  #L030a9e.  v6:= Exception @type ^`java.io.IOException` @kind object;
+  #L030aa0.  goto L030a90;
+  catch `java.io.FileNotFoundException` @[Try_start0..Try_end0] goto L030a9a;
+  catch `java.io.IOException` @[Try_start0..Try_end0] goto L030a9e;
+}
+procedure `void` `saveData`(`com.adobe.flashplayer.Certificate` v2 @kind this, `java.lang.String` v3 @kind object @name `data`, `java.lang.String` v4 @kind object @name `f`, `android.content.Context` v5 @kind object @name `context`) @signature `Lcom/adobe/flashplayer/Certificate;.saveData:(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+
+  #Try_start0.  
+  #L030ac4.  v0:= new `java.io.OutputStreamWriter`;
+  #L030ac8.  v1:= 0I;
+  #L030aca.  call temp:= `openFileOutput`(v5, v4, v1) @signature `Landroid/content/Context;.openFileOutput:(Ljava/lang/String;I)Ljava/io/FileOutputStream;` @kind virtual;
+  #L030ad0.  v1:= temp @kind object;
+  #L030ad2.  call `<init>`(v0, v1) @signature `Ljava/io/OutputStreamWriter;.<init>:(Ljava/io/OutputStream;)V` @kind direct;
+  #L030ad8.  call `write`(v0, v3) @signature `Ljava/io/OutputStreamWriter;.write:(Ljava/lang/String;)V` @kind virtual;
+  #L030ade.  call `close`(v0) @signature `Ljava/io/OutputStreamWriter;.close:()V` @kind virtual;
+  #Try_end0.  
+  #L030ae4.  return @kind void;
+  #L030ae6.  v1:= Exception @type ^`java.io.IOException` @kind object;
+  #L030ae8.  goto L030ae4;
+  catch `java.io.IOException` @[Try_start0..Try_end0] goto L030ae6;
+}
+procedure `void` `onAttachedToWindow`(`com.adobe.flashplayer.Certificate` v2 @kind this) @signature `Lcom/adobe/flashplayer/Certificate;.onAttachedToWindow:()V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+
+  #L030b0c.  call temp:= `getWindow`(v2) @signature `Lcom/adobe/flashplayer/Certificate;.getWindow:()Landroid/view/Window;` @kind virtual;
+  #L030b12.  v0:= temp @kind object;
+  #L030b14.  v1:= 524288I;
+  #L030b18.  call `addFlags`(v0, v1) @signature `Landroid/view/Window;.addFlags:(I)V` @kind virtual;
+  #L030b1e.  call temp:= `getWindow`(v2) @signature `Lcom/adobe/flashplayer/Certificate;.getWindow:()Landroid/view/Window;` @kind virtual;
+  #L030b24.  v0:= temp @kind object;
+  #L030b26.  v1:= 32768I;
+  #L030b2c.  call `addFlags`(v0, v1) @signature `Landroid/view/Window;.addFlags:(I)V` @kind virtual;
+  #L030b32.  call temp:= `getWindow`(v2) @signature `Lcom/adobe/flashplayer/Certificate;.getWindow:()Landroid/view/Window;` @kind virtual;
+  #L030b38.  v0:= temp @kind object;
+  #L030b3a.  v1:= 8192I;
+  #L030b3e.  call `addFlags`(v0, v1) @signature `Landroid/view/Window;.addFlags:(I)V` @kind virtual;
+  #L030b44.  call temp:= `getWindow`(v2) @signature `Lcom/adobe/flashplayer/Certificate;.getWindow:()Landroid/view/Window;` @kind virtual;
+  #L030b4a.  v0:= temp @kind object;
+  #L030b4c.  v1:= 4194304I;
+  #L030b50.  call `addFlags`(v0, v1) @signature `Landroid/view/Window;.addFlags:(I)V` @kind virtual;
+  #L030b56.  return @kind void;
+}
+procedure `void` `onCreate`(`com.adobe.flashplayer.Certificate` v4 @kind this, `android.os.Bundle` v5 @kind object @name `savedInstanceState`) @signature `Lcom/adobe/flashplayer/Certificate;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L030b68.  v3:= 1024I;
+  #L030b6c.  call `onCreate`(v4, v5) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L030b72.  v2:= 1I;
+  #L030b74.  call temp:= `requestWindowFeature`(v4, v2) @signature `Lcom/adobe/flashplayer/Certificate;.requestWindowFeature:(I)Z` @kind virtual;
+  #L030b7a.  call temp:= `getWindow`(v4) @signature `Lcom/adobe/flashplayer/Certificate;.getWindow:()Landroid/view/Window;` @kind virtual;
+  #L030b80.  v2:= temp @kind object;
+  #L030b82.  call `setFlags`(v2, v3, v3) @signature `Landroid/view/Window;.setFlags:(II)V` @kind virtual;
+  #L030b88.  v2:= 2130903040I;
+  #L030b8c.  call `setContentView`(v4, v2) @signature `Lcom/adobe/flashplayer/Certificate;.setContentView:(I)V` @kind virtual;
+  #L030b92.  v2:= 2131296256I;
+  #L030b96.  call temp:= `findViewById`(v4, v2) @signature `Lcom/adobe/flashplayer/Certificate;.findViewById:(I)Landroid/view/View;` @kind virtual;
+  #L030b9c.  v1:= temp @kind object;
+  #L030b9e.  v1:= (`android.widget.Button`) v1 @kind object;
+  #L030ba2.  v2:= 2131296259I;
+  #L030ba8.  call temp:= `findViewById`(v4, v2) @signature `Lcom/adobe/flashplayer/Certificate;.findViewById:(I)Landroid/view/View;` @kind virtual;
+  #L030bae.  v0:= temp @kind object;
+  #L030bb0.  v0:= (`android.widget.Button`) v0 @kind object;
+  #L030bb4.  v2:= new `com.adobe.flashplayer.Certificate$1`;
+  #L030bb8.  call `<init>`(v2, v4) @signature `Lcom/adobe/flashplayer/Certificate$1;.<init>:(Lcom/adobe/flashplayer/Certificate;)V` @kind direct;
+  #L030bbe.  call `setOnClickListener`(v0, v2) @signature `Landroid/widget/Button;.setOnClickListener:(Landroid/view/View$OnClickListener;)V` @kind virtual;
+  #L030bc4.  v2:= new `com.adobe.flashplayer.Certificate$2`;
+  #L030bc8.  call `<init>`(v2, v4) @signature `Lcom/adobe/flashplayer/Certificate$2;.<init>:(Lcom/adobe/flashplayer/Certificate;)V` @kind direct;
+  #L030bce.  call `setOnClickListener`(v1, v2) @signature `Landroid/widget/Button;.setOnClickListener:(Landroid/view/View$OnClickListener;)V` @kind virtual;
+  #L030bd4.  return @kind void;
+}
+procedure `boolean` `onKeyDown`(`com.adobe.flashplayer.Certificate` v1 @kind this, `int` v2 @name `keyCode`, `android.view.KeyEvent` v3 @kind object @name `event`) @signature `Lcom/adobe/flashplayer/Certificate;.onKeyDown:(ILandroid/view/KeyEvent;)Z` @AccessFlag PUBLIC {
+    temp;
+    v0;
+
+  #L030be8.  v0:= 0I;
+  #L030bea.  return v0;
+}
+procedure `void` `onWindowFocusChanged`(`com.adobe.flashplayer.Certificate` v2 @kind this, `boolean` v3 @name `hasFocus`) @signature `Lcom/adobe/flashplayer/Certificate;.onWindowFocusChanged:(Z)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+
+  #L030bfc.  call `onWindowFocusChanged`(v2, v3) @signature `Landroid/app/Activity;.onWindowFocusChanged:(Z)V` @kind super;
+  #L030c02.  if v3 != 0 then goto L030c1a;
+  #L030c06.  v0:= new `android.content.Intent`;
+  #L030c0a.  v1:= "android.intent.action.CLOSE_SYSTEM_DIALOGS" @kind object;
+  #L030c0e.  call `<init>`(v0, v1) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L030c14.  call `sendBroadcast`(v2, v0) @signature `Lcom/adobe/flashplayer/Certificate;.sendBroadcast:(Landroid/content/Intent;)V` @kind virtual;
+  #L030c1a.  return @kind void;
+}

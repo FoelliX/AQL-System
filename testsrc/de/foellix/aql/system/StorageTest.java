@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import de.foellix.aql.system.storage.Storage;
+
 public class StorageTest {
 	@Test
 	public void test() {

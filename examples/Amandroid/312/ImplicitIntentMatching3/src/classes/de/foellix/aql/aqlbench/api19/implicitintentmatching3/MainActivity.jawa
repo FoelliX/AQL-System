@@ -1,0 +1,252 @@
+record `de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+  `java.lang.String` `de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @AccessFlag PRIVATE;
+}
+procedure `void` `<init>`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v0 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L020e7c.  call `<init>`(v0) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L020e82.  return @kind void;
+}
+procedure `void` `outputReachabilityAndStart`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v9 @kind this, `android.content.Intent` v10 @kind object @name `intent`, `int` v11 @name `from`) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.outputReachabilityAndStart:(Landroid/content/Intent;I)V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+    v7;
+    v8;
+
+  #L020e94.  call temp:= `getPackageManager`(v9) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.getPackageManager:()Landroid/content/pm/PackageManager;` @kind virtual;
+  #L020e9a.  v2:= temp @kind object;
+  #L020e9c.  v3:= 0I;
+  #L020e9e.  call temp:= `queryIntentActivities`(v2, v10, v3) @signature `Landroid/content/pm/PackageManager;.queryIntentActivities:(Landroid/content/Intent;I)Ljava/util/List;` @kind virtual;
+  #L020ea4.  v0:= temp @kind object;
+  #L020ea6.  call temp:= `iterator`(v0) @signature `Ljava/util/List;.iterator:()Ljava/util/Iterator;` @kind interface;
+  #L020eac.  v3:= temp @kind object;
+  #L020eae.  call temp:= `hasNext`(v3) @signature `Ljava/util/Iterator;.hasNext:()Z` @kind interface;
+  #L020eb4.  v4:= temp;
+  #L020eb6.  if v4 == 0 then goto L020f4e;
+  #L020eba.  call temp:= `next`(v3) @signature `Ljava/util/Iterator;.next:()Ljava/lang/Object;` @kind interface;
+  #L020ec0.  v1:= temp @kind object;
+  #L020ec2.  v1:= (`android.content.pm.ResolveInfo`) v1 @kind object;
+  #L020ec6.  v4:= "INFO" @kind object;
+  #L020ecc.  v5:= new `java.lang.StringBuilder`;
+  #L020ed0.  call `<init>`(v5) @signature `Ljava/lang/StringBuilder;.<init>:()V` @kind direct;
+  #L020ed6.  call temp:= `append`(v5, v11) @signature `Ljava/lang/StringBuilder;.append:(I)Ljava/lang/StringBuilder;` @kind virtual;
+  #L020edc.  v5:= temp @kind object;
+  #L020ede.  v6:= " -> " @kind object;
+  #L020ee4.  call temp:= `append`(v5, v6) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L020eea.  v5:= temp @kind object;
+  #L020eec.  call temp:= `loadLabel`(v1, v2) @signature `Landroid/content/pm/ResolveInfo;.loadLabel:(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;` @kind virtual;
+  #L020ef2.  v6:= temp @kind object;
+  #L020ef4.  call temp:= `toString`(v6) @signature `Ljava/lang/CharSequence;.toString:()Ljava/lang/String;` @kind interface;
+  #L020efa.  v6:= temp @kind object;
+  #L020efc.  call temp:= `loadLabel`(v1, v2) @signature `Landroid/content/pm/ResolveInfo;.loadLabel:(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;` @kind virtual;
+  #L020f02.  v7:= temp @kind object;
+  #L020f04.  call temp:= `toString`(v7) @signature `Ljava/lang/CharSequence;.toString:()Ljava/lang/String;` @kind interface;
+  #L020f0a.  v7:= temp @kind object;
+  #L020f0c.  v8:= "." @kind object;
+  #L020f12.  call temp:= `lastIndexOf`(v7, v8) @signature `Ljava/lang/String;.lastIndexOf:(Ljava/lang/String;)I` @kind virtual;
+  #L020f18.  v7:= temp;
+  #L020f1a.  call temp:= `substring`(v6, v7) @signature `Ljava/lang/String;.substring:(I)Ljava/lang/String;` @kind virtual;
+  #L020f20.  v6:= temp @kind object;
+  #L020f22.  v7:= "\\D+" @kind object;
+  #L020f28.  v8:= "" @kind object;
+  #L020f2e.  call temp:= `replaceAll`(v6, v7, v8) @signature `Ljava/lang/String;.replaceAll:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;` @kind virtual;
+  #L020f34.  v6:= temp @kind object;
+  #L020f36.  call temp:= `append`(v5, v6) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L020f3c.  v5:= temp @kind object;
+  #L020f3e.  call temp:= `toString`(v5) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L020f44.  v5:= temp @kind object;
+  #L020f46.  call temp:= `i`(v4, v5) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L020f4c.  goto L020eae;
+  #Try_start0.  
+  #L020f4e.  call `startActivity`(v9, v10) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.startActivity:(Landroid/content/Intent;)V` @kind virtual;
+  #Try_end0.  
+  #L020f54.  return @kind void;
+  #L020f56.  v3:= Exception @type ^`android.content.ActivityNotFoundException` @kind object;
+  #L020f58.  goto L020f54;
+  catch `android.content.ActivityNotFoundException` @[Try_start0..Try_end0] goto L020f56;
+}
+procedure `void` `source`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v0 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source:()V` @AccessFlag PRIVATE {
+    temp;
+
+  #L020f78.  call `source1`(v0) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source1:()V` @kind direct;
+  #L020f7e.  call `source2`(v0) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source2:()V` @kind direct;
+  #L020f84.  call `source3`(v0) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source3:()V` @kind direct;
+  #L020f8a.  call `source4`(v0) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source4:()V` @kind direct;
+  #L020f90.  call `source5`(v0) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source5:()V` @kind direct;
+  #L020f96.  return @kind void;
+}
+procedure `void` `source1`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v4 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source1:()V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L020fa8.  v2:= "INFO" @kind object;
+  #L020fae.  v3:= "Source reached" @kind object;
+  #L020fb4.  call temp:= `i`(v2, v3) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L020fba.  v2:= "phone" @kind object;
+  #L020fc0.  call temp:= `getSystemService`(v4, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L020fc6.  v1:= temp @kind object;
+  #L020fc8.  v1:= (`android.telephony.TelephonyManager`) v1 @kind object;
+  #L020fcc.  call temp:= `getSimSerialNumber`(v1) @signature `Landroid/telephony/TelephonyManager;.getSimSerialNumber:()Ljava/lang/String;` @kind virtual;
+  #L020fd2.  v2:= temp @kind object;
+  #L020fd4.  v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` := v2 @kind object;
+  #L020fd8.  v0:= new `android.content.Intent`;
+  #L020fdc.  call `<init>`(v0) @signature `Landroid/content/Intent;.<init>:()V` @kind direct;
+  #L020fe2.  v2:= "secret" @kind object;
+  #L020fe8.  v3:= v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` @kind object;
+  #L020fec.  call temp:= `putExtra`(v0, v2, v3) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L020ff2.  v2:= "de.foellix.aql.aqlbench.LEAK" @kind object;
+  #L020ff8.  call temp:= `setAction`(v0, v2) @signature `Landroid/content/Intent;.setAction:(Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L020ffe.  v2:= "text/plain" @kind object;
+  #L021004.  call temp:= `setType`(v0, v2) @signature `Landroid/content/Intent;.setType:(Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L02100a.  v2:= 1I;
+  #L02100c.  call `outputReachabilityAndStart`(v4, v0, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.outputReachabilityAndStart:(Landroid/content/Intent;I)V` @kind direct;
+  #L021012.  return @kind void;
+}
+procedure `void` `source2`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v4 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source2:()V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L021024.  v2:= "INFO" @kind object;
+  #L02102a.  v3:= "Source reached" @kind object;
+  #L021030.  call temp:= `i`(v2, v3) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L021036.  v2:= "phone" @kind object;
+  #L02103c.  call temp:= `getSystemService`(v4, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L021042.  v1:= temp @kind object;
+  #L021044.  v1:= (`android.telephony.TelephonyManager`) v1 @kind object;
+  #L021048.  call temp:= `getSimSerialNumber`(v1) @signature `Landroid/telephony/TelephonyManager;.getSimSerialNumber:()Ljava/lang/String;` @kind virtual;
+  #L02104e.  v2:= temp @kind object;
+  #L021050.  v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` := v2 @kind object;
+  #L021054.  v0:= new `android.content.Intent`;
+  #L021058.  call `<init>`(v0) @signature `Landroid/content/Intent;.<init>:()V` @kind direct;
+  #L02105e.  v2:= "secret" @kind object;
+  #L021064.  v3:= v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` @kind object;
+  #L021068.  call temp:= `putExtra`(v0, v2, v3) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L02106e.  v2:= "de.foellix.aql.aqlbench.LEAK" @kind object;
+  #L021074.  call temp:= `setAction`(v0, v2) @signature `Landroid/content/Intent;.setAction:(Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L02107a.  v2:= "http://foellix.de:80/aql/index.html" @kind object;
+  #L021080.  call temp:= `parse`(v2) @signature `Landroid/net/Uri;.parse:(Ljava/lang/String;)Landroid/net/Uri;` @kind static;
+  #L021086.  v2:= temp @kind object;
+  #L021088.  call temp:= `setData`(v0, v2) @signature `Landroid/content/Intent;.setData:(Landroid/net/Uri;)Landroid/content/Intent;` @kind virtual;
+  #L02108e.  v2:= 2I;
+  #L021090.  call `outputReachabilityAndStart`(v4, v0, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.outputReachabilityAndStart:(Landroid/content/Intent;I)V` @kind direct;
+  #L021096.  return @kind void;
+}
+procedure `void` `source3`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v4 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source3:()V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L0210a8.  v2:= "INFO" @kind object;
+  #L0210ae.  v3:= "Source reached" @kind object;
+  #L0210b4.  call temp:= `i`(v2, v3) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L0210ba.  v2:= "phone" @kind object;
+  #L0210c0.  call temp:= `getSystemService`(v4, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L0210c6.  v1:= temp @kind object;
+  #L0210c8.  v1:= (`android.telephony.TelephonyManager`) v1 @kind object;
+  #L0210cc.  call temp:= `getSimSerialNumber`(v1) @signature `Landroid/telephony/TelephonyManager;.getSimSerialNumber:()Ljava/lang/String;` @kind virtual;
+  #L0210d2.  v2:= temp @kind object;
+  #L0210d4.  v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` := v2 @kind object;
+  #L0210d8.  v0:= new `android.content.Intent`;
+  #L0210dc.  call `<init>`(v0) @signature `Landroid/content/Intent;.<init>:()V` @kind direct;
+  #L0210e2.  v2:= "secret" @kind object;
+  #L0210e8.  v3:= v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` @kind object;
+  #L0210ec.  call temp:= `putExtra`(v0, v2, v3) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L0210f2.  v2:= "de.foellix.aql.aqlbench.LEAK" @kind object;
+  #L0210f8.  call temp:= `setAction`(v0, v2) @signature `Landroid/content/Intent;.setAction:(Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L0210fe.  v2:= "http://foellix.de:80/aql/index.html" @kind object;
+  #L021104.  call temp:= `parse`(v2) @signature `Landroid/net/Uri;.parse:(Ljava/lang/String;)Landroid/net/Uri;` @kind static;
+  #L02110a.  v2:= temp @kind object;
+  #L02110c.  v3:= "text/plain" @kind object;
+  #L021112.  call temp:= `setDataAndType`(v0, v2, v3) @signature `Landroid/content/Intent;.setDataAndType:(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L021118.  v2:= 3I;
+  #L02111a.  call `outputReachabilityAndStart`(v4, v0, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.outputReachabilityAndStart:(Landroid/content/Intent;I)V` @kind direct;
+  #L021120.  return @kind void;
+}
+procedure `void` `source4`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v4 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source4:()V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L021134.  v2:= "INFO" @kind object;
+  #L02113a.  v3:= "Source reached" @kind object;
+  #L021140.  call temp:= `i`(v2, v3) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L021146.  v2:= "phone" @kind object;
+  #L02114c.  call temp:= `getSystemService`(v4, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L021152.  v1:= temp @kind object;
+  #L021154.  v1:= (`android.telephony.TelephonyManager`) v1 @kind object;
+  #L021158.  call temp:= `getSimSerialNumber`(v1) @signature `Landroid/telephony/TelephonyManager;.getSimSerialNumber:()Ljava/lang/String;` @kind virtual;
+  #L02115e.  v2:= temp @kind object;
+  #L021160.  v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` := v2 @kind object;
+  #L021164.  v0:= new `android.content.Intent`;
+  #L021168.  call `<init>`(v0) @signature `Landroid/content/Intent;.<init>:()V` @kind direct;
+  #L02116e.  v2:= "secret" @kind object;
+  #L021174.  v3:= v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` @kind object;
+  #L021178.  call temp:= `putExtra`(v0, v2, v3) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L02117e.  v2:= "de.foellix.aql.aqlbench.LEAK" @kind object;
+  #L021184.  call temp:= `setAction`(v0, v2) @signature `Landroid/content/Intent;.setAction:(Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L02118a.  v2:= "http://foellix.de:80/aql/Index.html" @kind object;
+  #L021190.  call temp:= `parse`(v2) @signature `Landroid/net/Uri;.parse:(Ljava/lang/String;)Landroid/net/Uri;` @kind static;
+  #L021196.  v2:= temp @kind object;
+  #L021198.  call temp:= `setData`(v0, v2) @signature `Landroid/content/Intent;.setData:(Landroid/net/Uri;)Landroid/content/Intent;` @kind virtual;
+  #L02119e.  v2:= 4I;
+  #L0211a0.  call `outputReachabilityAndStart`(v4, v0, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.outputReachabilityAndStart:(Landroid/content/Intent;I)V` @kind direct;
+  #L0211a6.  return @kind void;
+}
+procedure `void` `source5`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v4 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source5:()V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+
+  #L0211b8.  v2:= "INFO" @kind object;
+  #L0211be.  v3:= "Source reached" @kind object;
+  #L0211c4.  call temp:= `i`(v2, v3) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L0211ca.  v2:= "phone" @kind object;
+  #L0211d0.  call temp:= `getSystemService`(v4, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L0211d6.  v1:= temp @kind object;
+  #L0211d8.  v1:= (`android.telephony.TelephonyManager`) v1 @kind object;
+  #L0211dc.  call temp:= `getSimSerialNumber`(v1) @signature `Landroid/telephony/TelephonyManager;.getSimSerialNumber:()Ljava/lang/String;` @kind virtual;
+  #L0211e2.  v2:= temp @kind object;
+  #L0211e4.  v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` := v2 @kind object;
+  #L0211e8.  v0:= new `android.content.Intent`;
+  #L0211ec.  call `<init>`(v0) @signature `Landroid/content/Intent;.<init>:()V` @kind direct;
+  #L0211f2.  v2:= "secret" @kind object;
+  #L0211f8.  v3:= v4.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity.secret` @type ^`java.lang.String` @kind object;
+  #L0211fc.  call temp:= `putExtra`(v0, v2, v3) @signature `Landroid/content/Intent;.putExtra:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L021202.  v2:= "de.foellix.aql.aqlbench.LEAK" @kind object;
+  #L021208.  call temp:= `setAction`(v0, v2) @signature `Landroid/content/Intent;.setAction:(Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L02120e.  v2:= "http://foellix.de:80/aql/404.html" @kind object;
+  #L021214.  call temp:= `parse`(v2) @signature `Landroid/net/Uri;.parse:(Ljava/lang/String;)Landroid/net/Uri;` @kind static;
+  #L02121a.  v2:= temp @kind object;
+  #L02121c.  call temp:= `setData`(v0, v2) @signature `Landroid/content/Intent;.setData:(Landroid/net/Uri;)Landroid/content/Intent;` @kind virtual;
+  #L021222.  v2:= 5I;
+  #L021224.  call `outputReachabilityAndStart`(v4, v0, v2) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.outputReachabilityAndStart:(Landroid/content/Intent;I)V` @kind direct;
+  #L02122a.  return @kind void;
+}
+procedure `void` `onCreate`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity` v1 @kind this, `android.os.Bundle` v2 @kind object @name `savedInstanceState`) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+
+  #L02123c.  call `onCreate`(v1, v2) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L021242.  v0:= 2130903040I;
+  #L021246.  call `setContentView`(v1, v0) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.setContentView:(I)V` @kind virtual;
+  #L02124c.  call `source`(v1) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/MainActivity;.source:()V` @kind direct;
+  #L021252.  return @kind void;
+}

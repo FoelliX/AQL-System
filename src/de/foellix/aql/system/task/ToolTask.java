@@ -1,189 +1,292 @@
 package de.foellix.aql.system.task;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.ws.rs.core.MediaType;
+import de.foellix.aql.config.Tool;
+import de.foellix.aql.datastructure.query.DefaultQuestion;
+import de.foellix.aql.datastructure.query.LoadingQuestion;
+import de.foellix.aql.datastructure.query.Question;
+import de.foellix.aql.datastructure.query.StringOrQuestionPair;
+import de.foellix.aql.helper.AppInfo;
+import de.foellix.aql.system.TaskCreator;
+import de.foellix.aql.system.storage.Storage;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.HttpRequestWithBody;
-import com.mashape.unirest.request.body.MultipartBody;
+public class ToolTask extends Task {
+	private static final long serialVersionUID = -5789871100141384864L;
 
-import de.foellix.aql.Log;
-import de.foellix.aql.converter.ConverterRegistry;
-import de.foellix.aql.converter.IConverter;
-import de.foellix.aql.converter.NoConverter;
-import de.foellix.aql.datastructure.Answer;
-import de.foellix.aql.datastructure.App;
-import de.foellix.aql.datastructure.IQuestionNode;
-import de.foellix.aql.datastructure.handler.AnswerHandler;
-import de.foellix.aql.datastructure.handler.QueryHandler;
-import de.foellix.aql.helper.Helper;
-import de.foellix.aql.system.Storage;
-
-public class ToolTask {
-	Task parent;
-
-	private final ToolTaskInfo taskinfo;
-
-	private Answer answer;
-
-	ToolTask(Task parent) {
-		this.parent = parent;
-		this.taskinfo = (ToolTaskInfo) parent.getTaskinfo();
+	public ToolTask(TaskCreator taskCreator, ToolTaskInfo taskInfo, Tool tool) {
+		super(taskCreator, taskInfo, tool);
 	}
 
-	public void execute() throws Exception {
-		// Tool
-		init();
-		if (this.answer != null) {
-			this.parent.getParent().localAnswerAvailable(this.taskinfo.getQuestion(), this.answer);
+	@Override
+	public void refreshVariables(Task child) {
+		// by preprocessor
+		if (child instanceof PreprocessorTask) {
+			final Question loadedQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(this, true);
+			if (loadedQuestion instanceof DefaultQuestion) {
+				final DefaultQuestion question = (DefaultQuestion) loadedQuestion;
 
-			this.parent.successPart2(false);
-		} else {
-			Log.msg("Executing " + (this.taskinfo.getTool().isExternal() ? "external" : "internal") + " Tool: "
-					+ this.taskinfo.getTool().getName() + " (" + Helper.getExecuteCommand(this.taskinfo) + ")",
-					Log.IMPORTANT);
+				if (child instanceof PreprocessorTask) {
+					// IN
+					if (question.getIn() != null && question.getIn().getExecutedPreprocessorKeywords() != null
+							&& !question.getIn().getExecutedPreprocessorKeywords().isEmpty()) {
+						for (final String keyword : question.getIn().getExecutedPreprocessorKeywords()) {
+							final PreprocessorTask loadedPreprocessorTask = Storage.getInstance().getData()
+									.getPreprocessorTask(question.getIn(), keyword);
+							if (child == loadedPreprocessorTask) {
+								final File apkFile = (File) child.getTaskAnswer().getAnswer();
+								final AppInfo appInfo = new AppInfo(apkFile);
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_IN, appInfo.getApkFile().getAbsolutePath());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_FILENAME, appInfo.getFilename());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_NAME, appInfo.getAppName());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_PACKAGE, appInfo.getPkgName());
+							}
+						}
+					}
 
-			if (this.taskinfo.getTool().isExternal()) {
-				this.answer = getExternalAnswer();
-				if (this.answer != null) {
-					// Successful
-					this.parent.successPart1(this.taskinfo.getTool().getName() + " successfully executed in %TIME%s. ("
-							+ Helper.getExecuteCommand(this.taskinfo) + ")");
-					finish();
-					this.parent.successPart2(true);
+					// FROM
+					if (question.getFrom() != null && question.getFrom().getExecutedPreprocessorKeywords() != null
+							&& !question.getFrom().getExecutedPreprocessorKeywords().isEmpty()) {
+						for (final String keyword : question.getFrom().getExecutedPreprocessorKeywords()) {
+							final PreprocessorTask loadedPreprocessorTask = Storage.getInstance().getData()
+									.getPreprocessorTask(question.getFrom(), keyword);
+							if (child == loadedPreprocessorTask) {
+								final File apkFile = (File) child.getTaskAnswer().getAnswer();
+								final AppInfo appInfo = new AppInfo(apkFile);
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM,
+										appInfo.getApkFile().getAbsolutePath());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_FILENAME, appInfo.getFilename());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_NAME, appInfo.getAppName());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_PACKAGE, appInfo.getPkgName());
+							}
+						}
+					}
 
-					return;
-				}
-			} else {
-				final String[] runCmd = this.taskinfo.getTool().getExecute().getRun().split(" ");
-				for (int i = 0; i < runCmd.length; i++) {
-					runCmd[i] = Helper.replaceVariables(runCmd[i], this.taskinfo, this.taskinfo.getQuestion());
-				}
-				final String path = Helper.replaceVariables(this.taskinfo.getTool().getPath(), this.taskinfo,
-						this.taskinfo.getQuestion());
-
-				if (this.parent.waitFor(runCmd, path) == 0) {
-					// Successful
-					this.parent.successPart1(this.taskinfo.getTool().getName() + " successfully executed in %TIME%s. ("
-							+ Helper.getExecuteCommand(this.taskinfo) + ")");
-
-					final File result = Helper.findFileWithAsterisk(
-							new File(Helper.replaceVariables(this.taskinfo.getTool().getExecute().getResult(),
-									this.taskinfo, this.taskinfo.getQuestion())));
-					Helper.waitForResult("Result file was not generated. " + this.taskinfo.getTool().getName()
-							+ " may have not finished properly.", result);
-
-					applyConverter(result);
-					finish();
-
-					this.parent.successPart2(true);
-
-					return;
+					// TO
+					if (question.getTo() != null && question.getTo().getExecutedPreprocessorKeywords() != null
+							&& !question.getTo().getExecutedPreprocessorKeywords().isEmpty()) {
+						for (final String keyword : question.getTo().getExecutedPreprocessorKeywords()) {
+							final PreprocessorTask loadedPreprocessorTask = Storage.getInstance().getData()
+									.getPreprocessorTask(question.getTo(), keyword);
+							if (child == loadedPreprocessorTask) {
+								final File apkFile = (File) child.getTaskAnswer().getAnswer();
+								final AppInfo appInfo = new AppInfo(apkFile);
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_TO, appInfo.getApkFile().getAbsolutePath());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_FILENAME, appInfo.getFilename());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_NAME, appInfo.getAppName());
+								this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_PACKAGE, appInfo.getPkgName());
+							}
+						}
+					}
 				}
 			}
-			// Failed
-			this.parent.failed(this.taskinfo.getTool().getName() + " execution failed after %TIME%s! ("
-					+ Helper.getExecuteCommand(this.taskinfo) + ")");
 		}
-	}
 
-	void abort(Exception err) {
-		try {
-			if (!this.parent.isExecuted()) {
-				Log.msg(this.taskinfo.getTool().getName() + " execution aborted "
-						+ (err instanceof TaskAbortedBeforeException ? "before " : "") + "after "
-						+ this.parent.getTime() + "s! (" + Helper.getExecuteCommand(this.taskinfo) + ")",
-						Log.IMPORTANT);
-			} else {
-				Log.msg(this.taskinfo.getTool().getName() + "'s result conversion failed after " + this.parent.getTime()
-						+ "s with the following error: " + err.getMessage(), Log.IMPORTANT);
-			}
-			if (Log.logIt(Log.DEBUG_DETAILED)) {
-				err.printStackTrace();
-			}
-		} catch (final NullPointerException e) {
-			if (!this.parent.isExecuted()) {
-				Log.msg("Execution aborted!", Log.IMPORTANT);
-				err.printStackTrace();
-			} else {
-				Log.msg("Result conversion failed!" + (err.getMessage() != null ? " (" + err.getMessage() + ")" : ""),
-						Log.IMPORTANT);
-			}
-			if (Log.logIt(Log.DEBUG_DETAILED)) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private void init() {
-		this.answer = Storage.getInstance().load(this.taskinfo.getTool(), this.taskinfo.getQuestion(),
-				this.parent.getParent().getScheduler().isAlwaysPreferLoading());
-	}
-
-	private void applyConverter(File result) throws Exception {
-		final IConverter converter = ConverterRegistry.getInstance().getConverter(this.taskinfo.getTool());
-		if (converter instanceof NoConverter) {
-			Log.msg("No converter found for: " + this.taskinfo.getTool().getName(), Log.DEBUG);
-		}
-		this.answer = converter.parse(result, this.taskinfo);
-	}
-
-	private void finish() {
-		Storage.getInstance().store(this.taskinfo.getTool(), this.taskinfo.getQuestion(), this.answer);
-		this.parent.getParent().localAnswerAvailable(this.taskinfo.getQuestion(), this.answer);
-	}
-
-	// External
-	public Answer getExternalAnswer() {
-		String query = this.taskinfo.getQuestion().toString();
-		try {
-			UnirestHandler.getInstance().start(this.parent.getParent());
-
-			final HttpRequestWithBody request = Unirest.post(this.taskinfo.getTool().getExecute().getUrl())
-					.header("accept", MediaType.TEXT_XML);
-
-			final IQuestionNode parsedQuery = QueryHandler.parseQuery(query);
-			final List<File> files = new ArrayList<>();
-			for (final App app : parsedQuery.getAllApps(false)) {
-				final String allFiles = app.getFile();
-				for (final String file : allFiles.replaceAll(", ", ",").split(",")) {
-					files.add(new File(file));
+		// by app or with-file
+		if (child.getTaskAnswer().getType() == TaskAnswer.ANSWER_TYPE_FILE) {
+			final Question loadedQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(this, true);
+			final Question loadedFileQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(child);
+			if (loadedQuestion instanceof DefaultQuestion) {
+				if (((DefaultQuestion) loadedQuestion).getIn() != null
+						&& ((DefaultQuestion) loadedQuestion).getIn().getApp() == loadedFileQuestion) {
+					// IN
+					final File apkFile = (File) child.getTaskAnswer().getAnswer();
+					final AppInfo appInfo = new AppInfo(apkFile);
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_IN, appInfo.getApkFile().getAbsolutePath());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_FILENAME, appInfo.getFilename());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_NAME, appInfo.getAppName());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_PACKAGE, appInfo.getPkgName());
+				} else if (((DefaultQuestion) loadedQuestion).getFrom() != null
+						&& ((DefaultQuestion) loadedQuestion).getFrom().getApp() == loadedFileQuestion) {
+					// FROM
+					final File apkFile = (File) child.getTaskAnswer().getAnswer();
+					final AppInfo appInfo = new AppInfo(apkFile);
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM, appInfo.getApkFile().getAbsolutePath());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_FILENAME, appInfo.getFilename());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_NAME, appInfo.getAppName());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_PACKAGE, appInfo.getPkgName());
+				} else if (((DefaultQuestion) loadedQuestion).getTo() != null
+						&& ((DefaultQuestion) loadedQuestion).getTo().getApp() == loadedFileQuestion) {
+					// TO
+					final File apkFile = (File) child.getTaskAnswer().getAnswer();
+					final AppInfo appInfo = new AppInfo(apkFile);
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_TO, appInfo.getApkFile().getAbsolutePath());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_FILENAME, appInfo.getFilename());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_NAME, appInfo.getAppName());
+					this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_PACKAGE, appInfo.getPkgName());
+				} else {
+					// WITH
+					refreshWith(child, loadedQuestion, loadedFileQuestion);
 				}
 			}
-			query = replaceFilesInQuery(parsedQuery);
+		}
 
-			final MultipartBody requestWithParameters = request.field("query", query)
-					.field("timeout", this.parent.getParent().getScheduler().getTimeout())
-					.field("username", this.taskinfo.getTool().getExecute().getUsername())
-					.field("password", this.taskinfo.getTool().getExecute().getPassword()).field("files", files);
+		// by AQL with-file
+		if (child.getTaskAnswer().getType() == TaskAnswer.ANSWER_TYPE_AQL) {
+			final Question loadedQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(this, true);
+			final Question loadedFileQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(child);
+			if (loadedQuestion instanceof DefaultQuestion) {
+				// WITH
+				refreshWith(child, loadedQuestion, loadedFileQuestion);
+			}
+		}
 
-			final HttpResponse<String> response = requestWithParameters.asString();
+		// by statement, method, class, with-key-or-value string
+		if (child.getTaskAnswer().getType() == TaskAnswer.ANSWER_TYPE_RAW) {
+			final Question loadedQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(this, true);
+			final Question loadedFileQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(child);
+			if (loadedQuestion instanceof DefaultQuestion) {
+				// WITH
+				refreshWith(child, loadedQuestion, loadedFileQuestion);
 
-			return AnswerHandler.parseXML(response.getBody());
-		} catch (final UnirestException e) {
-			Log.error("Error occured while accessing external tool: " + e.getMessage());
-			return null;
-		} finally {
-			UnirestHandler.getInstance().stop();
+				// IN
+				if (((DefaultQuestion) loadedQuestion).getIn() != null) {
+					if (((DefaultQuestion) loadedQuestion).getIn().getStatement() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getIn().getStatement();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.STATEMENT_IN,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+					if (((DefaultQuestion) loadedQuestion).getIn().getMethod() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getIn().getMethod();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.METHOD_IN,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+					if (((DefaultQuestion) loadedQuestion).getIn().getClassname() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getIn().getClassname();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.CLASS_IN,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+				}
+
+				// FROM
+				if (((DefaultQuestion) loadedQuestion).getFrom() != null) {
+					if (((DefaultQuestion) loadedQuestion).getFrom().getStatement() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getFrom().getStatement();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.STATEMENT_FROM,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+					if (((DefaultQuestion) loadedQuestion).getFrom().getMethod() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getFrom().getMethod();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.METHOD_FROM,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+					if (((DefaultQuestion) loadedQuestion).getFrom().getClassname() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getFrom().getClassname();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.CLASS_FROM,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+				}
+
+				// TO
+				if (((DefaultQuestion) loadedQuestion).getTo() != null) {
+					if (((DefaultQuestion) loadedQuestion).getTo().getStatement() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getTo().getStatement();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.STATEMENT_TO,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+					if (((DefaultQuestion) loadedQuestion).getTo().getMethod() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getTo().getMethod();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.METHOD_TO,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+					if (((DefaultQuestion) loadedQuestion).getTo().getClassname() instanceof Question) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getTo().getClassname();
+						if (needle == loadedFileQuestion) {
+							this.taskInfo.setData(ToolTaskInfo.CLASS_TO,
+									child.getTaskAnswer().getAnswerForQuery(false));
+						}
+					}
+				}
+			}
+		}
+
+		// by app loading question
+		if (child.getTaskAnswer().getType() == TaskAnswer.ANSWER_TYPE_FILE) {
+			final Question loadedQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(this, true);
+			final Question loadedFileQuestion = Storage.getInstance().getData().getQuestionFromQuestionTaskMap(child);
+			if (loadedQuestion instanceof DefaultQuestion && loadedFileQuestion instanceof LoadingQuestion) {
+				// WITH
+				refreshWith(child, loadedQuestion, loadedFileQuestion);
+
+				// IN
+				if (((DefaultQuestion) loadedQuestion).getIn() != null) {
+					if (((DefaultQuestion) loadedQuestion).getIn().getApp() instanceof LoadingQuestion) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getIn().getApp();
+						if (needle == loadedFileQuestion) {
+							final File apkFile = (File) child.getTaskAnswer().getAnswer();
+							final AppInfo appInfo = new AppInfo(apkFile);
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_IN, appInfo.getApkFile().getAbsolutePath());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_FILENAME, appInfo.getFilename());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_NAME, appInfo.getAppName());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_IN_PACKAGE, appInfo.getPkgName());
+						}
+					}
+				}
+
+				// FROM
+				if (((DefaultQuestion) loadedQuestion).getFrom() != null) {
+					if (((DefaultQuestion) loadedQuestion).getFrom().getApp() instanceof LoadingQuestion) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getFrom().getApp();
+						if (needle == loadedFileQuestion) {
+							final File apkFile = (File) child.getTaskAnswer().getAnswer();
+							final AppInfo appInfo = new AppInfo(apkFile);
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM, appInfo.getApkFile().getAbsolutePath());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_FILENAME, appInfo.getFilename());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_NAME, appInfo.getAppName());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_FROM_PACKAGE, appInfo.getPkgName());
+						}
+					}
+				}
+
+				// TO
+				if (((DefaultQuestion) loadedQuestion).getTo() != null) {
+					if (((DefaultQuestion) loadedQuestion).getTo().getApp() instanceof LoadingQuestion) {
+						final Question needle = (Question) ((DefaultQuestion) loadedQuestion).getTo().getApp();
+						if (needle == loadedFileQuestion) {
+							final File apkFile = (File) child.getTaskAnswer().getAnswer();
+							final AppInfo appInfo = new AppInfo(apkFile);
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_TO, appInfo.getApkFile().getAbsolutePath());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_FILENAME, appInfo.getFilename());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_NAME, appInfo.getAppName());
+							this.taskInfo.setData(ToolTaskInfo.APP_APK_TO_PACKAGE, appInfo.getPkgName());
+						}
+					}
+				}
+			}
 		}
 	}
 
-	private String replaceFilesInQuery(IQuestionNode parsedQuery) {
-		parsedQuery = QueryHandler.replaceWithAbsolutePaths(parsedQuery);
-		String returnQuery = parsedQuery.toString();
-		int i = 0;
-		for (final App app : parsedQuery.getAllApps(false)) {
-			final String allFiles = app.getFile();
-			for (final String file : allFiles.replaceAll(", ", ",").split(",")) {
-				i++;
-				returnQuery = returnQuery.replaceAll(file, "%FILE_" + i + "%");
+	private void refreshWith(Task child, Question loadedQuestion, Question loadedFileQuestion) {
+		if (((DefaultQuestion) loadedQuestion).getWiths() != null) {
+			final String answerFileString = child.getTaskAnswer().getAnswerForQuery(false);
+			for (final StringOrQuestionPair pair : ((DefaultQuestion) loadedQuestion).getWiths()) {
+				if (pair.getValue() == loadedFileQuestion && pair.getKey().isComplete(true)) {
+					this.taskInfo.setData(TaskInfo.VARIABLE_SYMBOL_FILE + pair.getKey().toStringInAnswer(false)
+							+ TaskInfo.VARIABLE_SYMBOL_FILE, answerFileString);
+					break;
+				} else if (pair.getKey() == loadedFileQuestion && pair.getValue().isComplete(true)) {
+					this.taskInfo.setData(
+							TaskInfo.VARIABLE_SYMBOL_FILE + answerFileString + TaskInfo.VARIABLE_SYMBOL_FILE,
+							pair.getValue().toStringInAnswer(false));
+					break;
+				}
 			}
 		}
-		return returnQuery;
 	}
 }

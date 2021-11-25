@@ -1,0 +1,49 @@
+record `de.ecspride.LocationLeak1$MyLocationListener` @kind class @AccessFlag  extends `android.location.LocationListener` @kind interface {
+  `de.ecspride.LocationLeak1` `de.ecspride.LocationLeak1$MyLocationListener.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`de.ecspride.LocationLeak1$MyLocationListener` v0 @kind this, `de.ecspride.LocationLeak1` v1 @kind object) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.<init>:(Lde/ecspride/LocationLeak1;)V` @AccessFlag PRIVATE_CONSTRUCTOR {
+    temp;
+
+  #L000844.  v0.`de.ecspride.LocationLeak1$MyLocationListener.this$0` @type ^`de.ecspride.LocationLeak1` := v1 @kind object;
+  #L000848.  return @kind void;
+}
+procedure `void` `<init>`(`de.ecspride.LocationLeak1$MyLocationListener` v0 @kind this, `de.ecspride.LocationLeak1` v1 @kind object, `de.ecspride.LocationLeak1$MyLocationListener` v2 @kind object) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.<init>:(Lde/ecspride/LocationLeak1;Lde/ecspride/LocationLeak1$MyLocationListener;)V` @AccessFlag SYNTHETIC_CONSTRUCTOR {
+    temp;
+
+  #L00085c.  call `<init>`(v0, v1) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.<init>:(Lde/ecspride/LocationLeak1;)V` @kind direct;
+  #L000862.  return @kind void;
+}
+procedure `void` `onLocationChanged`(`de.ecspride.LocationLeak1$MyLocationListener` v6 @kind this, `android.location.Location` v7 @kind object @name `loc`) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.onLocationChanged:(Landroid/location/Location;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+
+  #L000874.  call temp:= `getLatitude`(v7) @signature `Landroid/location/Location;.getLatitude:()D` @kind virtual;
+  #L00087a.  v0:= temp @kind wide;
+  #L00087c.  call temp:= `getLongitude`(v7) @signature `Landroid/location/Location;.getLongitude:()D` @kind virtual;
+  #L000882.  v2:= temp @kind wide;
+  #L000884.  v4:= v6.`de.ecspride.LocationLeak1$MyLocationListener.this$0` @type ^`de.ecspride.LocationLeak1` @kind object;
+  #L000888.  call temp:= `toString`(v0) @signature `Ljava/lang/Double;.toString:(D)Ljava/lang/String;` @kind static;
+  #L00088e.  v5:= temp @kind object;
+  #L000890.  call `access$0`(v4, v5) @signature `Lde/ecspride/LocationLeak1;.access$0:(Lde/ecspride/LocationLeak1;Ljava/lang/String;)V` @kind static;
+  #L000896.  return @kind void;
+}
+procedure `void` `onProviderDisabled`(`de.ecspride.LocationLeak1$MyLocationListener` v0 @kind this, `java.lang.String` v1 @kind object @name `provider`) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.onProviderDisabled:(Ljava/lang/String;)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L0008a8.  return @kind void;
+}
+procedure `void` `onProviderEnabled`(`de.ecspride.LocationLeak1$MyLocationListener` v0 @kind this, `java.lang.String` v1 @kind object @name `provider`) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.onProviderEnabled:(Ljava/lang/String;)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L0008bc.  return @kind void;
+}
+procedure `void` `onStatusChanged`(`de.ecspride.LocationLeak1$MyLocationListener` v0 @kind this, `java.lang.String` v1 @kind object, `int` v2 , `android.os.Bundle` v3 @kind object @name `extras`) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.onStatusChanged:(Ljava/lang/String;ILandroid/os/Bundle;)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L0008d0.  return @kind void;
+}

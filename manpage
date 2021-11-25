@@ -2,20 +2,28 @@
 
 -query "X", -q "X":		This parameter is used to assign the AQL-Query. X refers to this query.
 
--config "X", -cfg "X", -c "X":	By default the config.xml file in the tool's directory is used as configuration. With this parameter a different configuration file can be chosen. X has to reference the path to and the configuration file itself.
+-config "X", -cfg "X", -c "X":	By default the config.xml file in the tool's directory is used as configuration. With this parameter a different configuration file can be chosen. X has to reference the path to and the configuration file itself. (X can also be an online file or combination of a link and login credentials associated with an AQL-WebService. Furthermore, this parameter can be given multiple times - configurations will be merged into the last one given in this case.)
+
+-rules "X":			By default the rules.xml file in the tool’s directory is used as (transformation) rules / strategy configuration. With this parameter a different file can be chosen. X has to reference the path to and the rules file itself.
+
+-timeout "X"s/m/h "Y", -t "X"s/m/h "Y":	With this parameter the maximum execution time of each tool can be set. If it expires the tool's execution is canceled. X refers to this time in seconds (e.g. 10s), minutes or hours. Y is optional and defines how to handle timeout values given in configuration files. Y can have the following values: 1. "min" - minimal timeout used, 2. "max" - maximal timeout used and 3. "override" use X always.
+
+-nr, -noRetry			Disables retrying with next-highest-priority tool, if the tool with highest priority fails.
+
+-configwizard, -cw		If this parameter is applied the Config Wizard will be started at the beginning.
 
 -output "X", -out "X", -o "X":	The answer to a query is automatically saved in the "answers" directory. This parameter can be used to store it in a second file. X has to define this file by path and filename.
 
--preferexecute, -pe:		This parameter is used to force the execution of analysis tools even if a similar question has been asked before.
+-debug "X", -d "X":		The output generated during the execution of this tool can be set to different levels. X may be set to: "none", "important", "error", "special", "warning", "normal", "debug", "detailed", "verbose", "all" (ascending precision from left to right). Additionally it can be set to "short", the output will then be equal to "normal" but shorter at some points. By default it is set to "normal".
 
--timeout "X"s/m/h, -t "X"s/m/h:	With this parameter the maximum execution time of each tool can be set. If it expires the tool's execution is aborted. X refers to this time in seconds (e.g. 10s), minutes or hours.
-
--debug "X", -d "X":		The output generated during the execution of this tool can be set to different levels. X may be set to: "error", "warning", "normal", "debug", "detailed" (ascending precision from left to right). Additionally it can be set to "short", the output will then be equal to "normal" but shorter at some points. By default it is set to "normal".
-
--configwizard, -cw		If this parameter is applied the Config Wizard will be started at the beginning.
+-df "X", -dtf "X", -debugToFile "X": Sets the log level (X) that should be logged to file (into "log.txt"). The default value is "important".
 
 -backup, -bak, -b:		To backup previously computed results on startup add one of these parameters.
 
 -reset, -re, -r:		To reset BREW on startup add one of these parameters.
 
--gui				If this or no parameters at all are provided the graphical user interface is started. It allows to formulate queries and display answers in a handy way.
+-gui				If this or no parameters at all are provided the graphical user interface is started. It allows to formulate queries and display answers in a handy way. (Additionally use -ns, -noSplash to skip the splashscreen.)
+
+-dg, -draw, -drawGraph		Decides whether to draw a graph (on a GUI) representing the query and its questions.
+
+-v, -view			The determined AQL-Answer will be shown in the GUI after executing the specified query.

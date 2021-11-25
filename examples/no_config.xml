@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+	<androidPlatforms>/path/to/SDK/platforms</androidPlatforms>
+    <androidBuildTools>/path/to/SDK/build-tools/version</androidBuildTools>
+    <maxMemory>6</maxMemory>
+</config>

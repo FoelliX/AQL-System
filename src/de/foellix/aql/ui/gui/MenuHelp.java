@@ -30,7 +30,7 @@ public class MenuHelp extends Menu {
 		this.menuItemConfigWizard.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
-				new ConfigWizard(stage, ConfigHandler.getInstance().getConfigFile()).show();
+				new ConfigWizard(stage, ConfigHandler.getInstance().getConfigFile(), true);
 			}
 		});
 
@@ -58,9 +58,12 @@ public class MenuHelp extends Menu {
 			public void handle(final ActionEvent event) {
 				final Alert alert = new Alert(AlertType.INFORMATION);
 				final Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
-				alertStage.getIcons().add(new Image("file:data/gui/images/icon_16.png", 16, 16, false, true));
-				alertStage.getIcons().add(new Image("file:data/gui/images/icon_32.png", 32, 32, false, true));
-				alertStage.getIcons().add(new Image("file:data/gui/images/icon_64.png", 64, 64, false, true));
+				alertStage.getIcons().add(
+						new Image(new File("data/gui/images/icon_16.png").toURI().toString(), 16, 16, false, true));
+				alertStage.getIcons().add(
+						new Image(new File("data/gui/images/icon_32.png").toURI().toString(), 32, 32, false, true));
+				alertStage.getIcons().add(
+						new Image(new File("data/gui/images/icon_64.png").toURI().toString(), 64, 64, false, true));
 				alert.setTitle("Information");
 				alert.setHeaderText(Properties.info().ABBREVIATION + "\n" + Properties.info().NAME);
 				alert.setContentText("Version: " + Properties.info().VERSION + " (" + Properties.info().BUILDNUMBER

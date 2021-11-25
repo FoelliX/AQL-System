@@ -1,0 +1,50 @@
+record `de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+  `java.lang.String` `de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10.secret` @AccessFlag PRIVATE;
+}
+procedure `void` `<init>`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10` v0 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/SinkActivity10;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L0214fc.  call `<init>`(v0) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L021502.  return @kind void;
+}
+procedure `void` `sink`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10` v6 @kind this) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/SinkActivity10;.sink:()V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+
+  #L021514.  v2:= 0I;
+  #L021516.  v1:= "INFO" @kind object;
+  #L02151c.  v3:= "Sink reached" @kind object;
+  #L021522.  call temp:= `i`(v1, v3) @signature `Landroid/util/Log;.i:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L021528.  call temp:= `getIntent`(v6) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/SinkActivity10;.getIntent:()Landroid/content/Intent;` @kind virtual;
+  #L02152e.  v1:= temp @kind object;
+  #L021530.  v3:= "secret" @kind object;
+  #L021536.  call temp:= `getStringExtra`(v1, v3) @signature `Landroid/content/Intent;.getStringExtra:(Ljava/lang/String;)Ljava/lang/String;` @kind virtual;
+  #L02153c.  v1:= temp @kind object;
+  #L02153e.  v6.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10.secret` @type ^`java.lang.String` := v1 @kind object;
+  #L021542.  call temp:= `getDefault`() @signature `Landroid/telephony/SmsManager;.getDefault:()Landroid/telephony/SmsManager;` @kind static;
+  #L021548.  v0:= temp @kind object;
+  #L02154a.  v1:= "123456789" @kind object;
+  #L021550.  v3:= v6.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10.secret` @type ^`java.lang.String` @kind object;
+  #L021554.  v4:= v2 @kind object;
+  #L021556.  v5:= v2 @kind object;
+  #L021558.  call `sendTextMessage`(v0, v1, v2, v3, v4, v5) @signature `Landroid/telephony/SmsManager;.sendTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V` @kind virtual;
+  #L02155e.  v1:= "LEAK" @kind object;
+  #L021564.  v2:= v6.`de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10.secret` @type ^`java.lang.String` @kind object;
+  #L021568.  call temp:= `wtf`(v1, v2) @signature `Landroid/util/Log;.wtf:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L02156e.  return @kind void;
+}
+procedure `void` `onCreate`(`de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10` v1 @kind this, `android.os.Bundle` v2 @kind object @name `savedInstanceState`) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/SinkActivity10;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+
+  #L021580.  call `onCreate`(v1, v2) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L021586.  v0:= 2130903040I;
+  #L02158a.  call `setContentView`(v1, v0) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/SinkActivity10;.setContentView:(I)V` @kind virtual;
+  #L021590.  call `sink`(v1) @signature `Lde/foellix/aql/aqlbench/api19/implicitintentmatching3/SinkActivity10;.sink:()V` @kind direct;
+  #L021596.  return @kind void;
+}

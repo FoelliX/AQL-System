@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "tag", "numberOfQueries", "reportEntries" })
 public class JSONReader {
-
 	@JsonProperty("tag")
 	private String tag;
 	@JsonProperty("numberOfQueries")
@@ -22,7 +21,7 @@ public class JSONReader {
 	@JsonProperty("reportEntries")
 	private List<ReportEntry> reportEntries = null;
 	@JsonIgnore
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
 	@JsonProperty("tag")
 	public String getTag() {
@@ -63,5 +62,4 @@ public class JSONReader {
 	public void setAdditionalProperty(String name, Object value) {
 		this.additionalProperties.put(name, value);
 	}
-
 }

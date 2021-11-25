@@ -16,6 +16,7 @@ import de.foellix.aql.datastructure.Reference;
 import de.foellix.aql.helper.EqualsHelper;
 import de.foellix.aql.helper.EqualsOptions;
 import de.foellix.aql.helper.Helper;
+import de.foellix.aql.helper.RAWIdentifier;
 
 public class WebRepresentation {
 	private int counter;
@@ -28,17 +29,25 @@ public class WebRepresentation {
 	}
 
 	public String toJson(Answer answer) {
+		return toJson(answer, true);
+	}
+
+	public String toJson(Answer answer, boolean considerLinenumbers) {
 		this.counter = 0;
 		this.map.clear();
 		this.edges.clear();
+		final RAWIdentifier raw = new RAWIdentifier(true, considerLinenumbers);
 
 		if (answer.getFlows() != null && !answer.getFlows().getFlow().isEmpty()) {
 			for (final Flow item : answer.getFlows().getFlow()) {
 				// Create edge
 				final Reference fromRef = Helper.getFrom(item.getReference());
-				final Node from = addNode(fromRef, Helper.toRAW(fromRef, true));
 				final Reference toRef = Helper.getTo(item.getReference());
-				final Node to = addNode(toRef, Helper.toRAW(toRef, true));
+				if (fromRef == null || toRef == null) {
+					continue;
+				}
+				final Node from = addNode(fromRef, raw);
+				final Node to = addNode(toRef, raw);
 				this.counter++;
 
 				// Set edge style
@@ -98,34 +107,40 @@ public class WebRepresentation {
 		}
 		if (answer.getPermissions() != null && !answer.getPermissions().getPermission().isEmpty()) {
 			for (final Permission item : answer.getPermissions().getPermission()) {
-				final Node ref = addNode(item.getReference(), Helper.toRAW(item.getReference(), true));
-				final Node permission = addNode(item, Helper.toRAW(item));
-				this.counter++;
-				this.edges.add(new Edge(this.counter, permission, ref, Edge.STYLE_PERMISSION));
+				if (item.getReference() != null) {
+					final Node ref = addNode(item.getReference(), raw);
+					final Node permission = addNode(item, raw);
+					this.counter++;
+					this.edges.add(new Edge(this.counter, permission, ref, Edge.STYLE_PERMISSION));
+				}
 			}
 		}
 		if (answer.getIntentsinks() != null && !answer.getIntentsinks().getIntentsink().isEmpty()) {
 			for (final Intentsink item : answer.getIntentsinks().getIntentsink()) {
-				final Node ref = addNode(item.getReference(), Helper.toRAW(item.getReference(), true));
+				if (item.getReference() != null) {
+					final Node ref = addNode(item.getReference(), raw);
 
-				final Intentsink temp = new Intentsink();
-				temp.setTarget(item.getTarget());
-				temp.setAttributes(item.getAttributes());
-				final Node intentsink = addNode(temp, Helper.toRAW(temp));
-				this.counter++;
-				this.edges.add(new Edge(this.counter, intentsink, ref, Edge.STYLE_INTENT_SINK));
+					final Intentsink temp = new Intentsink();
+					temp.setTarget(item.getTarget());
+					temp.setAttributes(item.getAttributes());
+					final Node intentsink = addNode(temp, raw);
+					this.counter++;
+					this.edges.add(new Edge(this.counter, intentsink, ref, Edge.STYLE_INTENT_SINK));
+				}
 			}
 		}
 		if (answer.getIntentsources() != null && !answer.getIntentsources().getIntentsource().isEmpty()) {
 			for (final Intentsource item : answer.getIntentsources().getIntentsource()) {
-				final Node ref = addNode(item.getReference(), Helper.toRAW(item.getReference(), true));
+				if (item.getReference() != null) {
+					final Node ref = addNode(item.getReference(), raw);
 
-				final Intentsource temp = new Intentsource();
-				temp.setTarget(item.getTarget());
-				temp.setAttributes(item.getAttributes());
-				final Node intentsource = addNode(temp, Helper.toRAW(temp));
-				this.counter++;
-				this.edges.add(new Edge(this.counter, intentsource, ref, Edge.STYLE_INTENT_SOURCE));
+					final Intentsource temp = new Intentsource();
+					temp.setTarget(item.getTarget());
+					temp.setAttributes(item.getAttributes());
+					final Node intentsource = addNode(temp, raw);
+					this.counter++;
+					this.edges.add(new Edge(this.counter, intentsource, ref, Edge.STYLE_INTENT_SOURCE));
+				}
 			}
 		}
 
@@ -144,7 +159,8 @@ public class WebRepresentation {
 		return sb.toString();
 	}
 
-	private Node addNode(Object obj, String identifier) {
+	private Node addNode(Object obj, RAWIdentifier raw) {
+		final String identifier = raw.toRAW(obj);
 		if (!this.map.containsKey(identifier)) {
 			this.counter++;
 			final Node node = new Node(this.counter, obj);

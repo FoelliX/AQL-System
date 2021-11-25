@@ -1,54 +1,73 @@
 package de.foellix.aql.converter.ic3;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
+import de.foellix.aql.converter.ConverterTestHelper;
 import de.foellix.aql.converter.IConverter;
 import de.foellix.aql.datastructure.Answer;
-import de.foellix.aql.datastructure.App;
-import de.foellix.aql.datastructure.QuestionPart;
-import de.foellix.aql.datastructure.Reference;
+import de.foellix.aql.datastructure.query.DefaultQuestion;
+import de.foellix.aql.datastructure.query.QuestionReference;
+import de.foellix.aql.datastructure.query.QuestionString;
 import de.foellix.aql.helper.Helper;
-import de.foellix.aql.system.task.ToolTaskInfo;
+import de.foellix.aql.system.storage.Storage;
+import de.foellix.aql.system.task.ConverterTask;
+import de.foellix.aql.system.task.ConverterTaskInfo;
 
 public class ConverterIC3Test {
-	private static final String EXPECTED_1 = "*** IntentSinks *** #1: Action: de.foellix.CALLSINK Reference: Statement('virtualinvoke r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>(r1)')->Method('<de.foellix.sourceapp.SourceMainActivity: void source()>')->Class('de.foellix.sourceapp.SourceMainActivity')->App('Test') ";
-	private static final String EXPECTED_2 = "*** IntentSources *** #1: Class: de.foellix.sinkapp.SinkMainActivity Reference: Statement('r1 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"Secret\")')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('Test') #2: Action: de.foellix.CALLSINK Category: android.intent.category.DEFAULT Reference: Statement('r1 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"Secret\")')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('Test') #3: Action: android.intent.action.MAIN Category: android.intent.category.LAUNCHER Reference: Statement('r1 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"Secret\")')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('Test') ";
-	private static final String EXPECTED_3 = "*** IntentSources *** #1: Class: com.codalata.craigslistchecker.CC_Running Reference: Statement('i1 = virtualinvoke r1.<android.os.Bundle: int getInt(java.lang.String)>(r6)')->Method('<com.codalata.craigslistchecker.CC_Running: void BundleCheck()>')->Class('com.codalata.craigslistchecker.CC_Running')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #2: Class: com.codalata.craigslistchecker.CC_Running Reference: Statement('i2 = virtualinvoke r1.<android.os.Bundle: int getInt(java.lang.String)>(r10)')->Method('<com.codalata.craigslistchecker.CC_Running: void BundleCheck()>')->Class('com.codalata.craigslistchecker.CC_Running')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #3: Class: com.codalata.craigslistchecker.CC_Running Reference: Statement('i3 = virtualinvoke r1.<android.os.Bundle: int getInt(java.lang.String)>(r11)')->Method('<com.codalata.craigslistchecker.CC_Running: void BundleCheck()>')->Class('com.codalata.craigslistchecker.CC_Running')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #4: Class: com.google.android.gms.internal.ci Reference: Statement('$r1 = virtualinvoke r4.<android.os.Bundle: android.os.Parcelable getParcelable(java.lang.String)>(r7)')->Method('<com.google.android.gms.internal.ci: com.google.android.gms.internal.ci a(android.content.Intent)>')->Class('com.google.android.gms.internal.ci')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #5: Class: com.google.android.gms.internal.cg Reference: Statement('z0 = virtualinvoke r1.<android.os.Bundle: boolean getBoolean(java.lang.String,boolean)>(r4, z0)')->Method('<com.google.android.gms.internal.cg: void onCreate(android.os.Bundle)>')->Class('com.google.android.gms.internal.cg')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #6: Class: com.google.android.gms.internal.cn Reference: Statement('z2 = virtualinvoke r1.<android.content.Intent: boolean getBooleanExtra(java.lang.String,boolean)>(r5, z0)')->Method('<com.google.android.gms.internal.cn: boolean b(android.app.Activity)>')->Class('com.google.android.gms.internal.cn')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #7: Class: com.google.android.gms.internal.ci Reference: Statement('r4 = virtualinvoke r0.<android.content.Intent: android.os.Bundle getBundleExtra(java.lang.String)>(r3)')->Method('<com.google.android.gms.internal.ci: com.google.android.gms.internal.ci a(android.content.Intent)>')->Class('com.google.android.gms.internal.ci')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #8: Class: com.google.android.gms.internal.ep Reference: Statement('r3 = virtualinvoke r0.<android.os.Bundle: java.lang.Object get(java.lang.String)>(r6)')->Method('<com.google.android.gms.internal.ep: org.json.JSONObject b(android.os.Bundle)>')->Class('com.google.android.gms.internal.ep')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') *** IntentSinks *** #1: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r10)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #2: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r10)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #3: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r10)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #4: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r10)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #5: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r10)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #6: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r10)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #7: Action: android.intent.action.SEND Data: is set (Type: plain/text) Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r8)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #8: Action: android.intent.action.CALL Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r9)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #9: Action: android.intent.action.CALL Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r9)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #10: Action: android.intent.action.CALL Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r9)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #11: Action: android.intent.action.CALL Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r9)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #12: Action: android.intent.action.CALL Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r9)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #13: Action: android.intent.action.CALL Data: is set Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.ItemView: void startActivity(android.content.Intent)>(r9)')->Method('<com.codalata.craigslistchecker.ItemView: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #14: Action: android.intent.action.PICK Data: is set Reference: Statement('virtualinvoke r5.<com.codalata.craigslistchecker.ItemView: void startActivityForResult(android.content.Intent,int)>(r2, s0)')->Method('<com.codalata.craigslistchecker.ItemView$2: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.ItemView$2')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #15: Action: com.google.android.gms.analytics.service.START Reference: Statement('z0 = virtualinvoke r6.<android.content.Context: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>(r1, r7, 129)')->Method('<com.google.analytics.tracking.android.AnalyticsGmsCoreClient: void connect()>')->Class('com.google.analytics.tracking.android.AnalyticsGmsCoreClient')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #16: Action: com.google.android.gms.analytics.service.START Reference: Statement('z0 = virtualinvoke r6.<android.content.Context: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>(r1, r7, 129)')->Method('<com.google.analytics.tracking.android.AnalyticsGmsCoreClient: void connect()>')->Class('com.google.analytics.tracking.android.AnalyticsGmsCoreClient')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #17: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r7.<com.codalata.craigslistchecker.Location: void startActivity(android.content.Intent)>(r2)')->Method('<com.codalata.craigslistchecker.Location$7: void onClick(android.content.DialogInterface,int)>')->Class('com.codalata.craigslistchecker.Location$7')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #18: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r7.<com.codalata.craigslistchecker.Location: void startActivity(android.content.Intent)>(r2)')->Method('<com.codalata.craigslistchecker.Location$9: void onClick(android.content.DialogInterface,int)>')->Class('com.codalata.craigslistchecker.Location$9')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #19: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r7.<com.codalata.craigslistchecker.Location: void startActivity(android.content.Intent)>(r2)')->Method('<com.codalata.craigslistchecker.Location$13: void onClick(android.content.DialogInterface,int)>')->Class('com.codalata.craigslistchecker.Location$13')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #20: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r7.<com.codalata.craigslistchecker.Location: void startActivity(android.content.Intent)>(r2)')->Method('<com.codalata.craigslistchecker.Location$11: void onClick(android.content.DialogInterface,int)>')->Class('com.codalata.craigslistchecker.Location$11')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #21: Class: com.codalata.craigslistchecker.Relevance Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.AUTOSearchSettings: void startActivity(android.content.Intent)>(r4)')->Method('<com.codalata.craigslistchecker.AUTOSearchSettings: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.AUTOSearchSettings')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #22: Class: com.codalata.craigslistchecker.Relevance Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.SearchSettings: void startActivity(android.content.Intent)>(r4)')->Method('<com.codalata.craigslistchecker.SearchSettings: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.SearchSettings')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #23: Action: com.google.android.gms.analytics.service.START Reference: Statement('z0 = virtualinvoke r6.<android.content.Context: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>(r1, r7, 129)')->Method('<com.google.analytics.tracking.android.AnalyticsGmsCoreClient: void connect()>')->Class('com.google.analytics.tracking.android.AnalyticsGmsCoreClient')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #24: Class: com.codalata.craigslistchecker.AutomationSettings Reference: Statement('virtualinvoke r38.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r39)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #25: Class: com.codalata.craigslistchecker.Category Reference: Statement('virtualinvoke r48.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r49)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #26: Class: com.codalata.craigslistchecker.Favorites Reference: Statement('virtualinvoke r53.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r54)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #27: Class: com.codalata.craigslistchecker.CL_SERVICE Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.Home: android.content.ComponentName startService(android.content.Intent)>(r4)')->Method('<com.codalata.craigslistchecker.Home: void AutomatedClicked()>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #28: Class: com.codalata.craigslistchecker.SearchSettings Reference: Statement('virtualinvoke r99.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r100)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #29: Class: com.codalata.craigslistchecker.Location Reference: Statement('virtualinvoke r43.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r44)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #30: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r156.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r4)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #31: Action: com.google.android.gms.analytics.service.START Reference: Statement('z0 = virtualinvoke r6.<android.content.Context: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>(r1, r7, 129)')->Method('<com.google.analytics.tracking.android.AnalyticsGmsCoreClient: void connect()>')->Class('com.google.analytics.tracking.android.AnalyticsGmsCoreClient')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #32: Action: android.intent.action.SEND Data: is set (Type: plain/text) Reference: Statement('virtualinvoke r146.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r147)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #33: Class: com.codalata.craigslistchecker.CL_SERVICE Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.Home: android.content.ComponentName startService(android.content.Intent)>(r5)')->Method('<com.codalata.craigslistchecker.Home: void CTHERUNNERS()>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #34: Class: com.codalata.craigslistchecker.MyWb Reference: Statement('virtualinvoke r151.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r152)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #35: Class: com.codalata.craigslistchecker.Help Reference: Statement('virtualinvoke r111.<com.codalata.craigslistchecker.Home: void startActivity(android.content.Intent)>(r112)')->Method('<com.codalata.craigslistchecker.Home: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.Home')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #36: Class: com.codalata.craigslistchecker.AUTOLocation Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.NEWAutomationITEM: void startActivity(android.content.Intent)>(r6)')->Method('<com.codalata.craigslistchecker.NEWAutomationITEM: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.NEWAutomationITEM')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #37: Class: com.codalata.craigslistchecker.CL_SERVICE Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.NEWAutomationITEM: android.content.ComponentName startService(android.content.Intent)>(r3)')->Method('<com.codalata.craigslistchecker.NEWAutomationITEM: void ENDME()>')->Class('com.codalata.craigslistchecker.NEWAutomationITEM')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #38: Class: com.codalata.craigslistchecker.AUTOCategory Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.NEWAutomationITEM: void startActivity(android.content.Intent)>(r5)')->Method('<com.codalata.craigslistchecker.NEWAutomationITEM: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.NEWAutomationITEM')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #39: Class: com.codalata.craigslistchecker.AUTOSearchSettings Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.NEWAutomationITEM: void startActivity(android.content.Intent)>(r7)')->Method('<com.codalata.craigslistchecker.NEWAutomationITEM: void onClick(android.view.View)>')->Class('com.codalata.craigslistchecker.NEWAutomationITEM')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #40: Action: com.google.android.gms.analytics.service.START Reference: Statement('z0 = virtualinvoke r6.<android.content.Context: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>(r1, r7, 129)')->Method('<com.google.analytics.tracking.android.AnalyticsGmsCoreClient: void connect()>')->Class('com.google.analytics.tracking.android.AnalyticsGmsCoreClient')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #41: Action: android.intent.action.VIEW Data: is set (Type: NULL-CONSTANT) Data: is set Class: NULL-CONSTANT Reference: Statement('virtualinvoke r0.<android.content.Context: void startActivity(android.content.Intent)>(r12)')->Method('<com.google.android.gms.internal.cd: boolean a(android.content.Context,com.google.android.gms.internal.cf,com.google.android.gms.internal.cm)>')->Class('com.google.android.gms.internal.cd')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #42: Action: android.intent.action.VIEW Data: is set Class: (.*) Reference: Statement('virtualinvoke r0.<android.content.Context: void startActivity(android.content.Intent)>(r12)')->Method('<com.google.android.gms.internal.cd: boolean a(android.content.Context,com.google.android.gms.internal.cf,com.google.android.gms.internal.cm)>')->Class('com.google.android.gms.internal.cd')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #43: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r0.<android.content.Context: void startActivity(android.content.Intent)>(r12)')->Method('<com.google.android.gms.internal.cd: boolean a(android.content.Context,com.google.android.gms.internal.cf,com.google.android.gms.internal.cm)>')->Class('com.google.android.gms.internal.cd')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #44: Action: android.intent.action.VIEW Data: is set (Type: NULL-CONSTANT) Data: is set Class: (.*) Reference: Statement('virtualinvoke r0.<android.content.Context: void startActivity(android.content.Intent)>(r12)')->Method('<com.google.android.gms.internal.cd: boolean a(android.content.Context,com.google.android.gms.internal.cf,com.google.android.gms.internal.cm)>')->Class('com.google.android.gms.internal.cd')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #45: Action: android.intent.action.VIEW Data: is set (Type: NULL-CONSTANT) Data: is set Reference: Statement('virtualinvoke r0.<android.content.Context: void startActivity(android.content.Intent)>(r12)')->Method('<com.google.android.gms.internal.cd: boolean a(android.content.Context,com.google.android.gms.internal.cf,com.google.android.gms.internal.cm)>')->Class('com.google.android.gms.internal.cd')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #46: Action: android.intent.action.VIEW Data: is set Class: NULL-CONSTANT Reference: Statement('virtualinvoke r0.<android.content.Context: void startActivity(android.content.Intent)>(r12)')->Method('<com.google.android.gms.internal.cd: boolean a(android.content.Context,com.google.android.gms.internal.cf,com.google.android.gms.internal.cm)>')->Class('com.google.android.gms.internal.cd')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #47: Class: com.codalata.craigslistchecker.NEWAutomationITEM Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.AutomationSettings: void startActivity(android.content.Intent)>(r3)')->Method('<com.codalata.craigslistchecker.AutomationSettings: void PROUSER()>')->Class('com.codalata.craigslistchecker.AutomationSettings')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #48: Class: com.codalata.craigslistchecker.NEWAutomationITEM Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.AutomationSettings: void startActivity(android.content.Intent)>(r12)')->Method('<com.codalata.craigslistchecker.AutomationSettings: void FREEUSER()>')->Class('com.codalata.craigslistchecker.AutomationSettings')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #49: Action: android.intent.action.VIEW Data: is set Reference: Statement('virtualinvoke r7.<com.codalata.craigslistchecker.AutomationSettings: void startActivity(android.content.Intent)>(r2)')->Method('<com.codalata.craigslistchecker.AutomationSettings$1: void onClick(android.content.DialogInterface,int)>')->Class('com.codalata.craigslistchecker.AutomationSettings$1')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') #50: Class: com.codalata.craigslistchecker.NEWAutomationITEM Reference: Statement('virtualinvoke r0.<com.codalata.craigslistchecker.AutomationSettings: void startActivity(android.content.Intent)>(r8)')->Method('<com.codalata.craigslistchecker.AutomationSettings: void FREEUSER()>')->Class('com.codalata.craigslistchecker.AutomationSettings')->App('examples\\test\\converter\\ic3\\com.codalata.craigslistchecker.apk') ";
-	private static final String EXPECTED_4 = "*** IntentSources *** #1: Class: org.arguslab.icc_implicit_src_sink.FooActivity Reference: Statement('r8 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(r7)')->Method('<org.arguslab.icc_implicit_src_sink.FooActivity: void onCreate(android.os.Bundle)>')->Class('org.arguslab.icc_implicit_src_sink.FooActivity')->App('examples\\test\\converter\\ic3\\icc_implicit_src_sink.apk') #2: Action: amandroid.impliciticctest_action.testaction Category: android.intent.category.DEFAULT Reference: Statement('r8 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(r7)')->Method('<org.arguslab.icc_implicit_src_sink.FooActivity: void onCreate(android.os.Bundle)>')->Class('org.arguslab.icc_implicit_src_sink.FooActivity')->App('examples\\test\\converter\\ic3\\icc_implicit_src_sink.apk') ";
+	private static final String EXPECTED_1 = "*** Intents *** #1: Action: de.foellix.CALLSINK Reference: Statement('virtualinvoke r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>(r1)')->Method('<de.foellix.sourceapp.SourceMainActivity: void source()>')->Class('de.foellix.sourceapp.SourceMainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "SIMApp.apk') *** IntentFilters ***  *** IntentSinks *** #1: Action: de.foellix.CALLSINK Reference: Statement('virtualinvoke r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>(r1)')->Method('<de.foellix.sourceapp.SourceMainActivity: void source()>')->Class('de.foellix.sourceapp.SourceMainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER + "SIMApp.apk') ";
+	private static final String EXPECTED_2 = "*** IntentFilters *** #1: Action: de.foellix.CALLSINK Category: android.intent.category.DEFAULT Reference: Class('de.foellix.sinkapp.SinkMainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "SMSApp.apk') #2: Action: android.intent.action.MAIN Category: android.intent.category.LAUNCHER Reference: Class('de.foellix.sinkapp.SinkMainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "SMSApp.apk') *** IntentSources *** #1: Class: de.foellix.sinkapp.SinkMainActivity Reference: Statement('r1 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"Secret\")')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "SMSApp.apk') #2: Action: de.foellix.CALLSINK Category: android.intent.category.DEFAULT Reference: Statement('r1 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"Secret\")')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "SMSApp.apk') #3: Action: android.intent.action.MAIN Category: android.intent.category.LAUNCHER Reference: Statement('r1 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"Secret\")')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER + "SMSApp.apk') ";
+	private static final String EXPECTED_3 = "bcd285ed59b178d5b7edf08c61c361e0910795b1c6389fdf1978aa4ea038a8f5";
+	private static final String EXPECTED_4 = "*** IntentFilters *** #1: Action: amandroid.impliciticctest_action.testaction Category: android.intent.category.DEFAULT Reference: Class('org.arguslab.icc_implicit_src_sink.FooActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "icc_implicit_src_sink.apk') *** IntentSources *** #1: Class: org.arguslab.icc_implicit_src_sink.FooActivity Reference: Statement('r8 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(r7)')->Method('<org.arguslab.icc_implicit_src_sink.FooActivity: void onCreate(android.os.Bundle)>')->Class('org.arguslab.icc_implicit_src_sink.FooActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "icc_implicit_src_sink.apk') #2: Action: amandroid.impliciticctest_action.testaction Category: android.intent.category.DEFAULT Reference: Statement('r8 = virtualinvoke r2.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(r7)')->Method('<org.arguslab.icc_implicit_src_sink.FooActivity: void onCreate(android.os.Bundle)>')->Class('org.arguslab.icc_implicit_src_sink.FooActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER + "icc_implicit_src_sink.apk') ";
 
 	@Test
 	public void test1() {
-		final QuestionPart qp = new QuestionPart();
-		final App app = new App();
-		app.setFile("Test");
-		final Reference ref = new Reference();
-		ref.setApp(app);
-		qp.addReference(ref);
-		final ToolTaskInfo taskInfo = new ToolTaskInfo(null, qp);
-
 		boolean noException = true;
+
+		final DefaultQuestion question = new DefaultQuestion();
+		final QuestionReference ref = new QuestionReference();
+		ref.setApp(new QuestionString("/some/path/SIMApp.apk"));
+		question.setIn(ref);
+
 		try {
-			// Test IC3 SIM App
-			final File appfile1 = new File("examples/scenario1/SIMApp.dat");
-			final IConverter compiler1 = new ConverterIC3();
-			final Answer answer1 = compiler1.parse(appfile1, taskInfo);
+			// Test FD SIM App
+			final File appfile = new File("examples/IC3/020/simsms/SIMApp.dat");
+			final ConverterTaskInfo taskInfo = new ConverterTaskInfo();
+			taskInfo.setData(ConverterTaskInfo.APP_APK, ref.getApp().toStringInAnswer(false));
+			taskInfo.setData(ConverterTaskInfo.RESULT_FILE, appfile.getAbsolutePath());
+			final ConverterTask task = new ConverterTask(null, taskInfo, null);
 
-			assertEquals(EXPECTED_1, Helper.toString(answer1).replaceAll("\n", " "));
+			Storage.getInstance().getData().putIntoQuestionTaskMap(question, task);
 
-			// Test IC3 SMS App
-			final File appfile2 = new File("examples/scenario1/SMSApp.dat");
-			final IConverter compiler2 = new ConverterIC3();
-			final Answer answer2 = compiler2.parse(appfile2, taskInfo);
+			final IConverter converter = new ConverterIC3();
+			final Answer answer = converter.parse(task);
 
-			assertEquals(EXPECTED_2, Helper.toString(answer2).replaceAll("\n", " "));
+			ConverterTestHelper.assertForConverters(EXPECTED_1, Helper.toString(answer));
 		} catch (final Exception e) {
 			noException = false;
 			e.printStackTrace();
+		} finally {
+			Storage.getInstance().getData().removeFromQuestionTaskMap(question);
 		}
 
 		assertTrue(noException);
@@ -56,24 +75,32 @@ public class ConverterIC3Test {
 
 	@Test
 	public void test2() {
-		final QuestionPart qp = new QuestionPart();
-		final App app = Helper.createApp(new File("examples/test/converter/ic3/com.codalata.craigslistchecker.apk"));
-		final Reference ref = new Reference();
-		ref.setApp(app);
-		qp.addReference(ref);
-		final ToolTaskInfo taskInfo = new ToolTaskInfo(null, qp);
-
 		boolean noException = true;
-		try {
-			// Test IC3 RW App
-			final File appfile1 = new File("examples/test/converter/ic3/com.codalata.craigslistchecker_71.dat");
-			final IConverter compiler1 = new ConverterIC3();
-			final Answer answer1 = compiler1.parse(appfile1, taskInfo);
 
-			assertEquals(EXPECTED_3, Helper.toString(answer1).replaceAll("\n", " "));
+		final DefaultQuestion question = new DefaultQuestion();
+		final QuestionReference ref = new QuestionReference();
+		ref.setApp(new QuestionString("/some/path/SMSApp.apk"));
+		question.setIn(ref);
+
+		try {
+			// Test FD SIM App
+			final File appfile = new File("examples/IC3/020/simsms/SMSApp.dat");
+			final ConverterTaskInfo taskInfo = new ConverterTaskInfo();
+			taskInfo.setData(ConverterTaskInfo.APP_APK, ref.getApp().toStringInAnswer(false));
+			taskInfo.setData(ConverterTaskInfo.RESULT_FILE, appfile.getAbsolutePath());
+			final ConverterTask task = new ConverterTask(null, taskInfo, null);
+
+			Storage.getInstance().getData().putIntoQuestionTaskMap(question, task);
+
+			final IConverter converter = new ConverterIC3();
+			final Answer answer = converter.parse(task);
+
+			ConverterTestHelper.assertForConverters(EXPECTED_2, Helper.toString(answer));
 		} catch (final Exception e) {
 			noException = false;
 			e.printStackTrace();
+		} finally {
+			Storage.getInstance().getData().removeFromQuestionTaskMap(question);
 		}
 
 		assertTrue(noException);
@@ -81,24 +108,65 @@ public class ConverterIC3Test {
 
 	@Test
 	public void test3() {
-		final QuestionPart qp = new QuestionPart();
-		final App app = Helper.createApp(new File("examples/test/converter/ic3/icc_implicit_src_sink.apk"));
-		final Reference ref = new Reference();
-		ref.setApp(app);
-		qp.addReference(ref);
-		final ToolTaskInfo taskInfo = new ToolTaskInfo(null, qp);
-
 		boolean noException = true;
-		try {
-			// Test IC3 RW App
-			final File appfile1 = new File("examples/test/converter/ic3/org.arguslab.icc_implicit_src_sink_1.dat");
-			final IConverter compiler1 = new ConverterIC3();
-			final Answer answer1 = compiler1.parse(appfile1, taskInfo);
 
-			assertEquals(EXPECTED_4, Helper.toString(answer1).replaceAll("\n", " "));
+		final DefaultQuestion question = new DefaultQuestion();
+		final QuestionReference ref = new QuestionReference();
+		ref.setApp(new QuestionString("/some/path/com.codalata.craigslistchecker.apk"));
+		question.setIn(ref);
+
+		try {
+			// Test FD SIM App
+			final File appfile = new File("examples/IC3/020/other/com.codalata.craigslistchecker_71.dat");
+			final ConverterTaskInfo taskInfo = new ConverterTaskInfo();
+			taskInfo.setData(ConverterTaskInfo.APP_APK, ref.getApp().toStringInAnswer(false));
+			taskInfo.setData(ConverterTaskInfo.RESULT_FILE, appfile.getAbsolutePath());
+			final ConverterTask task = new ConverterTask(null, taskInfo, null);
+
+			Storage.getInstance().getData().putIntoQuestionTaskMap(question, task);
+
+			final IConverter converter = new ConverterIC3();
+			final Answer answer = converter.parse(task);
+
+			ConverterTestHelper.assertForConvertersByHash(EXPECTED_3, "com.codalata.craigslistchecker", answer);
 		} catch (final Exception e) {
 			noException = false;
 			e.printStackTrace();
+		} finally {
+			Storage.getInstance().getData().removeFromQuestionTaskMap(question);
+		}
+
+		assertTrue(noException);
+	}
+
+	@Test
+	public void test4() {
+		boolean noException = true;
+
+		final DefaultQuestion question = new DefaultQuestion();
+		final QuestionReference ref = new QuestionReference();
+		ref.setApp(new QuestionString("/some/path/icc_implicit_src_sink.apk"));
+		question.setIn(ref);
+
+		try {
+			// Test FD SIM App
+			final File appfile = new File("examples/IC3/020/other/org.arguslab.icc_implicit_src_sink_1.dat");
+			final ConverterTaskInfo taskInfo = new ConverterTaskInfo();
+			taskInfo.setData(ConverterTaskInfo.APP_APK, ref.getApp().toStringInAnswer(false));
+			taskInfo.setData(ConverterTaskInfo.RESULT_FILE, appfile.getAbsolutePath());
+			final ConverterTask task = new ConverterTask(null, taskInfo, null);
+
+			Storage.getInstance().getData().putIntoQuestionTaskMap(question, task);
+
+			final IConverter converter = new ConverterIC3();
+			final Answer answer = converter.parse(task);
+
+			ConverterTestHelper.assertForConverters(EXPECTED_4, Helper.toString(answer));
+		} catch (final Exception e) {
+			noException = false;
+			e.printStackTrace();
+		} finally {
+			Storage.getInstance().getData().removeFromQuestionTaskMap(question);
 		}
 
 		assertTrue(noException);

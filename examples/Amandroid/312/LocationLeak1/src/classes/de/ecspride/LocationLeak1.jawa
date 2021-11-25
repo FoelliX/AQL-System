@@ -1,0 +1,80 @@
+record `de.ecspride.LocationLeak1` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+  `java.lang.String` `de.ecspride.LocationLeak1.latitude` @AccessFlag PRIVATE;
+}
+procedure `void` `<init>`(`de.ecspride.LocationLeak1` v1 @kind this) @signature `Lde/ecspride/LocationLeak1;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+    v0;
+
+  #L0008e4.  call `<init>`(v1) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L0008ea.  v0:= "" @kind object;
+  #L0008ee.  v1.`de.ecspride.LocationLeak1.latitude` @type ^`java.lang.String` := v0 @kind object;
+  #L0008f2.  return @kind void;
+}
+procedure `void` `access$0`(`de.ecspride.LocationLeak1` v0 @kind object, `java.lang.String` v1 @kind object) @signature `Lde/ecspride/LocationLeak1;.access$0:(Lde/ecspride/LocationLeak1;Ljava/lang/String;)V` @AccessFlag STATIC_SYNTHETIC {
+    temp;
+
+  #L000904.  v0.`de.ecspride.LocationLeak1.latitude` @type ^`java.lang.String` := v1 @kind object;
+  #L000908.  return @kind void;
+}
+procedure `void` `onCreate`(`de.ecspride.LocationLeak1` v16 @kind this, `android.os.Bundle` v17 @kind object @name `savedInstanceState`) @signature `Lde/ecspride/LocationLeak1;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+    v7;
+    v8;
+    v9;
+    v10;
+    v11;
+    v12;
+    v13;
+    v14;
+    v15;
+
+  #L00091c.  v6:= 2130903040I;
+  #L000922.  v0:= v16 @kind object;
+  #L000926.  call `setContentView`(v0, v6) @signature `Lde/ecspride/LocationLeak1;.setContentView:(I)V` @kind virtual;
+  #L00092c.  v8:= "location" @kind object;
+  #L000930.  v0:= v16 @kind object;
+  #L000934.  call temp:= `getSystemService`(v0, v8) @signature `Lde/ecspride/LocationLeak1;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L00093a.  v7:= temp @kind object;
+  #L00093c.  v10:= v7 @kind object;
+  #L00093e.  v10:= (`android.location.LocationManager`) v10 @kind object;
+  #L000942.  v9:= v10 @kind object;
+  #L000944.  v11:= new `de.ecspride.LocationLeak1$MyLocationListener`;
+  #L000948.  v12:= 0I;
+  #L00094a.  v0:= v16 @kind object;
+  #L00094e.  call `<init>`(v11, v0, v12) @signature `Lde/ecspride/LocationLeak1$MyLocationListener;.<init>:(Lde/ecspride/LocationLeak1;Lde/ecspride/LocationLeak1$MyLocationListener;)V` @kind direct;
+  #L000954.  v8:= "gps" @kind object;
+  #L000958.  v13:= 5000L;
+  #L00095c.  v15:= 1092616192I;
+  #L000962.  v0:= v9 @kind object;
+  #L000964.  v1:= v8 @kind object;
+  #L000966.  v2:= v13 @kind wide;
+  #L000968.  v4:= v15;
+  #L00096a.  v5:= v11 @kind object;
+  #L00096c.  call `requestLocationUpdates`(v0, v1, v2, v4, v5) @signature `Landroid/location/LocationManager;.requestLocationUpdates:(Ljava/lang/String;JFLandroid/location/LocationListener;)V` @kind virtual;
+  #L000972.  return @kind void;
+}
+procedure `void` `onResume`(`de.ecspride.LocationLeak1` v3 @kind this) @signature `Lde/ecspride/LocationLeak1;.onResume:()V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+
+  #L000984.  v0:= new `java.lang.StringBuilder`;
+  #L000988.  v1:= "Latitude: " @kind object;
+  #L00098c.  call `<init>`(v0, v1) @signature `Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L000992.  v2:= v3.`de.ecspride.LocationLeak1.latitude` @type ^`java.lang.String` @kind object;
+  #L000996.  call temp:= `append`(v0, v2) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L00099c.  v0:= temp @kind object;
+  #L00099e.  call temp:= `toString`(v0) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L0009a4.  v2:= temp @kind object;
+  #L0009a6.  v1:= "Latitude" @kind object;
+  #L0009aa.  call temp:= `d`(v1, v2) @signature `Landroid/util/Log;.d:(Ljava/lang/String;Ljava/lang/String;)I` @kind static;
+  #L0009b0.  return @kind void;
+}

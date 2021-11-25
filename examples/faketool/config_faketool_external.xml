@@ -3,61 +3,61 @@
 	<androidPlatforms>path/to/Android/sdks/platforms</androidPlatforms>
     <maxMemory>6</maxMemory>
     <tools>
-        <tool name="Tool1" version="1" external="true">
+        <tool name="FakeTool1" version="1" external="true">
             <priority>1</priority>
             <execute>
                 <url>http://localhost:8080/AQL-WebService/ask</url>
                 <username>aql</username>
-                <password>AQL-P4SSw0rd</password>
+                <password>S3cR3T!</password>
             </execute>
             <path>.</path>
             <questions>IntraAppFlows</questions>
         </tool>
-        <tool name="Tool2" version="1" external="true">
+        <tool name="FakeTool2" version="1" external="true">
             <priority>1</priority>
             <execute>
                 <url>http://localhost:8080/AQL-WebService/ask</url>
                 <username>aql</username>
-                <password>AQL-P4SSw0rd</password>
+                <password>S3cR3T!</password>
             </execute>
             <path>.</path>
             <questions>IntentSinks, IntentSources</questions>
         </tool>
     </tools>
     <preprocessors>
-        <tool name="Preprocessor" version="1" external="true">
+        <tool name="FakePreprocessor" version="1" external="true">
             <priority>1</priority>
             <execute>
                 <url>http://localhost:8080/AQL-WebService/ask</url>
                 <username>aql</username>
-                <password>AQL-P4SSw0rd</password>
+                <password>S3cR3T!</password>
             </execute>
             <path>.</path>
             <questions>FAKE</questions>
         </tool>
     </preprocessors>
     <operators>
-        <tool name="Operator" version="1" external="true">
+        <tool name="FakeOperator" version="1" external="true">
             <priority>1</priority>
             <execute>
                 <url>http://localhost:8080/AQL-WebService/ask</url>
                 <username>aql</username>
-                <password>AQL-P4SSw0rd</password>
+                <password>S3cR3T!</password>
             </execute>
             <path>.</path>
             <questions>MATCH(*)</questions>
         </tool>
     </operators>
     <converters>
-        <tool name="Converter" version="1" external="true">
+        <tool name="FakeConverter" version="1" external="true">
             <priority>1</priority>
             <execute>
                 <url>http://localhost:8080/AQL-WebService/ask</url>
                 <username>aql</username>
-                <password>AQL-P4SSw0rd</password>
+                <password>S3cR3T!</password>
             </execute>
             <path>.</path>
-            <questions>Tool1</questions>
+            <questions>FakeTool1</questions>
         </tool>
     </converters>
 </config>

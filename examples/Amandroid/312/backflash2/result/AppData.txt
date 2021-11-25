@@ -1,0 +1,514 @@
+Application Name: backflash.apk
+Uses Permissions: android.permission.RECEIVE_SMS, android.permission.SEND_SMS, android.permission.ACCESS_NETWORK_STATE, android.permission.SYSTEM_ALERT_WINDOW, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.CALL_PHONE, android.permission.READ_SMS, android.permission.WRITE_SETTINGS, android.permission.READ_CONTACTS, android.permission.READ_LOGS, android.permission.BROADCAST_PACKAGE_ADDED, android.permission.CHANGE_WIFI_STATE, com.android.browser.permission.READ_HISTORY_BOOKMARKS, android.permission.RECORD_AUDIO, android.permission.READ_PHONE_STATE, android.permission.ACCESS_WIFI_STATE, android.permission.RECEIVE_BOOT_COMPLETED, android.permission.RESTART_PACKAGES, android.permission.KILL_BACKGROUND_PROCESSES, android.permission.DISABLE_KEYGUARD, android.permission.GET_TASKS, android.permission.BROADCAST_PACKAGE_REPLACED, android.permission.WAKE_LOCK, android.permission.BROADCAST_PACKAGE_INSTALL, android.permission.INTERNET, android.permission.PROCESS_OUTGOING_CALLS, android.permission.CHANGE_NETWORK_STATE
+
+Component com.adobe.flashplayer_.FlashURL
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: android.permission.BROADCAST_SMS
+  IntentFilters:
+    IntentFilter:(Actions:["android.provider.Telephony.SMS_RECEIVED"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashW
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.PACKAGE_CHANGED","android.intent.action.PACKAGE_ADDED","android.intent.action.PACKAGE_INSTALL","android.intent.action.PACKAGE_REPLACED","android.intent.action.PACKAGE_REMOVED"],Categories:["android.intent.category.DEFAULT"],Data:[(Schemes:<"package">,)])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.adobeCore
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: android.permission.RECEIVE_BOOT_COMPLETED
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.QUICKBOOT_POWERON","android.intent.action.BOOT_COMPLETED"],Categories:["android.intent.category.DEFAULT"])
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;
+      Caller Context: (adobeCore.onReceive,L03853c)(adobeCore.envMain,L6)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer_.AdobeZCore
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer_.AdobeZCore
+
+Component com.adobe.flashplayer_.FlashARM
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.MAIN"],Categories:["android.intent.category.LAUNCHER"])
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/app/Activity;.startActivityForResult:(Landroid/content/Intent;I)V
+      Caller Context: (FlashARM.onCreate,L033ab8)(FlashARM.envMain,L109)
+      Outgoing Intents via this call:
+        Intent:
+          Actions:
+            android.app.action.ADD_DEVICE_ADMIN
+          Explicit: false
+          Precise: true
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;
+      Caller Context: (FlashARM.onCreate,L033a7c)(FlashARM.envMain,L109)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer_.AdobeFlashCore
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer_.AdobeFlashCore
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;
+      Caller Context: (FlashARM.onActivityResult,L0339e8)(FlashARM.envMain,L112)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer_.AdobeZCore
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer_.AdobeZCore
+    ICC call details are listed below:
+      Caller Procedure: Landroid/app/Activity;.startActivityForResult:(Landroid/content/Intent;I)V
+      Caller Context: (FlashARM.onActivityResult,L033a36)(FlashARM.envMain,L112)
+      Outgoing Intents via this call:
+        Intent:
+          Actions:
+            android.app.action.ADD_DEVICE_ADMIN
+          Explicit: false
+          Precise: true
+
+Component com.adobe.flashplayer.Certificate
+  Component type: activity
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.sendBroadcast:(Landroid/content/Intent;)V
+      Caller Context: (Certificate.onWindowFocusChanged,L030c14)(Certificate.env,L329)
+      Outgoing Intents via this call:
+        Intent:
+          Actions:
+            android.intent.action.CLOSE_SYSTEM_DIALOGS
+          Explicit: false
+          Precise: true
+    ICC call details are listed below:
+      Caller Procedure: Landroid/app/Activity;.startActivity:(Landroid/content/Intent;)V
+      Caller Context: (1.onClick,L030906)(Certificate.env,L351)
+      Outgoing Intents via this call:
+        Intent:
+          Actions:
+            android.settings.SETTINGS
+          Explicit: false
+          Precise: true
+
+Component com.adobe.packages.ZLocker
+  Component type: activity
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.MacrosStat
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.AdobeUtil
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashZ
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.NEW_OUTGOING_CALL"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.packages.BK
+  Component type: activity
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.FlashY
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.PHONE_STATE"])
+
+  Inter-component communication (ICC) Result:
+
+
+Component com.adobe.flashplayer_.SystemSWF
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.BOOT_COMPLETED"])
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;
+      Caller Context: (SystemSWF.onReceive,L037aae)(SystemSWF.envMain,L295)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer_.AdobeFlashCore
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer_.AdobeFlashCore
+
+Component com.adobe.flashplayer_.AdobeZCore
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startActivity:(Landroid/content/Intent;)V
+      Caller Context: (1.onTick,L033852)(AdobeZCore.env,L253)
+      Outgoing Intents via this call:
+        Intent:
+          Actions:
+            android.settings.SETTINGS
+          Explicit: false
+          Precise: true
+    ICC call details are listed below:
+      Caller Procedure: Landroid/app/ContextImpl;.startActivity:(Landroid/content/Intent;)V
+      Caller Context: (1.onTick,L03380a)(AdobeZCore.env,L253)
+      Outgoing Intents via this call:
+        Intent:
+          Actions:
+            android.settings.SETTINGS
+          Explicit: false
+          Precise: true
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;
+      Caller Context: (AdobeZCore.onDestroy,L03395a)(AdobeZCore.env,L267)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer_.AdobeZCore
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer_.AdobeZCore
+
+Component com.adobe.flashplayer_.AdobeFlashCore
+  Component type: service
+  Exported: false
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;
+      Caller Context: (AdobeFlashCore.onDestroy,L03117a)(AdobeFlashCore.env,L95)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer_.AdobeFlashCore
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer_.AdobeFlashCore
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startService:(Landroid/content/Intent;)Landroid/content/ComponentName;
+      Caller Context: (1.onTick,L030d76)(AdobeFlashCore.env,L85)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer_.AdobeUtil
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer_.AdobeUtil
+
+Component com.adobe.flashplayer_.ADOBEcoreZa
+  Component type: receiver
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: android.permission.BIND_DEVICE_ADMIN
+  IntentFilters:
+    IntentFilter:(Actions:["android.app.action.DEVICE_ADMIN_ENABLED","android.app.action.ACTION_DEVICE_ADMIN_DISABLED","android.app.action.ACTION_DEVICE_ADMIN_DISABLE_REQUESTED"])
+
+  Inter-component communication (ICC) Result:
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startActivity:(Landroid/content/Intent;)V
+      Caller Context: (ADOBEcoreZa.onDisableRequested,L030caa)(ADOBEcoreZa.envMain,L139)
+      Outgoing Intents via this call:
+        Intent:
+          Component Names:
+            com.adobe.flashplayer.Certificate
+          Actions:
+            android.intent.action.VIEW
+          Explicit: true
+          Precise: true
+          ICC Targets:
+            com.adobe.flashplayer.Certificate
+    ICC call details are listed below:
+      Caller Procedure: Landroid/content/ContextWrapper;.startActivity:(Landroid/content/Intent;)V
+      Caller Context: (ADOBEcoreZa.onDisableRequested,L030c7a)(ADOBEcoreZa.envMain,L139)
+      Outgoing Intents via this call:
+        Intent:
+          Actions:
+            android.settings.SETTINGS
+          Explicit: false
+          Precise: true
+
+
+Taint analysis result:
+  Sources found:
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+    <Descriptors: api_source: Lorg/apache/http/HttpResponse;.getEntity:()Lorg/apache/http/HttpEntity;>
+    <Descriptors: api_source: Lorg/apache/http/HttpResponse;.getEntity:()Lorg/apache/http/HttpEntity;>
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+    <Descriptors: api_source: Ljava/net/URLConnection;.getInputStream:()Ljava/io/InputStream;>
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+    <Descriptors: callback_source: Lcom/adobe/flashplayer_/ADOBEcoreZa;.onEnabled:(Landroid/content/Context;Landroid/content/Intent;)V>
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+    <Descriptors: callback_source: Lcom/adobe/flashplayer_/ADOBEcoreZa;.onDisableRequested:(Landroid/content/Context;Landroid/content/Intent;)Ljava/lang/CharSequence;>
+    <Descriptors: api_source: Ljava/net/URLConnection;.getOutputStream:()Ljava/io/OutputStream;>
+    <Descriptors: callback_source: Lcom/adobe/flashplayer_/ADOBEcoreZa;.onDisabled:(Landroid/content/Context;Landroid/content/Intent;)V>
+    <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+    <Descriptors: callback_source: Lcom/adobe/flashplayer_/FlashARM;.onActivityResult:(IILandroid/content/Intent;)V>
+  Sinks found:
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/app/Activity;.startActivity:(Landroid/content/Intent;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/content/ContextWrapper;.startActivity:(Landroid/content/Intent;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/net/URLConnection;.setRequestProperty:(Ljava/lang/String;Ljava/lang/String;)V 2>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/net/URLConnection;.setRequestProperty:(Ljava/lang/String;Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/app/Activity;.startActivityForResult:(Landroid/content/Intent;I)V 1>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/app/ContextImpl;.startActivity:(Landroid/content/Intent;)V 1>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Ljava/net/URL;.openConnection:()Ljava/net/URLConnection; 0>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/app/Activity;.startActivityForResult:(Landroid/content/Intent;I)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Landroid/telephony/SmsManager;.sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V 3>
+    <Descriptors: api_sink: Ljava/net/URLConnection;.setRequestProperty:(Ljava/lang/String;Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/content/ContextWrapper;.sendBroadcast:(Landroid/content/Intent;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Landroid/content/ContextWrapper;.startActivity:(Landroid/content/Intent;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/DataOutputStream;.write:([BII)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+    <Descriptors: api_sink: Ljava/net/URLConnection;.setRequestProperty:(Ljava/lang/String;Ljava/lang/String;)V 2>
+  Discovered taint paths are listed below:
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031036)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L03101a) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L03100c)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L031028) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L03101a)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.env,L68) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Ljava/net/URLConnection;.getOutputStream:()Ljava/io/OutputStream;>
+      Sink: <Descriptors: api_sink: Ljava/io/DataOutputStream;.write:([BII)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(FlashVirtual.doInBackground,L035e36)(FlashVirtual.doInBackground,L035d00), Call@(FlashVirtual.doInBackground,L035e42)(FlashVirtual.doInBackground,L035d00), Call@(FlashVirtual.doInBackground,L035f94)(FlashVirtual.doInBackground,L035d00) param: 0, Call@(FlashVirtual.doInBackground,L035f94)(FlashVirtual.doInBackground,L035d00), Call@(FlashVirtual.doInBackground,L035f94)(FlashVirtual.doInBackground,L035d00) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L030ffe) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L03100c) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L03101a)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L030f68) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031036)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.env,L68) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L03101a) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L03100c)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L030f36) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: callback_source: Lcom/adobe/flashplayer_/FlashARM;.onActivityResult:(IILandroid/content/Intent;)V>
+      Sink: <Descriptors: api_sink: Landroid/app/Activity;.startActivityForResult:(Landroid/content/Intent;I)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Entry@Lcom/adobe/flashplayer_/FlashARM;.onActivityResult:(IILandroid/content/Intent;)V param: 3, Call@(FlashARM.onActivityResult,L0339f4)(FlashARM.envMain,L112) param: 3, Call@(FlashARM.onActivityResult,L0339f4)(FlashARM.envMain,L112), Call@(FlashARM.onCreate,L033a7c)(FlashARM.envMain,L109) param: 0, Call@(FlashARM.onCreate,L033a7c)(FlashARM.envMain,L109), Call@(FlashARM.onCreate,L033a8a)(FlashARM.envMain,L109) param: 1, Call@(FlashARM.onCreate,L033a8a)(FlashARM.envMain,L109), Call@(FlashARM.onCreate,L033aa4)(FlashARM.envMain,L109) param: 2, Call@(FlashARM.onCreate,L033aa4)(FlashARM.envMain,L109), Call@(FlashARM.onCreate,L033ab8)(FlashARM.envMain,L109) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030f82)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L03101a)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L031036) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031036)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L030f36) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031036)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L030f68) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031036)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L030ffe) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L031036) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: callback_source: Lcom/adobe/flashplayer_/FlashARM;.onActivityResult:(IILandroid/content/Intent;)V>
+      Sink: <Descriptors: api_sink: Landroid/app/Activity;.startActivityForResult:(Landroid/content/Intent;I)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Entry@Lcom/adobe/flashplayer_/FlashARM;.onActivityResult:(IILandroid/content/Intent;)V param: 3, Call@(FlashARM.onActivityResult,L0339f4)(FlashARM.envMain,L112) param: 3, Call@(FlashARM.onActivityResult,L0339f4)(FlashARM.envMain,L112), Call@(FlashARM.onActivityResult,L0339e8)(FlashARM.envMain,L112) param: 0, Call@(FlashARM.onActivityResult,L0339e8)(FlashARM.envMain,L112), Call@(FlashARM.onActivityResult,L033a08)(FlashARM.envMain,L112) param: 1, Call@(FlashARM.onActivityResult,L033a08)(FlashARM.envMain,L112), Call@(FlashARM.onActivityResult,L033a22)(FlashARM.envMain,L112) param: 2, Call@(FlashARM.onActivityResult,L033a22)(FlashARM.envMain,L112), Call@(FlashARM.onActivityResult,L033a36)(FlashARM.envMain,L112) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031036)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L031028) param: 1)
+
+    TaintPath:
+      Source: <Descriptors: api_source: Landroid/telephony/TelephonyManager;.getLine1Number:()Ljava/lang/String;>
+      Sink: <Descriptors: api_sink: Ljava/io/Writer;.write:(Ljava/lang/String;)V 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Call@(AdobeFlashCore.onCreate,L030fe6)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031150)(AdobeFlashCore.env,L62), Call@(AdobeFlashCore.onCreate,L031036)(AdobeFlashCore.env,L62) param: 2, Entry@Lcom/adobe/flashplayer_/AdobeFlashCore;.writeConfig:(Ljava/lang/String;Ljava/lang/String;)V param: 2, Call@(AdobeFlashCore.writeConfig,L030e48)(AdobeFlashCore.onCreate,L03100c) param: 1)

@@ -19,13 +19,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class SplashScreen extends Stage {
+	public static final File SPLASH_SCREEN = new File("data/gui/images/splash.png");
+
 	private boolean done;
 
 	public SplashScreen(String title, String version, Color color) {
 		this.setTitle(title);
-		this.getIcons().add(new Image("file:data/gui/images/icon_16.png", 16, 16, false, true));
-		this.getIcons().add(new Image("file:data/gui/images/icon_32.png", 32, 32, false, true));
-		this.getIcons().add(new Image("file:data/gui/images/icon_64.png", 64, 64, false, true));
+		this.getIcons().add(new Image(new File("data/gui/images/icon_16.png").toURI().toString(), 16, 16, false, true));
+		this.getIcons().add(new Image(new File("data/gui/images/icon_32.png").toURI().toString(), 32, 32, false, true));
+		this.getIcons().add(new Image(new File("data/gui/images/icon_64.png").toURI().toString(), 64, 64, false, true));
 		this.initStyle(StageStyle.TRANSPARENT);
 
 		final BorderPane mainPane = new BorderPane();
@@ -33,9 +35,9 @@ public class SplashScreen extends Stage {
 		mainPane.setPadding(new Insets(20, 20, 20, 20));
 		final BorderPane splash = new BorderPane();
 		splash.setPadding(new Insets(10, 10, 10, 10));
-		final BackgroundImage bg = new BackgroundImage(
-				new Image(new File("data/gui/images/splash.png").toURI().toString()), BackgroundRepeat.REPEAT,
-				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		final BackgroundImage bg = new BackgroundImage(new Image(SPLASH_SCREEN.toURI().toString()),
+				BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+				BackgroundSize.DEFAULT);
 		splash.setBackground(new Background(bg));
 		final DropShadow shadow = new DropShadow();
 		shadow.setRadius(17.0);
@@ -56,7 +58,7 @@ public class SplashScreen extends Stage {
 		mainPane.setCenter(splash);
 
 		final Scene scene = new Scene(mainPane, 840, 540);
-		scene.getStylesheets().add("file:data/gui/style.css");
+		scene.getStylesheets().add(new File("data/gui/style.css").toURI().toString());
 		scene.setFill(Color.TRANSPARENT);
 		this.setScene(scene);
 		this.show();

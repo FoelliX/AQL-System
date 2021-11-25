@@ -1,24 +1,34 @@
 package de.foellix.aql.system.task;
 
-import de.foellix.aql.config.Tool;
-import de.foellix.aql.datastructure.Question;
-import de.foellix.aql.datastructure.WaitingAnswer;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class OperatorTaskInfo extends TaskInfo {
-	private final Question question;
-	private final WaitingAnswer answer;
+	private static final long serialVersionUID = 9196192391015453116L;
 
-	public OperatorTaskInfo(Question question, final Tool operator, final WaitingAnswer answer) {
-		super(operator);
-		this.question = question;
-		this.answer = answer;
+	public static final String ANSWERS = "%ANSWERS%";
+	public static final String ANSWERSHASH = "%ANSWERSHASH%";
+	public static final String ANSWERSHASH_MD5 = "%ANSWERSHASH_MD5%";
+	public static final String ANSWERSHASH_SHA1 = "%ANSWERSHASH_SHA-1%";
+	public static final String ANSWERSHASH_SHA256 = "%ANSWERSHASH_SHA-256%";
+
+	public OperatorTaskInfo() {
+		super();
 	}
 
-	public WaitingAnswer getWaitingAnswer() {
-		return this.answer;
+	@Override
+	public Set<String> getAllVariableNames() {
+		final Set<String> variableNames = new HashSet<>();
+		variableNames.addAll(Arrays
+				.asList(new String[] { ANSWERS, ANSWERSHASH, ANSWERSHASH_MD5, ANSWERSHASH_SHA1, ANSWERSHASH_SHA256 }));
+		return variableNames;
 	}
 
-	public Question getQuestion() {
-		return this.question;
+	@Override
+	public Set<String> getAllFileVariableNames() {
+		final Set<String> specificVariableNames = new HashSet<>();
+		specificVariableNames.add(ANSWERS);
+		return specificVariableNames;
 	}
 }

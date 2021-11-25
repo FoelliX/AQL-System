@@ -1,0 +1,19 @@
+record `com.adobe.packages.ZLocker` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+  `android.telephony.TelephonyManager` `com.adobe.packages.ZLocker.telephonyManager` @AccessFlag ;
+}
+procedure `void` `<init>`(`com.adobe.packages.ZLocker` v1 @kind this) @signature `Lcom/adobe/packages/ZLocker;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+
+  # return;
+}
+procedure `void` `onAttachedToWindow`(`com.adobe.packages.ZLocker` v2 @kind this) @signature `Lcom/adobe/packages/ZLocker;.onAttachedToWindow:()V` @AccessFlag PUBLIC {
+
+  # return;
+}
+procedure `void` `onCreate`(`com.adobe.packages.ZLocker` v1 @kind this, `android.os.Bundle` v2 @kind object @name `savedInstanceState`) @signature `Lcom/adobe/packages/ZLocker;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+
+  # return;
+}
+procedure `boolean` `onKeyDown`(`com.adobe.packages.ZLocker` v1 @kind this, `int` v2 @name `keyCode`, `android.view.KeyEvent` v3 @kind object @name `event`) @signature `Lcom/adobe/packages/ZLocker;.onKeyDown:(ILandroid/view/KeyEvent;)Z` @AccessFlag PUBLIC {
+
+  # return;
+}

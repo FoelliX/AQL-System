@@ -1,0 +1,20 @@
+record `com.adobe.flashplayer_.AdobeUtil$1` @kind class @AccessFlag  extends `android.os.CountDownTimer` @kind class {
+  `com.adobe.flashplayer_.AdobeUtil` `com.adobe.flashplayer_.AdobeUtil$1.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.AdobeUtil$1` v0 @kind this, `com.adobe.flashplayer_.AdobeUtil` v1 @kind object, `long` v2 @name `$anonymous0`, `long` v4 @name `$anonymous1`) @signature `Lcom/adobe/flashplayer_/AdobeUtil$1;.<init>:(Lcom/adobe/flashplayer_/AdobeUtil;JJ)V` @AccessFlag CONSTRUCTOR {
+    temp;
+
+  #L0311c8.  v0.`com.adobe.flashplayer_.AdobeUtil$1.this$0` @type ^`com.adobe.flashplayer_.AdobeUtil` := v1 @kind object;
+  #L0311cc.  call `<init>`(v0, v2, v4) @signature `Landroid/os/CountDownTimer;.<init>:(JJ)V` @kind direct;
+  #L0311d2.  return @kind void;
+}
+procedure `void` `onFinish`(`com.adobe.flashplayer_.AdobeUtil$1` v0 @kind this) @signature `Lcom/adobe/flashplayer_/AdobeUtil$1;.onFinish:()V` @AccessFlag PUBLIC {
+    temp;
+
+  #L0311e4.  return @kind void;
+}
+procedure `void` `onTick`(`com.adobe.flashplayer_.AdobeUtil$1` v0 @kind this, `long` v1 @name `millisUntilFinished`) @signature `Lcom/adobe/flashplayer_/AdobeUtil$1;.onTick:(J)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L0311f8.  return @kind void;
+}

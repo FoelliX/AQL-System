@@ -13,6 +13,7 @@
 	<xs:element name="url" type="xs:string"/>
 	<xs:element name="username" type="xs:string"/>
 	<xs:element name="password" type="xs:string"/>
+	<xs:element name="timeout" type="xs:string"/>
     <xs:element name="priority">
         <xs:complexType>
             <xs:simpleContent>
@@ -43,7 +44,8 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="priority" maxOccurs="unbounded" minOccurs="0" />
-                <xs:element ref="execute" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="timeout" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="execute" minOccurs="1" maxOccurs="1" />
 				<xs:element ref="path" minOccurs="0" maxOccurs="1" />
                 <xs:element ref="runOnEntry" minOccurs="0" maxOccurs="1" />
 				<xs:element ref="runOnExit" minOccurs="0" maxOccurs="1" />
@@ -58,6 +60,7 @@
         </xs:complexType>
     </xs:element>
     <xs:element name="androidPlatforms" type="xs:string" />
+    <xs:element name="androidBuildTools" type="xs:string" />
     <xs:element name="maxMemory" type="xs:int" />
     <xs:element name="tools">
         <xs:complexType>
@@ -91,6 +94,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="androidPlatforms" />
+				<xs:element ref="androidBuildTools" />
                 <xs:element ref="maxMemory" />
                 <xs:element ref="tools" />
                 <xs:element ref="preprocessors" />

@@ -9,66 +9,57 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import de.foellix.aql.config.Tool;
-import de.foellix.aql.datastructure.App;
+import de.foellix.aql.Log;
 import de.foellix.aql.datastructure.Hash;
 import de.foellix.aql.datastructure.Hashes;
-import de.foellix.aql.datastructure.IQuestionNode;
-import de.foellix.aql.datastructure.KeywordsAndConstants;
-import de.foellix.aql.datastructure.QuestionPart;
-import de.foellix.aql.datastructure.Reference;
 
 public class HashHelper {
-	// Hash-Creator
-	public static String createHash(final Tool tool, final IQuestionNode question) {
-		final String hash = Helper.toRAW(tool) + question.toRAW(tool.isExternal());
-		return HashHelper.sha256Hash(hash);
-	}
+	public static final String HASH_TYPE_MD5 = "MD5";
+	public static final String HASH_TYPE_SHA1 = "SHA-1";
+	public static final String HASH_TYPE_SHA256 = "SHA-256";
 
-	public static String createHash(final Tool tool, final App app) {
-		final String hash = Helper.toRAW(tool) + Helper.toRAW(app);
-		return HashHelper.sha256Hash(hash);
-	}
-
-	public static String createGenericHash(final IQuestionNode question) {
-		final IQuestionNode copy = Helper.copy(question);
-		for (final QuestionPart part : copy.getAllQuestionParts()) {
-			for (final Reference ref : part.getAllReferences()) {
-				ref.setClassname(null);
-				ref.setMethod(null);
-				ref.setStatement(null);
-			}
-		}
-		final String hash = copy.toRAW(false);
-		return HashHelper.sha256Hash(hash);
-	}
-
-	// Hashes
 	public static String md5Hash(final File file) {
-		return hash(file, KeywordsAndConstants.HASH_TYPE_MD5);
+		return hash(file, HASH_TYPE_MD5);
 	}
 
 	public static String md5Hash(final String string) {
-		return hash(string, KeywordsAndConstants.HASH_TYPE_MD5);
+		return md5Hash(string, false);
+	}
+
+	public static String md5Hash(final String string, boolean replaceSlashes) {
+		return hash(string, HASH_TYPE_MD5, replaceSlashes);
 	}
 
 	public static String sha1Hash(final File file) {
-		return hash(file, KeywordsAndConstants.HASH_TYPE_SHA1);
+		return hash(file, HASH_TYPE_SHA1);
 	}
 
 	public static String sha1Hash(final String string) {
-		return hash(string, KeywordsAndConstants.HASH_TYPE_SHA1);
+		return sha1Hash(string, false);
+	}
+
+	public static String sha1Hash(final String string, boolean replaceSlashes) {
+		return hash(string, HASH_TYPE_SHA1, replaceSlashes);
 	}
 
 	public static String sha256Hash(final File file) {
-		return hash(file, KeywordsAndConstants.HASH_TYPE_SHA256);
+		return hash(file, HASH_TYPE_SHA256);
 	}
 
 	public static String sha256Hash(final String string) {
-		return hash(string, KeywordsAndConstants.HASH_TYPE_SHA256);
+		return sha256Hash(string, false);
 	}
 
-	private static String hash(final File file, final String algorithm) {
+	public static String sha256Hash(final String string, boolean replaceSlashes) {
+		return hash(string, HASH_TYPE_SHA256, replaceSlashes);
+	}
+
+	public static String hash(final File file, final String algorithm) {
+		if (file.isDirectory()) {
+			Log.warning("File for hash creation is a directory (" + file.getAbsolutePath()
+					+ "). Using only its name (\"" + file.getName() + "\") for hash creation.");
+			return hash(file.getName(), algorithm);
+		}
 		try {
 			final MessageDigest digest = MessageDigest.getInstance(algorithm);
 			final InputStream is = new FileInputStream(file);
@@ -87,15 +78,24 @@ public class HashHelper {
 				try {
 					is.close();
 				} catch (final IOException e) {
+					Log.warning("Could not close a file's input stream: " + file.getAbsolutePath());
 					return null;
 				}
 			}
 		} catch (final FileNotFoundException | NoSuchAlgorithmException e) {
+			Log.error("Could not find file for hash creation: " + file.getAbsolutePath());
 			return null;
 		}
 	}
 
-	private static String hash(final String string, final String algorithm) {
+	public static String hash(String string, final String algorithm) {
+		return hash(string, algorithm, false);
+	}
+
+	public static String hash(String string, final String algorithm, boolean replaceSlashes) {
+		if (replaceSlashes) {
+			string = string.replace("\\", "/");
+		}
 		try {
 			final MessageDigest digest = MessageDigest.getInstance(algorithm);
 			final byte[] hash = digest.digest(string.getBytes());

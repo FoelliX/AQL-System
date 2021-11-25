@@ -11,6 +11,8 @@ public class EqualsOptions {
 	public static final int PRECISELY_TARGET = 2;
 	public static final int IGNORE_APP = 3;
 	public static final int GENERATE_HASH_IF_NOT_AVAILABLE = 4;
+	public static final int CONSIDER_LINENUMBER = 5;
+	public static final int DENY_NULL_LINENUMBER = 6;
 
 	private Map<Integer, Boolean> mapping;
 
@@ -40,5 +42,13 @@ public class EqualsOptions {
 			}
 			return this;
 		}
+	}
+
+	public EqualsOptions copy() {
+		final EqualsOptions outputOptions = new EqualsOptions();
+		for (int i = 0; i <= 4; i++) {
+			outputOptions.setOption(i, this.getOption(i));
+		}
+		return outputOptions;
 	}
 }

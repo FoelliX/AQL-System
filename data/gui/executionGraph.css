@@ -1,0 +1,56 @@
+.pane {
+	-fx-background-color: transparent;
+}
+
+.edge {
+}
+
+.edgeSameObject {
+	-fx-stroke-dash-array: 5;
+	-fx-stroke: #AAAAAA;
+}
+
+.node {
+	-fx-padding: 7;
+	-fx-background-color: #fafafa;
+	-fx-background-radius: 7;
+	-fx-background-insets: 1;
+	-fx-effect: none;
+	-fx-text-fill: #000000;
+	-fx-text-alignment: center;
+	-fx-border-color: #000000;
+    -fx-border-width: 1; 
+    -fx-border-style: solid;
+	-fx-border-radius: 8;
+}
+
+.node:hover {
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 3, 0, 0, 0);
+	-fx-cursor: hand;
+}
+
+.node:pressed {
+	-fx-border-color: #555555;
+	-fx-text-fill: #555555;
+}
+
+.nodePlaceholder {
+	-fx-background-color: #c7e4ed;
+	-fx-border-style: dashed;
+}
+
+.nodeReady {
+	-fx-background-color: #ffeda6;
+}
+
+.nodeRunning {
+	-fx-background-color: #ffd4a6;
+}
+
+.nodeFailed {
+	-fx-background-color: #ebbcbc;
+}
+
+.nodeDone {
+	-fx-background-color: #d0ebae;
+}

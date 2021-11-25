@@ -1,0 +1,2 @@
+android.annotation
+com.adobe.packages

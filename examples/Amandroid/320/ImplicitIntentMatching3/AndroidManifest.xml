@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="de.foellix.aql.aqlbench.api19.implicitintentmatching3">
+        
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+        
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+        
+    <application android:allowBackup="true" android:debuggable="true" android:supportsRtl="true">
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.MainActivity">
+                        
+            <intent-filter>
+                                
+                <action android:name="android.intent.action.MAIN"/>
+                                
+                <category android:name="android.intent.category.LAUNCHER"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity1">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity2">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:mimeType="text/plain"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity3">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/AQL/index.html" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity4">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql/index.html" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity5">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:mimeType="text/plain" android:path="/aql/index.html" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity6">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql/index.html" android:port="80"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity7">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:path="/aql/index.html" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity8">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql/index.html" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity9">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity10">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:path="/aql/index.html" android:port="80"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity11">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql/index.html"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity12">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:port="80"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity13">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:path="/aql/index.html" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity14">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity15">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity16">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity17">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity18">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:port="80"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity19">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:path="/aql/index.html"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity20">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity21">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:pathPrefix="/aql" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity22">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:pathPattern="/aql/.*.html" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity23">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql0/index.html" android:pathPattern="/aql/.*.html" android:pathPrefix="/aql" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity24">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql/index.html" android:pathPattern="/aql/.*.html" android:pathPrefix="/aql0" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity25">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql/index.html" android:pathPattern="/aql0/.*.html" android:pathPrefix="/aql" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity26">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql0/index.html" android:pathPattern="/aql/.*.html" android:pathPrefix="/aql0" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity27">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql0/index.html" android:pathPattern="/aql0/.*.html" android:pathPrefix="/aql" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity28">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql/index.html" android:pathPattern="/aql0/.*.html" android:pathPrefix="/aql0" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity29">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:host="foellix.de" android:path="/aql0/index.html" android:pathPattern="/aql0/.*.html" android:pathPrefix="/aql0" android:port="80" android:scheme="http"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity30">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix.de:80/aql/index.html"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity31">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:sspPrefix="//foellix.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity32">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:sspPattern="//foellix..*"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity33">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:ssp="//foellix.de:80/aql/index.html"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity34">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix.de:80/aql/index.html" android:sspPattern="//foellix..*" android:sspPrefix="//foellix.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity35">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix0.de:80/aql/index.html" android:sspPattern="//foellix..*" android:sspPrefix="//foellix.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity36">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix.de:80/aql/index.html" android:sspPattern="//foellix..*" android:sspPrefix="//foellix0.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity37">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix.de:80/aql/index.html" android:sspPattern="//foellix0..*" android:sspPrefix="//foellix.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity38">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix0.de:80/aql/index.html" android:sspPattern="//foellix..*" android:sspPrefix="//foellix0.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity39">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix0.de:80/aql/index.html" android:sspPattern="//foellix0..*" android:sspPrefix="//foellix.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity40">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix.de:80/aql/index.html" android:sspPattern="//foellix0..*" android:sspPrefix="//foellix0.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity41">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix0.de:80/aql/index.html" android:sspPattern="//foellix0..*" android:sspPrefix="//foellix0.de"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+                
+        <activity android:name="de.foellix.aql.aqlbench.api19.implicitintentmatching3.SinkActivity42">
+                        
+            <intent-filter>
+                                
+                <action android:name="de.foellix.aql.aqlbench.LEAK"/>
+                                
+                <category android:name="android.intent.category.DEFAULT"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix.de:80/aql/index.html"/>
+                                
+                <data android:scheme="http" android:ssp="//foellix0.de:80/aql/index.html"/>
+                            
+            </intent-filter>
+                    
+        </activity>
+            
+    </application>
+    
+</manifest>

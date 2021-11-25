@@ -1,0 +1,30 @@
+.code-area {
+    -fx-font-family: Consolas;
+    -fx-font-size: 11pt;
+}
+
+.tagmark {
+    -fx-fill: #000000;
+}
+
+.anytag {
+    -fx-fill: navy;
+    -fx-font-weight: bold;
+}
+
+.paren {
+    -fx-fill: #0000ff;
+    -fx-font-weight: bold;
+}
+
+.attribute {
+    -fx-fill: #0000ff;
+}
+
+.avalue {
+    -fx-fill: green;
+}
+
+.comment {
+    -fx-fill: #999999;
+}

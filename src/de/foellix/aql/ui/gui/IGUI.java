@@ -1,6 +1,6 @@
 package de.foellix.aql.ui.gui;
 
-import de.foellix.aql.system.System;
+import de.foellix.aql.system.AQLSystem;
 import javafx.stage.Stage;
 
 public interface IGUI {
@@ -16,5 +16,5 @@ public interface IGUI {
 
 	public void exit();
 
-	public System getSystem();
+	public AQLSystem getSystem();
 }

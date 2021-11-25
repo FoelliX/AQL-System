@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataFlowResults FileFormatVersion="102" TerminationState="Success">
+	<Results>
+		<Result>
+			<Sink Statement="virtualinvoke $r4.&lt;android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)&gt;(&quot;+49 1234&quot;, null, $r5, null, null)" LineNumber="17"
+				Method="&lt;de.ecspride.MainActivity: void onCreate(android.os.Bundle)&gt;">
+				<AccessPath Value="$r5" Type="java.lang.String" TaintSubFields="true"></AccessPath>
+			</Sink>
+			<Sources>
+				<Source Statement="$r5 = virtualinvoke $r3.&lt;android.telephony.TelephonyManager: java.lang.String getDeviceId()&gt;()" LineNumber="17" Method="&lt;de.ecspride.MainActivity: void onCreate(android.os.Bundle)&gt;">
+					<AccessPath Value="$r5" Type="java.lang.String" TaintSubFields="true"></AccessPath>
+				</Source>
+			</Sources>
+		</Result>
+	</Results>
+	<PerformanceData>
+		<PerformanceEntry Name="TotalRuntimeSeconds" Value="1"></PerformanceEntry>
+		<PerformanceEntry Name="MaxMemoryConsumption" Value="25"></PerformanceEntry>
+		<PerformanceEntry Name="SourceCount" Value="1"></PerformanceEntry>
+		<PerformanceEntry Name="SinkCount" Value="1"></PerformanceEntry>
+	</PerformanceData>
+</DataFlowResults>

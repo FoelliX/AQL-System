@@ -1,0 +1,6 @@
+record `android.annotation.TargetApi` @kind interface @AccessFlag PUBLIC_ABSTRACT_ANNOTATION_INTERFACE extends `java.lang.annotation.Annotation` @kind interface {
+}
+procedure `int` `value`() @signature `Landroid/annotation/TargetApi;.value:()I` @AccessFlag PUBLIC_ABSTRACT {
+
+  # return;
+}

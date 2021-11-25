@@ -23,3 +23,5 @@ for lpid in ${arr[@]}
 do
         kill -9 ${lpid}
 done
+
+exit 0

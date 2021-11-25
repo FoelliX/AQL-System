@@ -1,9 +1,11 @@
 package de.foellix.aql.config.wizard;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
 import de.foellix.aql.config.Tool;
+import de.foellix.aql.helper.Helper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -25,6 +27,7 @@ public class ToolTableView extends ScrollPane {
 
 	private final ObservableList<Tool> tools;
 
+	@SuppressWarnings("unchecked")
 	public ToolTableView(final Overview parent, final int type) {
 		super();
 		this.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -36,15 +39,15 @@ public class ToolTableView extends ScrollPane {
 		this.tools = FXCollections.observableArrayList();
 		root.setItems(this.tools);
 
-		final TableColumn<Tool, String> colName = new TableColumn<Tool, String>("Name");
+		final TableColumn<Tool, String> colName = new TableColumn<>("Name");
 		colName.setCellValueFactory(new PropertyValueFactory<Tool, String>("name"));
 		colName.setPrefWidth(150);
 
-		final TableColumn<Tool, String> colVersion = new TableColumn<Tool, String>("Version");
+		final TableColumn<Tool, String> colVersion = new TableColumn<>("Version");
 		colVersion.setCellValueFactory(new PropertyValueFactory<Tool, String>("version"));
 		colVersion.setPrefWidth(150);
 
-		final TableColumn<Tool, String> colQuestion = new TableColumn<Tool, String>(Overview.typeToString(type));
+		final TableColumn<Tool, String> colQuestion = new TableColumn<>(Overview.typeToString(type));
 		colQuestion.setCellValueFactory(new PropertyValueFactory<Tool, String>("questions"));
 		colQuestion.setPrefWidth(150);
 
@@ -81,11 +84,14 @@ public class ToolTableView extends ScrollPane {
 		final Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		final Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
-		alertStage.getIcons().add(new Image("file:data/gui/images/icon_16.png", 16, 16, false, true));
-		alertStage.getIcons().add(new Image("file:data/gui/images/icon_32.png", 32, 32, false, true));
-		alertStage.getIcons().add(new Image("file:data/gui/images/icon_64.png", 64, 64, false, true));
+		alertStage.getIcons()
+				.add(new Image(new File("data/gui/images/icon_16.png").toURI().toString(), 16, 16, false, true));
+		alertStage.getIcons()
+				.add(new Image(new File("data/gui/images/icon_32.png").toURI().toString(), 32, 32, false, true));
+		alertStage.getIcons()
+				.add(new Image(new File("data/gui/images/icon_64.png").toURI().toString(), 64, 64, false, true));
 		alert.setTitle("Remove");
-		alert.setHeaderText("The following tool will be removed:\n" + tool.getName() + " (" + tool.getVersion() + ")");
+		alert.setHeaderText("The following tool will be removed:\n" + Helper.getQualifiedName(tool));
 		alert.setContentText("Proceed?");
 
 		final Optional<ButtonType> result = alert.showAndWait();

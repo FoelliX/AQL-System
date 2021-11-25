@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+	%QUERY%: The original query before applying the rule without question mark, if the original query ends with a question mark
+	%FILE_i%: File number i (i in [1, n]) from the original query
+	%FEATURE_i%: Feature number i (i in [1, n]) from the original query
+	%FEATURES%: All features from the original query
+-->
+
+<rules>
+	<rule name="InOutRule1">
+		<priority>2</priority>
+		<inputQuery>Flows FROM *1* App(%FILE_1%) TO *2* App(%FILE_2%) *3* FEATURING *4*'ABC'*5*</inputQuery>
+		<outputQuery>Flows IN App(%FILE_1%) *3* FEATURING *4* *5*</outputQuery>
+	</rule>
+	<rule name="InOutRule2">
+		<priority>1</priority>
+		<inputQuery>Flows FROM Statement(*1*) *2* TO *3* App(%FILE_2%) *4* </inputQuery>
+		<outputQuery>Flows IN App(%FILE_2%)*4*</outputQuery>
+	</rule>
+	<rule name="InOutRule3">
+		<priority>1</priority>
+		<inputQuery>Flows FROM App(%FILE_1%) TO App(%FILE_2%) *3*</inputQuery>
+		<outputQuery>Flows IN App(%FILE_2%) *3*</outputQuery>
+	</rule>
+	<rule name="InOutRule4">
+		<priority>0</priority>
+		<priority feature="COMBINER">3</priority>
+		<inputQuery>Flows FROM App('%FILE_1%') TO App('%FILE_2%') *3*</inputQuery>
+		<outputQuery>Flows IN App('%FILE_1%, %FILE_2%' | 'COMBINE')*3*</outputQuery>
+	</rule>
+	<rule name="SimpleRule1">
+		<priority>0</priority>
+		<priority feature="SIMPLE">3</priority>
+		<query>Flows IN App('%APP_APK_FROM%, %APP_APK_TO%' | 'COMBINE') ?</query>
+	</rule>
+	<rule name="SimpleRule2">
+		<priority>0</priority>
+		<priority feature="SIMPLE">3</priority>
+		<priority feature="TEST">1</priority>
+		<query>CONNECT [ Flows IN App('%APP_APK_IN%') FEATURING %FEATURE_2% ?, Flows IN App('%APP_APK_IN%') FEATURING %FEATURES% ?, %QUERY% ? ] ?</query>
+	</rule>
+	<rule name="SimpleRule3">
+		<priority>0</priority>
+		<priority feature="SIMPLE">3</priority>
+		<priority feature="VARIABLES">1</priority>
+		<query>a = '%APP_APK_IN%' ! c = Slice FROM Statement('getSimSerialNumber')->App($a) TO Statement('wtf')->App($a) FEATURING 'icc' WITH 'INPUT_EDGES' = { FILTER [ IntentSinks IN App($a) ? ] ? } ! CONNECT [ Flows IN App($c) FEATURING 'OLD' ?, IntentSources IN App($c) ? ] ?</query>
+	</rule>
+	<rule name="SimpleRule4">
+		<priority>0</priority>
+		<priority feature="SIMPLE">3</priority>
+		<priority feature="FULLREFS">1</priority>
+		<query>Flows IN App( { Slice FROM Statement('%STATEMENT_FROM%')->Method('%METHOD_FROM%')->Class('%CLASS_FROM%')->App('%APP_APK_FROM%') TO Statement('%STATEMENT_TO%')->Method('%METHOD_TO%')->Class('%CLASS_TO%')->App('%APP_APK_TO%') ! } ) ?</query>
+	</rule>
+</rules>

@@ -37,15 +37,18 @@ public class FileRelocator {
 
 		this.alert = new Alert(AlertType.CONFIRMATION);
 		final Stage alertStage = (Stage) this.alert.getDialogPane().getScene().getWindow();
-		alertStage.getIcons().add(new Image("file:data/gui/images/icon_16.png", 16, 16, false, true));
-		alertStage.getIcons().add(new Image("file:data/gui/images/icon_32.png", 32, 32, false, true));
-		alertStage.getIcons().add(new Image("file:data/gui/images/icon_64.png", 64, 64, false, true));
+		alertStage.getIcons()
+				.add(new Image(new File("data/gui/images/icon_16.png").toURI().toString(), 16, 16, false, true));
+		alertStage.getIcons()
+				.add(new Image(new File("data/gui/images/icon_32.png").toURI().toString(), 32, 32, false, true));
+		alertStage.getIcons()
+				.add(new Image(new File("data/gui/images/icon_64.png").toURI().toString(), 64, 64, false, true));
 		this.alert.setTitle("File not found");
 		this.alert.setContentText("Relocate it now by selecting a parent directory or choosing the file precisely.");
 		this.buttonTypeFolderIgnoreParent = new ButtonType("Directory (Ignore parent directory)");
 		this.buttonTypeFolder = new ButtonType("Directory");
 		this.buttonTypeFile = new ButtonType("File");
-		this.buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		this.buttonTypeCancel = new ButtonType("Cancel (Skip)", ButtonData.CANCEL_CLOSE);
 		this.alert.getButtonTypes().setAll(this.buttonTypeFolderIgnoreParent, this.buttonTypeFolder,
 				this.buttonTypeFile, this.buttonTypeCancel);
 
@@ -58,7 +61,8 @@ public class FileRelocator {
 			this.loadFileDialog.setInitialDirectory(this.relocateFolder);
 			this.loadFolderDialog.setInitialDirectory(this.relocateFolder);
 		}
-		while (relocateFile == null || !relocateFile.exists()) {
+		boolean skip = false;
+		while (!skip && (relocateFile == null || !relocateFile.exists())) {
 			this.alert.setHeaderText("The following file could not be found:\n" + file.getAbsolutePath());
 			this.loadFileDialog.setTitle("Relocate: " + file.getAbsolutePath());
 			this.loadFolderDialog.setTitle("Relocate: " + file.getAbsolutePath());
@@ -76,9 +80,16 @@ public class FileRelocator {
 				this.ignoreParent = true;
 				this.relocateFolder = this.loadFolderDialog.showDialog(this.stage);
 				relocateFile = recursivelySearchFile(file, this.relocateFolder, this.ignoreParent);
+			} else if (result.get() == this.buttonTypeCancel) {
+				skip = true;
 			}
 		}
-		Log.msg(file.getAbsolutePath() + "\nrelocated at\n" + relocateFile.getAbsolutePath(), Log.NORMAL);
+		if (skip) {
+			Log.warning(file.getAbsolutePath() + " does not exist and was not relocated!");
+			return null;
+		} else {
+			Log.msg(file.getAbsolutePath() + "\nrelocated at\n" + relocateFile.getAbsolutePath(), Log.NORMAL);
+		}
 
 		return relocateFile;
 	}

@@ -10,11 +10,16 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
+import org.fxmisc.wellbehaved.event.EventPattern;
+import org.fxmisc.wellbehaved.event.InputMap;
+import org.fxmisc.wellbehaved.event.Nodes;
 
 import de.foellix.aql.datastructure.Answer;
 import de.foellix.aql.datastructure.handler.AnswerHandler;
+import de.foellix.aql.helper.GUIHelper;
 import de.foellix.aql.system.IAnswerAvailable;
 import javafx.application.Platform;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -56,7 +61,11 @@ public class ViewerXML extends BorderPane implements IAnswerAvailable {
 		this.codeArea.textProperty().addListener((obs, oldText, newText) -> {
 			this.codeArea.setStyleSpans(0, computeHighlighting(newText));
 		});
+		final InputMap<KeyEvent> im = InputMap.consume(EventPattern.keyPressed("\t"),
+				e -> this.codeArea.replaceSelection("    "));
+		Nodes.addInputMap(this.codeArea, im);
 		this.codeArea.setStyle("-fx-font-family: Consolas;");
+		GUIHelper.addFinder(this.codeArea, new SearchAndReplaceBox(this.codeArea, "Viewer"));
 		final StackPane codePane = new StackPane(new VirtualizedScrollPane<>(this.codeArea));
 		codePane.setPrefWidth(Integer.MAX_VALUE);
 
@@ -113,14 +122,17 @@ public class ViewerXML extends BorderPane implements IAnswerAvailable {
 	}
 
 	@Override
-	public void answerAvailable(final Answer answer, final int status) {
-		Platform.runLater(() -> {
-			this.codeArea.replaceText(AnswerHandler.createXMLString(answer));
-			this.codeArea.scrollYBy(0);
-			if (this.statsbar != null) {
-				this.statsbar.refresh(answer);
-			}
-		});
+	public void answerAvailable(Object answer, int status) {
+		if (answer instanceof Answer) {
+			final Answer castedAnswer = (Answer) answer;
+			Platform.runLater(() -> {
+				this.codeArea.replaceText(AnswerHandler.createXMLString(castedAnswer));
+				this.codeArea.scrollYBy(0);
+				if (this.statsbar != null) {
+					this.statsbar.refresh(castedAnswer);
+				}
+			});
+		}
 	}
 
 	public String getContent() {

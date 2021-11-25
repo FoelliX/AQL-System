@@ -8,17 +8,22 @@ import java.io.IOException;
 import de.foellix.aql.Log;
 import de.foellix.aql.converter.IConverter;
 import de.foellix.aql.datastructure.Answer;
+import de.foellix.aql.datastructure.App;
 import de.foellix.aql.datastructure.Attribute;
 import de.foellix.aql.datastructure.Attributes;
 import de.foellix.aql.datastructure.Permission;
 import de.foellix.aql.datastructure.Permissions;
 import de.foellix.aql.datastructure.Reference;
 import de.foellix.aql.helper.Helper;
-import de.foellix.aql.system.task.ToolTaskInfo;
+import de.foellix.aql.system.task.ConverterTask;
+import de.foellix.aql.system.task.ConverterTaskInfo;
 
 public class ConverterPAndA2 implements IConverter {
 	@Override
-	public Answer parse(final File resultFile, final ToolTaskInfo taskInfo) {
+	public Answer parse(ConverterTask task) {
+		final File resultFile = new File(task.getTaskInfo().getData(ConverterTaskInfo.RESULT_FILE));
+		final App app = Helper.createApp(Helper.getAppFromData(task.getTaskInfo()));
+
 		final Answer answer = new Answer();
 		answer.setPermissions(new Permissions());
 
@@ -49,7 +54,7 @@ public class ConverterPAndA2 implements IConverter {
 							classname = Helper.cut(method, "<", ": ");
 
 							currentRef = new Reference();
-							currentRef.setApp(taskInfo.getQuestion().getAllReferences().get(0).getApp());
+							currentRef.setApp(app);
 							currentRef.setClassname(classname);
 							currentRef.setMethod(method);
 							try {

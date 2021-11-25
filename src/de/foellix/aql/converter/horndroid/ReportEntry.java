@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "description", "result", "verbose" })
 public class ReportEntry {
-
 	@JsonProperty("description")
 	private String description;
 	@JsonProperty("result")
@@ -21,7 +20,7 @@ public class ReportEntry {
 	@JsonProperty("verbose")
 	private Boolean verbose;
 	@JsonIgnore
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
 	@JsonProperty("description")
 	public String getDescription() {
@@ -62,5 +61,4 @@ public class ReportEntry {
 	public void setAdditionalProperty(String name, Object value) {
 		this.additionalProperties.put(name, value);
 	}
-
 }

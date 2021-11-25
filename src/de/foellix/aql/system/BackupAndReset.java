@@ -6,22 +6,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.foellix.aql.Log;
+import de.foellix.aql.helper.FileHelper;
 import de.foellix.aql.helper.ZipHelper;
+import de.foellix.aql.system.storage.Storage;
+import de.foellix.aql.ui.gui.viewer.web.ViewerWeb;
 
 public class BackupAndReset {
-	private static File storageFolder = new File("data/storage");
-
-	public static boolean backup(File storageFolder) {
-		BackupAndReset.storageFolder = storageFolder;
-		return backup();
+	public static boolean backup() {
+		return backup(Storage.DEFAULT_STORAGE_DIRECTORY);
 	}
 
-	public static boolean backup() {
+	public static boolean backup(File storageDirectory) {
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy-HH_mm_ss");
 		final Date currentTime = new Date();
 		try {
 			final File zipFile = new File("data/storage_backup_" + formatter.format(currentTime) + ".zip");
-			ZipHelper.zip(storageFolder, zipFile);
+			ZipHelper.zip(storageDirectory, zipFile);
 			Log.msg("Successfully backuped storage to: " + zipFile.getAbsolutePath(), Log.NORMAL);
 			return true;
 		} catch (final IOException e) {
@@ -30,35 +30,49 @@ public class BackupAndReset {
 		}
 	}
 
-	public static void reset(File storageFolder) {
-		BackupAndReset.storageFolder = storageFolder;
-		reset();
+	public static void reset() {
+		reset(Storage.DEFAULT_STORAGE_DIRECTORY);
 	}
 
-	public static void reset() {
+	public static void reset(File storageDirectory) {
 		boolean failed = false;
-		for (final File file : storageFolder.listFiles()) {
-			if (file.getName().endsWith(".xml")) {
-				if (file.exists() && !file.delete()) {
-					failed = true;
-				}
-			}
-		}
-		File storageFile = new File(storageFolder, "storageParts.ser");
-		if (storageFile.exists() && !storageFile.delete()) {
-			failed = true;
-		}
-		storageFile = new File(storageFolder, "storagePreprocessors.ser");
-		if (storageFile.exists() && !storageFile.delete()) {
+
+		// Reset (delete) storage directory
+		if (storageDirectory.exists() && !FileHelper.deleteDir(storageDirectory)) {
 			failed = true;
 		}
 
+		// Reset storage object
 		Storage.getInstance().reset();
 
+		// Re-create storage directory
+		storageDirectory.mkdir();
+
+		// Log
 		if (failed) {
 			Log.warning("Could not completely reset storage!");
 		} else {
 			Log.msg("Successfully reset storage!", Log.NORMAL);
 		}
+	}
+
+	public static void resetOutputDirectories() {
+		// data/temp
+		if (FileHelper.getTempDirectory().exists()) {
+			FileHelper.deleteDir(FileHelper.getTempDirectory());
+		}
+		FileHelper.getTempDirectory().mkdir();
+
+		// data/gui/web/temp
+		if (ViewerWeb.TEMP_DIRECTORY.exists()) {
+			FileHelper.deleteDir(ViewerWeb.TEMP_DIRECTORY);
+		}
+		ViewerWeb.TEMP_DIRECTORY.mkdir();
+
+		// answers
+		if (FileHelper.getAnswersDirectory().exists()) {
+			FileHelper.deleteDir(FileHelper.getAnswersDirectory());
+		}
+		FileHelper.getAnswersDirectory().mkdir();
 	}
 }

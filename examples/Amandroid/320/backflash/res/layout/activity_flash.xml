@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@drawable/back" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingBottom="@dimen/activity_vertical_margin" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textColor="#ffffffff" android:id="@id/preLoad" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Adobe Flash Player was installed success.\n\nGet more information at adobe.com." android:layout_alignParentLeft="true" />
+    <ImageView android:id="@id/imageView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dip" android:src="@drawable/ic_launcher" android:layout_below="@id/preLoad" android:layout_alignLeft="@id/preLoad" />
+</RelativeLayout>

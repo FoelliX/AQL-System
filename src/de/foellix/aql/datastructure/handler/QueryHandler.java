@@ -1,43 +1,38 @@
 package de.foellix.aql.datastructure.handler;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 
 import de.foellix.aql.Log;
-import de.foellix.aql.datastructure.App;
-import de.foellix.aql.datastructure.IQuestionNode;
+import de.foellix.aql.datastructure.query.Query;
+import de.foellix.aql.ui.gui.GUI;
 
 public class QueryHandler {
-	public static IQuestionNode parseQuery(String query) {
+	public static Query parseQuery(String query) {
+		return parseQuery(query, false);
+	}
+
+	public static Query parseQuery(String query, boolean ignoreExceptions) {
 		try {
 			final InputStream input = new ByteArrayInputStream(query.getBytes());
 			final QuestionParser parser = new QuestionParser(input);
-			parser.query();
+			parser.queries();
 			final QuestionHandler questionHandler = parser.getQuestionHandler();
-			IQuestionNode currentQuery = questionHandler.getCollection();
-
-			if (currentQuery.getChildren() != null && currentQuery.getChildren().size() == 1) {
-				currentQuery = currentQuery.getChildren().get(0);
-			}
-
+			final Query currentQuery = questionHandler.getQuery();
 			return currentQuery;
 		} catch (final ParseException e) {
-			Log.error("The query is not valid.");
-			e.printStackTrace();
+			if (!ignoreExceptions) {
+				Log.error("Query is not valid! Syntax error at line " + e.currentToken.beginLine + " near symbol \""
+						+ e.currentToken.image + "\".");
+				if (GUI.started) {
+					GUI.alert(true, "Error", "Query is not valid!", "Syntax error at line " + e.currentToken.beginLine
+							+ " near symbol \"" + e.currentToken.image + "\".");
+				}
+				if (Log.logIt(Log.DEBUG_DETAILED)) {
+					e.printStackTrace();
+				}
+			}
 			return null;
 		}
-	}
-
-	public static IQuestionNode replaceWithAbsolutePaths(IQuestionNode query) {
-		try {
-			for (final App app : query.getAllApps(true)) {
-				final File file = new File(app.getFile());
-				app.setFile(file.getAbsolutePath().replaceAll("\\\\", "/"));
-			}
-		} catch (final Exception e) {
-			Log.error("Could not convert to absolute paths. Maybe one or more files do not exists.");
-		}
-		return query;
 	}
 }

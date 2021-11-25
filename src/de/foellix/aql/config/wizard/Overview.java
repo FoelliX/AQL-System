@@ -46,6 +46,11 @@ public class Overview extends BorderPane {
 		this.setLeft(toolBox);
 
 		sync();
+		clear();
+	}
+
+	public void clear() {
+		this.editorOverview.load(null, -1);
 	}
 
 	public void sync() {
@@ -74,7 +79,8 @@ public class Overview extends BorderPane {
 				this.converters.sync(this.parent.getConfig().getConverters().getTool());
 			}
 		} catch (final Exception e) {
-			Log.error("Configuration invalid! Please fix you xml code or create a new configuration.");
+			Log.error("Configuration invalid! Please fix you xml code or create a new configuration."
+					+ Log.getExceptionAppendix(e));
 		}
 	}
 
@@ -84,7 +90,6 @@ public class Overview extends BorderPane {
 
 	public void apply() {
 		sync();
-		this.parent.syncEditorXML();
 	}
 
 	public ConfigWizard getParentGUI() {

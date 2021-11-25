@@ -1,56 +1,56 @@
 package de.foellix.aql.converter.flowdroid;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
+import de.foellix.aql.converter.ConverterTestHelper;
 import de.foellix.aql.converter.IConverter;
-import de.foellix.aql.converter.iccta.ConverterIccTA;
 import de.foellix.aql.datastructure.Answer;
-import de.foellix.aql.datastructure.App;
-import de.foellix.aql.datastructure.QuestionPart;
-import de.foellix.aql.datastructure.Reference;
+import de.foellix.aql.datastructure.query.DefaultQuestion;
+import de.foellix.aql.datastructure.query.QuestionReference;
+import de.foellix.aql.datastructure.query.QuestionString;
 import de.foellix.aql.helper.Helper;
-import de.foellix.aql.system.task.ToolTaskInfo;
+import de.foellix.aql.system.storage.Storage;
+import de.foellix.aql.system.task.ConverterTask;
+import de.foellix.aql.system.task.ConverterTaskInfo;
 
 public class ConverterFDTest {
-	// FIXME: Updated result resources to newer FlowDroid version. Use IccTA
-	// converter until then.
-
-	private static final String EXPECTED_1 = "*** Flows *** #1: To: Statement('virtualinvoke $r0.<de.foellix.sourceapp.SourceMainActivity: void startActivity(android.content.Intent)>($r1)')->Method('<de.foellix.sourceapp.SourceMainActivity: void source()>')->Class('de.foellix.sourceapp.SourceMainActivity')->App('Test') From: Statement('$r4 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getSimSerialNumber()>()')->Method('<de.foellix.sourceapp.SourceMainActivity: void source()>')->Class('de.foellix.sourceapp.SourceMainActivity')->App('Test') ";
-	private static final String EXPECTED_2 = "*** Flows *** #1: To: Statement('virtualinvoke $r3.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>(\"+49111111111\", null, $r2, null, null)')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('Test') From: Statement('$r1 = virtualinvoke $r0.<de.foellix.sinkapp.SinkMainActivity: android.content.Intent getIntent()>()')->Method('<de.foellix.sinkapp.SinkMainActivity: void sink()>')->Class('de.foellix.sinkapp.SinkMainActivity')->App('Test') ";
+	private static final String EXPECTED_1 = "*** Flows *** #1: From: Statement('$r5 = virtualinvoke $r3.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()', 17)->Method('<de.ecspride.MainActivity: void onCreate(android.os.Bundle)>')->Class('de.ecspride.MainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER
+			+ "DirectLeak1.apk') To: Statement('virtualinvoke $r4.<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>(\"+49 1234\", null, $r5, null, null)', 17)->Method('<de.ecspride.MainActivity: void onCreate(android.os.Bundle)>')->Class('de.ecspride.MainActivity')->App('"
+			+ ConverterTestHelper.PLACEHOLDER + "DirectLeak1.apk') ";
 
 	@Test
-	public void test() {
-		final QuestionPart qp = new QuestionPart();
-		final App app = new App();
-		app.setFile("Test");
-		final Reference ref = new Reference();
-		ref.setApp(app);
-		qp.addReference(ref);
-		final ToolTaskInfo taskInfo = new ToolTaskInfo(null, qp);
-
+	public void test01() {
 		boolean noException = true;
+
+		final DefaultQuestion question = new DefaultQuestion();
+		final QuestionReference ref = new QuestionReference();
+		ref.setApp(new QuestionString("/some/path/DirectLeak1.apk"));
+		question.setIn(ref);
+
 		try {
 			// Test FD SIM App
-			final File appfile1 = new File("examples/scenario1/SIMApp_result.txt");
-			final IConverter compiler1 = new ConverterIccTA();
-			final Answer answer1 = compiler1.parse(appfile1, taskInfo);
+			final File appfile = new File("examples/FlowDroid/271/DirectLeak1/DirectLeak1.xml");
+			final ConverterTaskInfo taskInfo = new ConverterTaskInfo();
+			taskInfo.setData(ConverterTaskInfo.APP_APK, ref.getApp().toStringInAnswer(false));
+			taskInfo.setData(ConverterTaskInfo.RESULT_FILE, appfile.getAbsolutePath());
+			final ConverterTask task = new ConverterTask(null, taskInfo, null);
 
-			assertEquals(EXPECTED_1, Helper.toString(answer1).replaceAll("\n", " "));
+			Storage.getInstance().getData().putIntoQuestionTaskMap(question, task);
 
-			// Test FD SMS App
-			final File appfile2 = new File("examples/scenario1/SMSApp_result.txt");
-			final IConverter compiler2 = new ConverterIccTA();
-			final Answer answer2 = compiler2.parse(appfile2, taskInfo);
+			final IConverter converter = new ConverterFD();
+			final Answer answer = converter.parse(task);
 
-			assertEquals(EXPECTED_2, Helper.toString(answer2).replaceAll("\n", " "));
+			ConverterTestHelper.assertForConverters(EXPECTED_1, Helper.toString(answer));
 		} catch (final Exception e) {
 			noException = false;
 			e.printStackTrace();
+		} finally {
+			Storage.getInstance().getData().removeFromQuestionTaskMap(question);
 		}
 
 		assertTrue(noException);

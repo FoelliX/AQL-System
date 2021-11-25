@@ -1,0 +1,68 @@
+record `com.adobe.flashplayer_.FlashVars` @kind class @AccessFlag PUBLIC extends `android.os.AsyncTask` @kind class {
+}
+procedure `void` `<init>`(`com.adobe.flashplayer_.FlashVars` v0 @kind this) @signature `Lcom/adobe/flashplayer_/FlashVars;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L035bf4.  call `<init>`(v0) @signature `Landroid/os/AsyncTask;.<init>:()V` @kind direct;
+  #L035bfa.  return @kind void;
+}
+procedure `java.lang.Object` `doInBackground`(`com.adobe.flashplayer_.FlashVars` v1 @kind this, `java.lang.Object`[] v2 @kind object) @signature `Lcom/adobe/flashplayer_/FlashVars;.doInBackground:([Ljava/lang/Object;)Ljava/lang/Object;` @AccessFlag PROTECTED_SYNTHETIC {
+    temp;
+    v0;
+
+  #L035c0c.  v2:= (`java.lang.String`[]) v2 @kind object;
+  #L035c10.  call temp:= `doInBackground`(v1, v2) @signature `Lcom/adobe/flashplayer_/FlashVars;.doInBackground:([Ljava/lang/String;)Ljava/lang/String;` @kind virtual;
+  #L035c16.  v0:= temp @kind object;
+  #L035c18.  return v0 @kind object;
+}
+procedure `java.lang.String` `doInBackground`(`com.adobe.flashplayer_.FlashVars` v7 @kind this, `java.lang.String`[] v8 @kind object @name `uri`) @signature `Lcom/adobe/flashplayer_/FlashVars;.doInBackground:([Ljava/lang/String;)Ljava/lang/String;` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L035c2c.  v0:= new `org.apache.http.impl.client.DefaultHttpClient`;
+  #L035c30.  call `<init>`(v0) @signature `Lorg/apache/http/impl/client/DefaultHttpClient;.<init>:()V` @kind direct;
+  #L035c36.  v3:= 0I;
+  #L035c38.  v5:= new `org.apache.http.client.methods.HttpGet`;
+  #L035c3c.  v6:= 0I;
+  #L035c3e.  v6:= v8[v6] @kind object;
+  #L035c42.  call `<init>`(v5, v6) @signature `Lorg/apache/http/client/methods/HttpGet;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L035c48.  call temp:= `execute`(v0, v5) @signature `Lorg/apache/http/client/HttpClient;.execute:(Lorg/apache/http/client/methods/HttpUriRequest;)Lorg/apache/http/HttpResponse;` @kind interface;
+  #L035c4e.  v2:= temp @kind object;
+  #L035c50.  call temp:= `getStatusLine`(v2) @signature `Lorg/apache/http/HttpResponse;.getStatusLine:()Lorg/apache/http/StatusLine;` @kind interface;
+  #L035c56.  v4:= temp @kind object;
+  #L035c58.  call temp:= `getStatusCode`(v4) @signature `Lorg/apache/http/StatusLine;.getStatusCode:()I` @kind interface;
+  #L035c5e.  v5:= temp;
+  #L035c60.  v6:= 200I;
+  #L035c64.  if v5 != v6 then goto L035c90;
+  #L035c68.  v1:= new `java.io.ByteArrayOutputStream`;
+  #L035c6c.  call `<init>`(v1) @signature `Ljava/io/ByteArrayOutputStream;.<init>:()V` @kind direct;
+  #L035c72.  call temp:= `getEntity`(v2) @signature `Lorg/apache/http/HttpResponse;.getEntity:()Lorg/apache/http/HttpEntity;` @kind interface;
+  #L035c78.  v5:= temp @kind object;
+  #L035c7a.  call `writeTo`(v5, v1) @signature `Lorg/apache/http/HttpEntity;.writeTo:(Ljava/io/OutputStream;)V` @kind interface;
+  #L035c80.  call `close`(v1) @signature `Ljava/io/ByteArrayOutputStream;.close:()V` @kind virtual;
+  #L035c86.  call temp:= `toString`(v1) @signature `Ljava/io/ByteArrayOutputStream;.toString:()Ljava/lang/String;` @kind virtual;
+  #L035c8c.  v3:= temp @kind object;
+  #L035c8e.  return v3 @kind object;
+  #L035c90.  call temp:= `getEntity`(v2) @signature `Lorg/apache/http/HttpResponse;.getEntity:()Lorg/apache/http/HttpEntity;` @kind interface;
+  #L035c96.  v5:= temp @kind object;
+  #L035c98.  call temp:= `getContent`(v5) @signature `Lorg/apache/http/HttpEntity;.getContent:()Ljava/io/InputStream;` @kind interface;
+  #L035c9e.  v5:= temp @kind object;
+  #L035ca0.  call `close`(v5) @signature `Ljava/io/InputStream;.close:()V` @kind virtual;
+  #L035ca6.  v5:= new `java.io.IOException`;
+  #L035caa.  call temp:= `getReasonPhrase`(v4) @signature `Lorg/apache/http/StatusLine;.getReasonPhrase:()Ljava/lang/String;` @kind interface;
+  #L035cb0.  v6:= temp @kind object;
+  #L035cb2.  call `<init>`(v5, v6) @signature `Ljava/io/IOException;.<init>:(Ljava/lang/String;)V` @kind direct;
+  #L035cb8.  throw v5;
+  #L035cba.  v5:= Exception @type ^`org.apache.http.client.ClientProtocolException` @kind object;
+  #L035cbc.  goto L035c8e;
+  #L035cbe.  v5:= Exception @type ^`java.io.IOException` @kind object;
+  #L035cc0.  goto L035c8e;
+  catch `org.apache.http.client.ClientProtocolException` @[L035c38..L035cba] goto L035cba;
+  catch `java.io.IOException` @[L035c38..L035cba] goto L035cbe;
+}

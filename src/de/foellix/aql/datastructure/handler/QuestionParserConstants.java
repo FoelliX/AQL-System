@@ -21,17 +21,25 @@ public interface QuestionParserConstants {
   /** RegularExpression Id. */
   int USES = 9;
   /** RegularExpression Id. */
-  int OPERATOR1 = 10;
+  int WITH = 10;
   /** RegularExpression Id. */
-  int OPERATOR2 = 11;
+  int FILTER_OPERATOR = 11;
   /** RegularExpression Id. */
-  int OPERATOR3 = 12;
+  int OTHER_OPERATORS = 12;
   /** RegularExpression Id. */
-  int SOIS1 = 13;
+  int CUSTOM_OPERATORS = 13;
   /** RegularExpression Id. */
-  int SOIS2 = 14;
+  int VARIABLE = 14;
   /** RegularExpression Id. */
-  int STRING = 15;
+  int SOIS1 = 15;
+  /** RegularExpression Id. */
+  int SOIS2 = 16;
+  /** RegularExpression Id. */
+  int ENDING = 17;
+  /** RegularExpression Id. */
+  int STRING = 18;
+  /** RegularExpression Id. */
+  int INT = 19;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -46,21 +54,26 @@ public interface QuestionParserConstants {
     "\"IN\"",
     "\"FROM\"",
     "\"TO\"",
-    "\"FEATURING\"",
-    "\"USES\"",
+    "<FEATURING>",
+    "<USES>",
+    "\"WITH\"",
     "\"FILTER\"",
-    "<OPERATOR2>",
-    "<OPERATOR3>",
-    "\"Flows\"",
+    "<OTHER_OPERATORS>",
+    "<CUSTOM_OPERATORS>",
+    "<VARIABLE>",
+    "<SOIS1>",
     "<SOIS2>",
+    "<ENDING>",
     "<STRING>",
-    "\"?\"",
-    "\"!\"",
+    "<INT>",
+    "\"=\"",
+    "\"{\"",
+    "\"}\"",
+    "\"$\"",
     "\",\"",
     "\"[\"",
     "\"]\"",
     "\"|\"",
-    "\"=\"",
     "\"Statement\"",
     "\"(\"",
     "\")\"",

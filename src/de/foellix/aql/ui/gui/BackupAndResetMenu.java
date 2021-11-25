@@ -43,9 +43,9 @@ public class BackupAndResetMenu extends ArrayList<MenuItem> {
 				}
 			}
 		});
-		final SeparatorMenuItem seperator4 = new SeparatorMenuItem();
 
-		this.addAll(menuItemBackupStorage, menuItemResetStorage, menuItemBackupAndResetStorage, seperator4);
+		this.addAll(menuItemBackupStorage, menuItemResetStorage, menuItemBackupAndResetStorage,
+				new SeparatorMenuItem());
 	}
 
 	private void addAll(MenuItem... menuitems) {

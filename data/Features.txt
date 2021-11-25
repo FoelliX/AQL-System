@@ -1,0 +1,31 @@
+% TODO: Complete list
+% TODO: Add SelfModification category
+% TODO: Add DynamicCodeLoading category
+
+% GUI
+<*: android.view.View findViewById(int)> -> GUI
+<android.widget.Button: void setOnClickListener(android.view.View$OnClickListener)> -> GUI
+
+% ICC & IAC
+<*: android.content.Intent getIntent()> -> ICC, IAC
+<*: void sendBroadcast(android.content.Intent)> -> ICC, IAC
+<*: void startActivity(android.content.Intent)> -> ICC, IAC
+<*: void startActivityForResult(android.content.Intent,int)> -> ICC, IAC
+<*: android.content.ComponentName startService(android.content.Intent)> -> ICC, IAC
+<android.content.ContentResolver: android.database.Cursor query(android.net.Uri,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String)> -> ICC, IAC
+<android.content.ContentResolver: android.net.Uri insert(android.net.Uri,android.content.ContentValues)> -> ICC, IAC
+
+% Native
+<java.lang.System: void loadLibrary(java.lang.String)> -> Native
+
+% Reflection
+<java.lang.Class: java.lang.Class forName(java.lang.String)> -> Reflection
+<java.lang.Class: java.lang.reflect.Field getDeclaredField(java.lang.String)> -> Reflection
+<java.lang.Class: java.lang.reflect.Method getMethod(java.lang.String,java.lang.Class[])> -> Reflection
+<java.lang.Class: java.lang.Object newInstance()> -> Reflection
+<java.lang.reflect.Method: java.lang.Object invoke(java.lang.Object,java.lang.Object[])> -> Reflection
+
+% SharedPreferences
+<*: android.content.SharedPreferences getSharedPreferences(java.lang.String,int)> -> SharedPreferences
+<android.content.SharedPreferences: java.lang.String getString(java.lang.String,java.lang.String)> -> SharedPreferences
+<android.content.SharedPreferences$Editor: android.content.SharedPreferences$Editor putString(java.lang.String,java.lang.String)> -> SharedPreferences

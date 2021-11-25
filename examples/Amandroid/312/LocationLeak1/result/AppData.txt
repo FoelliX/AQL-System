@@ -1,0 +1,29 @@
+Application Name: LocationLeak1.apk
+Uses Permissions: android.permission.ACCESS_FINE_LOCATION
+
+Component de.ecspride.LocationLeak1
+  Component type: activity
+  Exported: true
+  Dynamic Registered: false
+  Required Permission: 
+  IntentFilters:
+    IntentFilter:(Actions:["android.intent.action.MAIN"],Categories:["android.intent.category.LAUNCHER"])
+
+  Inter-component communication (ICC) Result:
+
+
+
+Taint analysis result:
+  Sources found:
+    <Descriptors: callback_source: Lde/ecspride/LocationLeak1$MyLocationListener;.onLocationChanged:(Landroid/location/Location;)V>
+    <Descriptors: api_source: Landroid/location/Location;.getLatitude:()D>
+    <Descriptors: api_source: Landroid/location/Location;.getLongitude:()D>
+  Sinks found:
+    <Descriptors: api_sink: Landroid/util/Log;.d:(Ljava/lang/String;Ljava/lang/String;)I 1>
+  Discovered taint paths are listed below:
+    TaintPath:
+      Source: <Descriptors: callback_source: Lde/ecspride/LocationLeak1$MyLocationListener;.onLocationChanged:(Landroid/location/Location;)V>
+      Sink: <Descriptors: api_sink: Landroid/util/Log;.d:(Ljava/lang/String;Ljava/lang/String;)I 1>
+      Types: maliciousness:information_theft
+      The path consists of the following edges ("->"). The nodes have the context information (p1 to pn means which parameter). The source is at the top :
+        List(Entry@Lde/ecspride/LocationLeak1$MyLocationListener;.onLocationChanged:(Landroid/location/Location;)V param: 1, Call@(MyLocationListener.onLocationChanged,L000874)(LocationLeak1.envMain,L22) param: 0, Return@(MyLocationListener.onLocationChanged,L000874)(LocationLeak1.envMain,L22), (MyLocationListener.onLocationChanged,L00087a)(LocationLeak1.envMain,L22), Call@(MyLocationListener.onLocationChanged,L000888)(LocationLeak1.envMain,L22) param: 0, Call@(MyLocationListener.onLocationChanged,L000888)(LocationLeak1.envMain,L22), Call@(LocationLeak1.onResume,L000996)(LocationLeak1.envMain,L10), Call@(LocationLeak1.onResume,L0009aa)(LocationLeak1.envMain,L10) param: 1)

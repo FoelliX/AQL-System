@@ -1,0 +1,10 @@
+record `com.adobe.packages.BK` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `<init>`(`com.adobe.packages.BK` v0 @kind this) @signature `Lcom/adobe/packages/BK;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+
+  # return;
+}
+procedure `void` `onCreate`(`com.adobe.packages.BK` v1 @kind this, `android.os.Bundle` v2 @kind object @name `savedInstanceState`) @signature `Lcom/adobe/packages/BK;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+
+  # return;
+}

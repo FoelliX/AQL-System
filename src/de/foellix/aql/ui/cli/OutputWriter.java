@@ -14,7 +14,9 @@ public class OutputWriter implements IAnswerAvailable {
 	}
 
 	@Override
-	public void answerAvailable(Answer answer, int status) {
-		AnswerHandler.createXML(answer, this.file);
+	public void answerAvailable(Object answer, int status) {
+		if (answer instanceof Answer) {
+			AnswerHandler.createXML((Answer) answer, this.file);
+		}
 	}
 }

@@ -1,6 +1,14 @@
 package de.foellix.aql.ui.gui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import de.foellix.aql.Log;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Control;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.text.Font;
 
@@ -260,19 +268,27 @@ public class FontAwesome {
 	public static final String ICON_PDF = "\uf1c1";
 	public static final String ICON_MINUS_SQUARE = "\uf147";
 	public static final String ICON_HOUR_GLASS = "\uf251";
+	public static final String ICON_RECYCLE = "\uf1b8";
+
+	public static final File FONT_AWESOME_FILE = new File("data/gui/FontAwesome.otf");
 
 	private static final int DEFAULT_BUTTON_SIZE = 15;
 	private static final int DEFAULT_MENUITEM_SIZE = 11;
 
-	private static String def = "defaultBtn";
-	private static String red = "red";
-	private static String green = "green";
-	private static String blue = "blue";
+	private static final String DEF = "defaultBtn";
+	private static final String RED = "red";
+	private static final String GREEN = "green";
+	private static final String BLUE = "blue";
 
 	private static FontAwesome instance = new FontAwesome();
 
 	private FontAwesome() {
-		Font.loadFont("file:data/gui/FontAwesome.otf", DEFAULT_BUTTON_SIZE);
+		try (FileInputStream fis = new FileInputStream(FONT_AWESOME_FILE)) {
+			Font.loadFont(fis, DEFAULT_BUTTON_SIZE);
+		} catch (final IOException e) {
+			Log.warning(
+					"Could not find \"" + FONT_AWESOME_FILE.getAbsolutePath() + "\"." + Log.getExceptionAppendix(e));
+		}
 	}
 
 	public static FontAwesome getInstance() {
@@ -285,9 +301,20 @@ public class FontAwesome {
 
 	public Button createButton(final String iconName, final int iconSize) {
 		final Button btn = new Button(iconName);
-		btn.getStyleClass().add(def);
+		btn.getStyleClass().add(DEF);
 		btn.setStyle("-fx-font-family: FontAwesome; -fx-font-size: " + iconSize + "px;");
 		return btn;
+	}
+
+	public Menu createInnerMenu(final String iconName, final String text) {
+		return createInnerMenu(iconName, text, DEFAULT_MENUITEM_SIZE);
+	}
+
+	public Menu createInnerMenu(final String iconName, final String text, final int iconSize) {
+		final Menu menu = new Menu(iconName + "\t" + text);
+		menu.getStyleClass().add("defaultMenuItem");
+		menu.setStyle("-fx-font-family: FontAwesome; -fx-font-size: " + iconSize + "px;");
+		return menu;
 	}
 
 	public MenuItem createMenuItem(final String iconName, final String text) {
@@ -295,73 +322,117 @@ public class FontAwesome {
 	}
 
 	public MenuItem createMenuItem(final String iconName, final String text, final int iconSize) {
-		final MenuItem menuItem = new MenuItem(iconName + "\t" + text);
+		final MenuItem menuItem;
+		if (iconName != null) {
+			menuItem = new MenuItem(iconName + "\t" + text);
+		} else {
+			menuItem = new MenuItem(text);
+		}
 		menuItem.getStyleClass().add("defaultMenuItem");
 		menuItem.setStyle("-fx-font-family: FontAwesome; -fx-font-size: " + iconSize + "px;");
 		return menuItem;
 	}
 
-	public void setDefault(final Button btn) {
-		if (!btn.getStyleClass().contains(def)) {
-			btn.getStyleClass().add(def);
-		}
-		if (btn.getStyleClass().contains(red)) {
-			btn.getStyleClass().remove(red);
-		}
-		if (btn.getStyleClass().contains(green)) {
-			btn.getStyleClass().remove(green);
-		}
-		if (btn.getStyleClass().contains(blue)) {
-			btn.getStyleClass().remove(blue);
-		}
+	public CheckMenuItem createCheckMenuItem(final String text) {
+		return createCheckMenuItem(text, DEFAULT_MENUITEM_SIZE);
 	}
 
-	public void setRed(final Button btn) {
-		if (btn.getStyleClass().contains(def)) {
-			btn.getStyleClass().remove(def);
-		}
-		if (!btn.getStyleClass().contains(red)) {
-			btn.getStyleClass().add(red);
-		}
-		if (btn.getStyleClass().contains(green)) {
-			btn.getStyleClass().remove(green);
-		}
-		if (btn.getStyleClass().contains(blue)) {
-			btn.getStyleClass().remove(blue);
-		}
+	public CheckMenuItem createCheckMenuItem(final String text, final int iconSize) {
+		final CheckMenuItem menuItem = new CheckMenuItem(text);
+		menuItem.getStyleClass().add("defaultMenuItem");
+		menuItem.setStyle("-fx-font-family: FontAwesome; -fx-font-size: " + iconSize + "px;");
+		return menuItem;
 	}
 
-	public void setGreen(final Button btn) {
-		if (btn.getStyleClass().contains(def)) {
-			btn.getStyleClass().remove(def);
+	public Button setDefault(final Button btn) {
+		if (!btn.getStyleClass().contains(DEF)) {
+			btn.getStyleClass().add(DEF);
 		}
-		if (btn.getStyleClass().contains(red)) {
-			btn.getStyleClass().remove(red);
+		if (btn.getStyleClass().contains(RED)) {
+			btn.getStyleClass().remove(RED);
 		}
-		if (!btn.getStyleClass().contains(green)) {
-			btn.getStyleClass().add(green);
+		if (btn.getStyleClass().contains(GREEN)) {
+			btn.getStyleClass().remove(GREEN);
 		}
-		if (btn.getStyleClass().contains(blue)) {
-			btn.getStyleClass().remove(blue);
+		if (btn.getStyleClass().contains(BLUE)) {
+			btn.getStyleClass().remove(BLUE);
 		}
+		return btn;
 	}
 
-	public void setBlue(final Button btn) {
-		if (btn.getStyleClass().contains(def)) {
-			btn.getStyleClass().remove(def);
+	public Button setRed(final Button btn) {
+		if (btn.getStyleClass().contains(DEF)) {
+			btn.getStyleClass().remove(DEF);
 		}
-		if (btn.getStyleClass().contains(red)) {
-			btn.getStyleClass().remove(red);
+		if (!btn.getStyleClass().contains(RED)) {
+			btn.getStyleClass().add(RED);
 		}
-		if (btn.getStyleClass().contains(green)) {
-			btn.getStyleClass().remove(green);
+		if (btn.getStyleClass().contains(GREEN)) {
+			btn.getStyleClass().remove(GREEN);
 		}
-		if (!btn.getStyleClass().contains(blue)) {
-			btn.getStyleClass().add(blue);
+		if (btn.getStyleClass().contains(BLUE)) {
+			btn.getStyleClass().remove(BLUE);
 		}
+		return btn;
 	}
 
-	public static void applyFontAwesome(final Button btn) {
-		btn.setStyle("-fx-font-family: FontAwesome;");
+	public Button setGreen(final Button btn) {
+		if (btn.getStyleClass().contains(DEF)) {
+			btn.getStyleClass().remove(DEF);
+		}
+		if (btn.getStyleClass().contains(RED)) {
+			btn.getStyleClass().remove(RED);
+		}
+		if (!btn.getStyleClass().contains(GREEN)) {
+			btn.getStyleClass().add(GREEN);
+		}
+		if (btn.getStyleClass().contains(BLUE)) {
+			btn.getStyleClass().remove(BLUE);
+		}
+		return btn;
+	}
+
+	public Button setBlue(final Button btn) {
+		if (btn.getStyleClass().contains(DEF)) {
+			btn.getStyleClass().remove(DEF);
+		}
+		if (btn.getStyleClass().contains(RED)) {
+			btn.getStyleClass().remove(RED);
+		}
+		if (btn.getStyleClass().contains(GREEN)) {
+			btn.getStyleClass().remove(GREEN);
+		}
+		if (!btn.getStyleClass().contains(BLUE)) {
+			btn.getStyleClass().add(BLUE);
+		}
+		return btn;
+	}
+
+	public static void applyFontAwesome(final MenuItem view) {
+		applyFontAwesome(view, "");
+	}
+
+	public static void applyFontAwesome(final MenuItem view, String styleAddition) {
+		getInstance();
+		if (styleAddition == null || styleAddition.isBlank()) {
+			styleAddition = "";
+		} else if (!styleAddition.startsWith(" ")) {
+			styleAddition = " " + styleAddition;
+		}
+		view.setStyle("-fx-font-family: FontAwesome;" + styleAddition);
+	}
+
+	public static void applyFontAwesome(final Control view) {
+		applyFontAwesome(view, "");
+	}
+
+	public static void applyFontAwesome(final Control view, String styleAddition) {
+		getInstance();
+		if (styleAddition == null || styleAddition.isBlank()) {
+			styleAddition = "";
+		} else if (!styleAddition.startsWith(" ")) {
+			styleAddition = " " + styleAddition;
+		}
+		view.setStyle("-fx-font-family: FontAwesome;" + styleAddition);
 	}
 }

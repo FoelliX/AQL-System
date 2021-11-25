@@ -11,8 +11,10 @@ import de.foellix.aql.datastructure.Intentsource;
 import de.foellix.aql.datastructure.handler.AnswerHandler;
 
 public class FakeConverter {
-	public static Answer fakeConversion(String input) {
-		final Answer answer = AnswerHandler.parseXML(new File(input));
+	public static Answer fakeConversion(File input) {
+		final Answer answer = AnswerHandler.parseXML(input);
+
+		System.out.println("Converting... (Adding attribute \"'converted' = 'true'\")");
 
 		if (answer.getFlows() != null) {
 			for (final Flow flow : answer.getFlows().getFlow()) {

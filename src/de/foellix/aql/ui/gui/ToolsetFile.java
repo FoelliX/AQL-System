@@ -9,6 +9,10 @@ import javafx.scene.layout.HBox;
 
 public class ToolsetFile extends HBox {
 	public ToolsetFile(final IGUI parent) {
+		this(parent, null);
+	}
+
+	public ToolsetFile(final IGUI parent, MenuFile menuFile) {
 		super();
 
 		if ((parent instanceof GUI) || (parent instanceof ConfigWizard)) {
@@ -28,6 +32,9 @@ public class ToolsetFile extends HBox {
 				@Override
 				public void handle(final ActionEvent event) {
 					parent.open();
+					if (menuFile != null) {
+						menuFile.refreshRecentFiles();
+					}
 				}
 			});
 			final Button btnSave = FontAwesome.getInstance().createButton(FontAwesome.ICON_SAVE);
@@ -36,6 +43,9 @@ public class ToolsetFile extends HBox {
 				@Override
 				public void handle(final ActionEvent event) {
 					parent.save();
+					if (menuFile != null) {
+						menuFile.refreshRecentFiles();
+					}
 				}
 			});
 
