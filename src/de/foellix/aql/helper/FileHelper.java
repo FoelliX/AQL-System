@@ -177,7 +177,7 @@ public class FileHelper {
 	/**
 	 * Waits 10 seconds for the file to become available.
 	 *
-	 * @param resultWithAsterisk
+	 * @param resultWithAsteriskFile
 	 *            The file to become available with placeholders ('*').
 	 * @return The final file available (or null)
 	 */

@@ -1,6 +1,5 @@
 package de.foellix.aql.system;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -57,10 +56,6 @@ public class ProcessWrapper {
 	 * Wraps a process including its commandline output.
 	 *
 	 * @return 0 on normal termination
-	 * @throws InterruptedException
-	 *             on Thread interruption
-	 * @throws IOException
-	 *             if something goes wrong redirecting commandline outputs
 	 */
 	public int waitFor() {
 		try {

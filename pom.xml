@@ -11,6 +11,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>ddMMyyyyHHmmssS</maven.build.timestamp.format>
 		<javafx.version>18-ea+4</javafx.version>
 		<jackson.version>2.12.4</jackson.version>
 	</properties>
@@ -138,12 +140,7 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>
-		<profile>
-			<id>allOS</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+
 			<dependencies>
 				<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web (for Linux, Windows and MaxOS) -->
 				<dependency>
@@ -277,7 +274,7 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>3.17.3</version>
+			<version>3.19.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.fxmisc.richtext/richtextfx -->
 		<dependency>
