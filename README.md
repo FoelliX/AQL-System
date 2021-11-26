@@ -122,7 +122,7 @@ All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/
 ESEC/FSE 2018 [https://dl.acm.org/citation.cfm?id=3236029](https://dl.acm.org/citation.cfm?id=3236029)
 - *Together Strong: Cooperative Android App Analysis* (Felix Pauck, Heike Wehrheim)  
 ESEC/FSE 2019 [https://dl.acm.org/citation.cfm?id=3338915](https://dl.acm.org/citation.cfm?id=3338915)
-- *TaintBench: Automatic real-world malware benchmarking of Android taint analyses* (Felix Pauck, Heike Wehrheim)  
+- *TaintBench: Automatic real-world malware benchmarking of Android taint analyses* (Linghui Luo, Felix Pauck, ...) 
 EMSE 2022 [https://link.springer.com/article/10.1007%2Fs10664-021-10013-5](https://link.springer.com/article/10.1007%2Fs10664-021-10013-5)
 
 ## License
