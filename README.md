@@ -77,11 +77,16 @@ Consequently, FlowDroid is launched and its result is converted into an AQL-Answ
 
 
 ## Usage
-Our wiki contains tutorials how to use/extend the AQL-System: [here](https://github.com/FoelliX/AQL-System/wiki)
+Our wiki contains tutorials how to use/extend the AQL-System: [here](https://github.com/FoelliX/AQL-System/wiki)  
+(Along with version 2.0.0 we added [video tutorials](https://github.com/FoelliX/AQL-System/wiki/Video_tutorials))
 
 ### Execution
 One [tutorial](https://github.com/FoelliX/AQL-System/wiki/Runthrough) deals with a simple run-through.
 It guides the user how to install, configure and execute an AQL-System, which is setup to use [Amandroid](http://pag.arguslab.org/argus-saf).
+In general the AQL-System can be started with the following command ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki/Launch_parameters)):  
+```bash
+java -jar AQL-System-2.0.0.jar
+```
 
 ### Development
 **Library**  
@@ -107,7 +112,7 @@ All releases can be found [here](https://github.com/FoelliX/AQL-System/releases/
 - Run the build ([Launch parameters](https://github.com/FoelliX/AQL-System/wiki/Launch_parameters)):
 	```bash
 	cd AQL-System/target/build
-	java -jar AQL-System-XXX.jar
+	java -jar AQL-System-2.0.0.jar
 	```
 
 **Building from source code (Eclipse)**  
