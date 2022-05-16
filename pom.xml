@@ -14,7 +14,7 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>ddMMyyyyHHmmssS</maven.build.timestamp.format>
 		<javafx.version>18-ea+4</javafx.version>
-		<jackson.version>2.12.4</jackson.version>
+		<jackson.version>2.12.6.1</jackson.version>
 	</properties>
 
 	<profiles>
